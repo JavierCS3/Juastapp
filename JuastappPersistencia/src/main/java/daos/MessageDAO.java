@@ -12,6 +12,7 @@ import conexion.ConexionBD;
 import exceptions.ExceptionPersistencia;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
@@ -143,4 +144,19 @@ public class MessageDAO implements IMessageDAO {
             throw new ExceptionPersistencia("Error al obtener los mensajes por ID de remitente: " + e.getMessage());
         }
     }
+    
+     /**
+     * Metodo que elimina todos los mensajes del chat
+     * @param chatId el id del chat
+     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+     */
+    @Override
+    public void deleteMessagesByChatId(ObjectId chatId) throws ExceptionPersistencia {
+        try {
+            messageCollection.deleteMany(Filters.eq("chatId", chatId));
+        } catch (Exception e) {
+            throw new ExceptionPersistencia("Error al eliminar los mensajes del chat con id: " + chatId, e);
+        }
+    }
+    
 }

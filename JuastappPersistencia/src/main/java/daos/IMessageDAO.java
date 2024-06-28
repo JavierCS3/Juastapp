@@ -66,4 +66,11 @@ public interface IMessageDAO {
      * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
      */
     List<Message> getMessagesBySenderId(ObjectId senderId) throws ExceptionPersistencia;
+    
+    /**
+     * Metodo que elimina todos los mensajes del chat
+     * @param chatId el id del chat
+     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+     */
+    public void deleteMessagesByChatId(ObjectId chatId) throws ExceptionPersistencia;
 }

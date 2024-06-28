@@ -20,7 +20,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *
+ * Clase que implementa los metodos de la interface Service
  * @author PC Gamer
  */
 public class JuastappService implements IJuastappService{
@@ -127,10 +127,66 @@ public class JuastappService implements IJuastappService{
                 throw new ExceptionService("Error al agregar chat",ex);
             }
         }
-        System.out.println("El chat es nulo");
+        System.out.println("El chat es nulo: "+chat);
+    }
+
+    @Override
+    public void updateChat(ChatDTO chat) throws ExceptionService {
+        if(chat!=null){
+            try {
+                Chat c=new Chat();
+                c=ChatDTO.conver(chat);
+                chatDAO.updateChat(c);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al actualizar el chat",ex);
+            }
+        }System.out.println("El chatDTO es nulo: "+chat);
+    }
+
+    @Override
+    public void deleteChatById(ObjectId chatId) throws ExceptionService {
+        if(chatId!=null){
+            try {
+                messageDAO.deleteMessagesByChatId(chatId);
+                
+                chatDAO.deleteChat(chatId);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al eliminar el chat",ex);
+            }
+        }
+        System.out.println("El id del chat es nulo: "+chatId);
+    }
+    
+    /**
+     *  Metodo que elimana el Mensaje por id
+     * @param messageId id del mensaje
+     * @throws ExceptionService Excepcion de la capa negocio
+     */
+    @Override
+    public void deleteMessageById(ObjectId messageId) throws ExceptionService {
+        if(messageId!=null){
+            try {
+                messageDAO.deleteMessage(messageId);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al eliminar el mensaje",ex);
+            }
+        }
+        System.out.println("El id del mensaje es nulo");
+    }
+
+    @Override
+    public void updateMessage(MessageDTO message) throws ExceptionService {
+        if(message!=null){
+            try {
+                Message m=new Message();
+                m=MessageDTO.conver(message);
+                messageDAO.updateMessage(m);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al eliminar el mensaje",ex);
+            }
+        }
     }
     
     
-    
-    
+
 }

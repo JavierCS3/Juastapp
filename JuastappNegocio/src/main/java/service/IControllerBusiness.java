@@ -12,11 +12,10 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *  Interface que conecta las consultas de la capa persistence con la capa business
+ *  Interface que controla los metodos de la clase Service
  * @author PC Gamer
  */
-public interface IJuastappService {
-    
+public interface IControllerBusiness {
     /**
      *  Metodo que crea un usuario
      * @param userDTO Usuario que se quiere crear
@@ -77,17 +76,16 @@ public interface IJuastappService {
     public void deleteChatById(ObjectId chatId)throws ExceptionService;
     
     /**
-     *  Metodo que elimana el Mensaje por id
-     * @param messageId id del mensaje
-     * @throws ExceptionService Excepcion de la capa negocio
-     */
-    public void deleteMessageById(ObjectId messageId)throws ExceptionService;
-    
-    /**
      *  Metodo que actualiza el mensagge
      * @param message mensaje actualizado
      * @throws ExceptionService Excepcion de la capa negocio
      */
     public void updateMessage(MessageDTO message) throws ExceptionService;
     
+    /**
+     *  Metodo que elimana el Mensaje por id
+     * @param messageId id del mensaje
+     * @throws ExceptionService Excepcion de la capa negocio
+     */
+    public void deleteMessageById(ObjectId messageId)throws ExceptionService;
 }
