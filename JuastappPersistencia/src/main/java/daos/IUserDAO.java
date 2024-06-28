@@ -62,4 +62,12 @@ public interface IUserDAO {
      * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
      */
     public User getUserById(ObjectId userId) throws ExceptionPersistencia;
+    
+    /**
+    * Busca un usuario por su número de teléfono.
+    * @param phoneNumber Número de teléfono del usuario a buscar.
+    * @return Usuario encontrado o null si no existe.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+    public User getUserByPhoneNumber(String phoneNumber) throws ExceptionPersistencia;
 }

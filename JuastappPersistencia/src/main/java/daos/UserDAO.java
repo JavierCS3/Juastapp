@@ -4,13 +4,10 @@
  */
 package daos;
 
-import daos.IUserDAO;
 import collection.User;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
-import static com.mongodb.client.model.Filters.eq;
 import com.mongodb.client.model.Sorts;
-import conexion.ConexionBD;
 import conexion.ConexionBD;
 import exceptions.ExceptionPersistencia;
 import org.bson.conversions.Bson;
@@ -157,4 +154,21 @@ public class UserDAO implements IUserDAO{
             throw new ExceptionPersistencia("Error al obtener usuario por ID: " + e.getMessage(), e);
         }
     }
+    
+    /**
+    * Busca un usuario por su número de teléfono.
+    * @param phoneNumber Número de teléfono del usuario a buscar.
+    * @return Usuario encontrado o null si no existe.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   @Override
+   public User getUserByPhoneNumber(String phoneNumber) throws ExceptionPersistencia {
+       try {
+           MongoCollection<User> collection = conexion.getDatabase().getCollection("users", User.class);
+           Bson filter = Filters.eq("phone", phoneNumber);
+           return collection.find(filter).first();
+       } catch (Exception e) {
+           throw new ExceptionPersistencia("Error al obtener usuario por número de teléfono: " + e.getMessage(), e);
+       }
+   }
 }
