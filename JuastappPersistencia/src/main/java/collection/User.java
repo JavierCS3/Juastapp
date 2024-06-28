@@ -22,6 +22,7 @@ public class User {
     private Addres addres;
     private String gender;
     private LocalDateTime createdAt;
+    private ObjectId[] contactos;
     
     /**
      * Constructor por omision
@@ -39,8 +40,9 @@ public class User {
      * @param address Direccion de tipo address en donde almacenara la coleccion address
      * @param gender Genero del usuario
      * @param birthDate Fecha de nacimiento del usuario
+     * @param contactos Contactos del usuario
      */
-    public User(String user,String phone,byte[] profileImage, String password, Addres address, String gender, LocalDate birthDate){
+    public User(String user,String phone,byte[] profileImage, String password, Addres address, String gender, LocalDate birthDate,ObjectId[] contactos){
         this.user=user;
         this.phone=phone;
         this.password=password;
@@ -49,6 +51,7 @@ public class User {
         this.birthDate=birthDate;
         this.createdAt=LocalDateTime.now();
         this.profileImage=profileImage;
+        this.contactos = contactos;
     }
 
     /**
@@ -194,5 +197,20 @@ public class User {
         this.createdAt = createdAt;
     }
     
+    /**
+     * Get para obtener los contactos
+     * @return
+     */
+    public ObjectId[] getContactos() {
+        return contactos;
+    }
+
+    /**
+     *  Set para insertar los contactos
+     * @param contactos
+     */
+    public void setContactos(ObjectId[] contactos) {
+        this.contactos = contactos;
+    }
     
 }

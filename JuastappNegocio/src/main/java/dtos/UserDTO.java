@@ -25,6 +25,7 @@ public class UserDTO {
     private AddresDTO addres;
     private String gender;
     private LocalDateTime createdAt;
+    private ObjectId[] contactosDTO;
 
     /**
      * Constructor por omisión.
@@ -42,8 +43,9 @@ public class UserDTO {
      * @param profileImage Imagen de perfil (en bytes).
      * @param addres Dirección del usuario representada por un objeto AddresDTO.
      * @param gender Género del usuario.
+     * @param contactosDTO Los contactos del usuario
      */
-    public UserDTO(String user, String phone, String password, LocalDate birthDate, byte[] profileImage, AddresDTO addres, String gender) {
+    public UserDTO(String user, String phone, String password, LocalDate birthDate, byte[] profileImage, AddresDTO addres, String gender,ObjectId[] contactosDTO) {
         this.user = user;
         this.phone = phone;
         this.password = password;
@@ -52,6 +54,7 @@ public class UserDTO {
         this.addres = addres;
         this.gender = gender;
         this.createdAt = LocalDateTime.now();
+        this.contactosDTO = contactosDTO;
     }
 
     /**
@@ -197,7 +200,28 @@ public class UserDTO {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    /**
+     * Obtiene todos los contactos
+     * @return todos los ids de los contactos
+     */
+    public ObjectId[] getContactosDTO() {
+        return contactosDTO;
+    }
+
+    /**
+     *  Establece los Ids de los contactos
+     * @param contactosDTO los contactos que quiere settear
+     */
+    public void setContactosDTO(ObjectId[] contactosDTO) {
+        this.contactosDTO = contactosDTO;
+    }
     
+    /**
+     *  Convierte un Usuario a UsuarioDTO
+     * @param userDAO Usuario que se quiere convertir
+     * @return UsuarioDTO convertido
+     */
     public static UserDTO conver(User userDAO){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userDAO.getId());
@@ -209,9 +233,15 @@ public class UserDTO {
         userDTO.setPassword(userDAO.getPassword());
         userDTO.setGender(userDAO.getGender());
         userDTO.setProfileImage(userDAO.getProfileImage());
+        userDTO.setContactosDTO(userDAO.getContactos());
         return userDTO;
     }
     
+    /**
+     * Convierte un UsuarioDTO aun usuario
+     * @param userDTO usuarioDTO que se quiere convertir
+     * @return Usuario ya convertido
+     */
     public static User conver(UserDTO userDTO){
         User userDAO = new User();
         userDAO.setId(userDTO.getId());
@@ -223,6 +253,7 @@ public class UserDTO {
         userDAO.setPassword(userDTO.getPassword());
         userDAO.setGender(userDTO.getGender());
         userDAO.setProfileImage(userDTO.getProfileImage());
+        userDAO.setContactos(userDAO.getContactos());
         return userDAO;
     }
     

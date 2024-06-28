@@ -12,7 +12,7 @@ public class Addres {
     private String street;
     private String city;
 //    private String state;
-//    private String zipCode;
+    private String zipCode;
     private String country;
     private String hNumber;
 
@@ -24,7 +24,7 @@ public class Addres {
         this.city = city;
         this.hNumber=hNumber;
 //        this.state = state;
-//        this.zipCode = zipCode;
+        this.zipCode = zipCode;
         this.country = country;
     }
 
@@ -52,13 +52,13 @@ public class Addres {
 //        this.state = state;
 //    }
 //
-//    public String getZipCode() {
-//        return zipCode;
-//    }
-//
-//    public void setZipCode(String zipCode) {
-//        this.zipCode = zipCode;
-//    }
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 //
 //    public String getCountry() {
 //        return country;

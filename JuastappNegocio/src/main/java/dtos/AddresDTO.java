@@ -16,8 +16,8 @@ public class AddresDTO {
     private String street;
     private String city;
     private String hNumber;
-//    private String state;
     private String country;
+    private String zipCode;
 
     /**
      * Constructor por omisión.
@@ -29,18 +29,14 @@ public class AddresDTO {
      * Constructor con parámetros para inicializar los campos de la dirección.
      * @param street Calle de la dirección.
      * @param city Ciudad de la dirección.
-     * @param country País de la dirección.
+     * @param country País pero lo manejamos como colonia de la dirección.
+     * @param zipCode Código postal de la dirección.
      */
-    public AddresDTO(String street, String city, String country, String hNumber) {
+    public AddresDTO(String street, String city, String country, String hNumber,String zipCode) {
         this.street = street;
         this.city = city;
-        this.hNumber=hNumber;
-//        * @param state Estado o provincia de la dirección.
-//     * @param zipCode Código postal de la dirección.
-        
-        
-//        this.state = state;
-//        this.zipCode = zipCode;
+        this.hNumber=hNumber;   
+        this.zipCode = zipCode;
         this.country = country;
     }
 
@@ -100,21 +96,21 @@ public class AddresDTO {
 //        this.state = state;
 //    }
 //
-//    /**
-//     * Obtiene el código postal de la dirección.
-//     * @return Código postal de la dirección.
-//     */
-//    public String getZipCode() {
-//        return zipCode;
-//    }
-//
-//    /**
-//     * Establece el código postal de la dirección.
-//     * @param zipCode Código postal de la dirección a establecer.
-//     */
-//    public void setZipCode(String zipCode) {
-//        this.zipCode = zipCode;
-//    }
+    /**
+     * Obtiene el código postal de la dirección.
+     * @return Código postal de la dirección.
+     */
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    /**
+     * Establece el código postal de la dirección.
+     * @param zipCode Código postal de la dirección a establecer.
+     */
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
     /**
      * Obtiene el país de la dirección.
@@ -143,6 +139,7 @@ public class AddresDTO {
         addresDTO.setStreet(addresDAO.getStreet());
         addresDTO.setCity(addresDAO.getCity());
         addresDTO.setCountry(addresDTO.getCountry());
+        addresDTO.setZipCode(addresDAO.getZipCode());
         return addresDTO;
     }
     
@@ -157,6 +154,7 @@ public class AddresDTO {
         addresDAO.setStreet(addresDTO.getStreet());
         addresDAO.setCity(addresDTO.getCity());
         addresDAO.setCountry(addresDTO.getCountry());
+        addresDAO.setZipCode(addresDTO.getZipCode());
         return addresDAO;
     }
     
