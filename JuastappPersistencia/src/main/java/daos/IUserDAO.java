@@ -15,6 +15,15 @@ import org.bson.types.ObjectId;
 public interface IUserDAO {
 
     /**
+    * Autentica un usuario por su número de teléfono y contraseña.
+    * @param phoneNumber Número de teléfono del usuario.
+    * @param password Contraseña del usuario.
+    * @return Usuario autenticado o null si las credenciales no son válidas.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+    public User login(String phoneNumber, String password) throws ExceptionPersistencia;
+    
+    /**
      * Lee todos los usuarios almacenados en la base de datos.
      * @return la lista de todos los usuarios
      * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos

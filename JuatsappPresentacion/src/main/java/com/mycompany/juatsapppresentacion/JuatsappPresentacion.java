@@ -4,6 +4,7 @@
 
 package com.mycompany.juatsapppresentacion;
 
+
 /**
  *
  * @author PC Gamer
@@ -11,6 +12,6 @@ package com.mycompany.juatsapppresentacion;
 public class JuatsappPresentacion {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+ 
     }
 }

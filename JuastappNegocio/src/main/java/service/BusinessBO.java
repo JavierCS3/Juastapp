@@ -18,6 +18,23 @@ import org.bson.types.ObjectId;
 public class BusinessBO implements IControllerBusiness{
     private JuastappService service;
 
+    
+    /**
+     *  Metodo para logger el usuario por numero telefonico y contraseña
+     * @param phoneNumber Numero de telefono
+     * @param password Contraseña
+     * @return UsuarioDTO
+     * @throws ExceptionService
+     */
+    @Override
+    public UserDTO login(String phoneNumber, String password) throws ExceptionService{
+        if(phoneNumber!=null && password!=null){
+            return service.login(phoneNumber, password);
+        }
+        throw new ExceptionService("No pueden ser nulo");
+    }
+    
+    
     public BusinessBO(JuastappService service) {
         this.service = service;
     }
@@ -100,5 +117,15 @@ public class BusinessBO implements IControllerBusiness{
             service.deleteMessageById(messageId);
         }
         throw new ExceptionService("El mesajeId es nulo");
+    }
+
+    @Override
+    public ObjectId getId() {
+        return service.getId();
+    }
+
+    @Override
+    public void setId(ObjectId id) {
+        service.setId(id);
     }
 }

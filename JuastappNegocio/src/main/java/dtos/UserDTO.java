@@ -7,6 +7,7 @@ package dtos;
 import collection.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -25,7 +26,7 @@ public class UserDTO {
     private AddresDTO addres;
     private String gender;
     private LocalDateTime createdAt;
-    private ObjectId[] contactosDTO;
+    private List<ObjectId> contactosDTO;
 
     /**
      * Constructor por omisión.
@@ -45,7 +46,7 @@ public class UserDTO {
      * @param gender Género del usuario.
      * @param contactosDTO Los contactos del usuario
      */
-    public UserDTO(String user, String phone, String password, LocalDate birthDate, byte[] profileImage, AddresDTO addres, String gender,ObjectId[] contactosDTO) {
+    public UserDTO(String user, String phone, String password, LocalDate birthDate, byte[] profileImage, AddresDTO addres, String gender,List<ObjectId> contactosDTO) {
         this.user = user;
         this.phone = phone;
         this.password = password;
@@ -205,7 +206,7 @@ public class UserDTO {
      * Obtiene todos los contactos
      * @return todos los ids de los contactos
      */
-    public ObjectId[] getContactosDTO() {
+    public List<ObjectId> getContactosDTO() {
         return contactosDTO;
     }
 
@@ -213,7 +214,7 @@ public class UserDTO {
      *  Establece los Ids de los contactos
      * @param contactosDTO los contactos que quiere settear
      */
-    public void setContactosDTO(ObjectId[] contactosDTO) {
+    public void setContactosDTO(List<ObjectId> contactosDTO) {
         this.contactosDTO = contactosDTO;
     }
     

@@ -88,4 +88,17 @@ public interface IControllerBusiness {
      * @throws ExceptionService Excepcion de la capa negocio
      */
     public void deleteMessageById(ObjectId messageId)throws ExceptionService;
+    
+    /**
+     *  Metodo para logger el usuario por numero telefonico y contraseña
+     * @param phoneNumber Numero de telefono
+     * @param password Contraseña
+     * @return UsuarioDTO
+     * @throws ExceptionService
+     */
+    public UserDTO login(String phoneNumber, String password) throws ExceptionService;
+    
+    public ObjectId getId();
+
+    public void setId(ObjectId id);
 }

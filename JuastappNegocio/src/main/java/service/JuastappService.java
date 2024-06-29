@@ -17,6 +17,8 @@ import exceptions.ExceptionPersistencia;
 import exceptions.ExceptionService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bson.types.ObjectId;
 
 /**
@@ -28,6 +30,7 @@ public class JuastappService implements IJuastappService{
     private UserDAO userDAO;
     private MessageDAO messageDAO;
     private ChatDAO chatDAO;
+    private ObjectId id;
     
     public JuastappService(UserDAO userDAO, MessageDAO messageDAO, ChatDAO chatDAO) {
         this.userDAO=userDAO;
@@ -186,7 +189,34 @@ public class JuastappService implements IJuastappService{
             }
         }
     }
-    
-    
 
+    @Override
+    public UserDTO login(String phoneNumber, String password) throws ExceptionService {
+        if(phoneNumber!=null && password!=null){
+            try {
+                System.out.println(phoneNumber+" "+password);
+                User user=userDAO.login(phoneNumber, password);
+                System.out.println(user.getId());
+                UserDTO userDTO= UserDTO.conver(user);
+                
+                setId(userDTO.getId());
+                return userDTO;
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al iniciar sesion",ex);
+            }
+        }else{
+            throw new ExceptionService("No pueden ser nulo "+phoneNumber+" "+password);
+        }
+    }
+
+    @Override
+    public ObjectId getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+    
 }

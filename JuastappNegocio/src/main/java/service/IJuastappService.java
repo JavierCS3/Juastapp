@@ -18,6 +18,15 @@ import org.bson.types.ObjectId;
 public interface IJuastappService {
     
     /**
+     *  Metodo para logger el usuario por numero telefonico y contraseña
+     * @param phoneNumber Numero de telefono
+     * @param password Contraseña
+     * @return UsuarioDTO
+     * @throws ExceptionService
+     */
+    public UserDTO login(String phoneNumber, String password) throws ExceptionService;
+    
+    /**
      *  Metodo que crea un usuario
      * @param userDTO Usuario que se quiere crear
      * @throws exceptions.ExceptionService Excepcion de la capa negocio
@@ -90,4 +99,7 @@ public interface IJuastappService {
      */
     public void updateMessage(MessageDTO message) throws ExceptionService;
     
+    public ObjectId getId();
+
+    public void setId(ObjectId id);
 }

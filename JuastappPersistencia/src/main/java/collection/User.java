@@ -6,6 +6,8 @@ package collection;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 /**
@@ -22,7 +24,7 @@ public class User {
     private Addres addres;
     private String gender;
     private LocalDateTime createdAt;
-    private ObjectId[] contactos;
+    private List<ObjectId> contactos;
     
     /**
      * Constructor por omision
@@ -42,7 +44,7 @@ public class User {
      * @param birthDate Fecha de nacimiento del usuario
      * @param contactos Contactos del usuario
      */
-    public User(String user,String phone,byte[] profileImage, String password, Addres address, String gender, LocalDate birthDate,ObjectId[] contactos){
+    public User(String user,String phone,byte[] profileImage, String password, Addres address, String gender, LocalDate birthDate,List<ObjectId> contactos){
         this.user=user;
         this.phone=phone;
         this.password=password;
@@ -55,8 +57,7 @@ public class User {
     }
 
     /**
-     * Get del id
-     * @return id del usuario
+     * @return
      */
     public ObjectId getId() {
         return id;
@@ -196,21 +197,20 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    
-    /**
-     * Get para obtener los contactos
-     * @return
-     */
-    public ObjectId[] getContactos() {
+
+    public Addres getAddres() {
+        return addres;
+    }
+
+    public void setAddres(Addres addres) {
+        this.addres = addres;
+    }
+
+    public List<ObjectId> getContactos() {
         return contactos;
     }
 
-    /**
-     *  Set para insertar los contactos
-     * @param contactos
-     */
-    public void setContactos(ObjectId[] contactos) {
+    public void setContactos(List<ObjectId> contactos) {
         this.contactos = contactos;
     }
-    
 }
