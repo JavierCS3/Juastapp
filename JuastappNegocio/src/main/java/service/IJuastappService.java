@@ -99,7 +99,22 @@ public interface IJuastappService {
      */
     public void updateMessage(MessageDTO message) throws ExceptionService;
     
+    /**
+     *
+     * @return
+     */
     public ObjectId getId();
 
+    /**
+     *
+     * @param id
+     */
     public void setId(ObjectId id);
+    
+    /**
+     *
+     * @param user
+     * @throws exceptions.ExceptionService
+     */
+    public void updateUser(UserDTO user) throws ExceptionService;
 }

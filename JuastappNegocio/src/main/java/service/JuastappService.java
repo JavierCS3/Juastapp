@@ -219,4 +219,19 @@ public class JuastappService implements IJuastappService{
         this.id = id;
     }
     
+    /**
+     *
+     * @param user
+     */
+    @Override
+    public void updateUser(UserDTO user) throws ExceptionService{
+        if(user!=null){
+            try {
+                User userD=UserDTO.conver(user);
+                userDAO.updateUser(userD);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al guardar sesion",ex);
+            }
+        }
+    }
 }

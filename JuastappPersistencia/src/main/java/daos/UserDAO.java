@@ -5,10 +5,12 @@
 package daos;
 
 import collection.User;
+import com.mongodb.MongoException;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.result.UpdateResult;
 import conexion.ConexionBD;
 import exceptions.ExceptionPersistencia;
 import org.bson.conversions.Bson;
@@ -17,6 +19,7 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.bson.Document;
 
 /**
  * Clase UserDAO que implementa los metodo de la interface IUserDAO
@@ -146,20 +149,37 @@ public class UserDAO implements IUserDAO{
     }
 
     /**
-     * Actualiza la información de un usuario existente en la base de datos.
-     * @param user Usuario con la información actualizada.
-     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
-     */
-    @Override
-    public void updateUser(User user) throws ExceptionPersistencia {
-        try {
-            MongoCollection<User> collection = conexion.getDatabase().getCollection("users", User.class);
-            ObjectId userId = user.getId();
-            collection.replaceOne(Filters.eq("_id", userId), user);
-        } catch (Exception e) {
-            throw new ExceptionPersistencia("Error al actualizar usuario: " + e.getMessage(), e);
+    * Actualiza la información de un usuario existente en la base de datos.
+    * @param user Usuario con la información actualizada.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   @Override
+   public void updateUser(User user) throws ExceptionPersistencia {
+       try {
+        MongoCollection<User> collection = conexion.getDatabase().getCollection("users", User.class);
+        ObjectId userId = user.getId();
+
+        if (userId == null) {
+            throw new IllegalArgumentException("El usuario debe tener un ID válido.");
         }
+
+        Bson filter = Filters.eq("_id", userId);
+
+        Document updateDoc = new Document();
+        updateDoc.put("$set", new Document()
+                .append("user", user.getUser())
+                .append("password", user.getPassword())
+                .append("profileImage", user.getProfileImage()));
+
+        UpdateResult result = collection.updateOne(filter, updateDoc);
+
+        if (result.getModifiedCount() != 1) {
+            throw new ExceptionPersistencia("No se pudo encontrar o actualizar el usuario.");
+        }
+    } catch (IllegalArgumentException | MongoException e) {
+        throw new ExceptionPersistencia("Error al actualizar usuario: " + e.getMessage(), e);
     }
+   }
 
     /**
      * Elimina un usuario de la base de datos por su ID.

@@ -101,4 +101,6 @@ public interface IControllerBusiness {
     public ObjectId getId();
 
     public void setId(ObjectId id);
+    
+    public void updateUser(UserDTO user) throws ExceptionService;
 }

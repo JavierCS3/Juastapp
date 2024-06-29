@@ -128,4 +128,9 @@ public class BusinessBO implements IControllerBusiness{
     public void setId(ObjectId id) {
         service.setId(id);
     }
+    
+    @Override
+    public void updateUser(UserDTO user) throws ExceptionService{
+        service.updateUser(user);
+    }
 }

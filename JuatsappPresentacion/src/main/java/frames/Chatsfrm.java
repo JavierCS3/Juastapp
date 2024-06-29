@@ -5,6 +5,7 @@
 package frames;
 
 import exceptions.ExceptionService;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
@@ -38,15 +39,13 @@ public class Chatsfrm extends javax.swing.JFrame {
             this.busBO=busBO;
             byte[] profileImageBytes = busBO.getUserById(busBO.getId()).getProfileImage();
             
-            // Convertir el array de bytes a un ImageIcon
             ImageIcon icon = new ImageIcon(profileImageBytes);
-            
-            // Escalar el ImageIcon si es necesario (opcional)
-            // ImageIcon scaledIcon = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-            
-            // Asignar el icono al botón BontonPerfil
-            BontonPerfil.setText(" ");
-            BontonPerfil.setIcon(icon);
+
+            Image scaledImage = icon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+            BontonPerfil.setText("");
+            BontonPerfil.setIcon(scaledIcon);
         } catch (ExceptionService ex) {
             Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -251,14 +250,12 @@ public class Chatsfrm extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                    .addComponent(panelRound3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(BontonPerfil)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                        .addComponent(panelRound3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(BontonPerfil))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,12 +264,12 @@ public class Chatsfrm extends javax.swing.JFrame {
                 .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(BontonPerfil)
-                .addGap(73, 73, 73))
+                .addGap(64, 64, 64))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 440));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 440));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 635, 405));
 
@@ -299,7 +296,7 @@ public class Chatsfrm extends javax.swing.JFrame {
 
     private void BontonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BontonPerfilActionPerformed
         // TODO add your handling code here:
-        EditProfile editP=new EditProfile();
+        EditProfile editP=new EditProfile(busBO);
         editP.show();
         this.dispose();
     }//GEN-LAST:event_BontonPerfilActionPerformed
