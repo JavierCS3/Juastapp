@@ -7,7 +7,7 @@ package frames;
 import dtos.ChatDTO;
 import dtos.UserDTO;
 import exceptions.ExceptionService;
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.List;
@@ -20,9 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import org.bson.types.ObjectId;
 import service.BusinessBO;
 
@@ -70,37 +67,39 @@ public class CreateContact extends javax.swing.JFrame {
     
     public void setButtonLayout() {
         try {
-            List<ObjectId> ids=busBO.getUserById(busBO.getId()).getContactosDTO();
-            List<UserDTO> contacts =new ArrayList<>();
-            UserDTO userNow=busBO.getUserById(busBO.getId());
-            System.out.println("numero de chats " +busBO.getChatByUser(busBO.getId()).size());
-            
+            List<ObjectId> ids = busBO.getUserById(busBO.getId()).getContactosDTO();
+            List<UserDTO> contacts = new ArrayList<>();
+
             List<ChatDTO> chat1 = busBO.getChatByUser(busBO.getId());
+
             for (ObjectId id : ids) {
                 int count = 0;
                 List<ChatDTO> chat2 = busBO.getChatByUser(id);
-                System.out.println("numero de chats contactos: " + chat2.size());
 
-                for (int i = 0; i < chat1.size() && i < chat2.size(); i++) {
-                    if (chat2.get(i) != null && chat1.get(i) != null) {
-                        if (chat1.get(i).getId().equals(chat2.get(i).getId())) {
+                for (ChatDTO chatDTO1 : chat1) {
+                    for (ChatDTO chatDTO2 : chat2) {
+                        if (chatDTO1 != null && chatDTO2 != null && chatDTO1.getId().equals(chatDTO2.getId())) {
                             count = 1;
                             break;
                         }
                     }
+                    if (count == 1) {
+                        break;
+                    }
                 }
-                System.out.println("Contador " + count);
+
                 if (count == 0) {
                     UserDTO user = busBO.getUserById(id);
                     contacts.add(user);
                 }
             }
-            System.out.println(contacts.size());
+
             buttons = new ArrayList<>();
-            panel.removeAll();
+            panel2.removeAll();
+
             for (UserDTO contact : contacts) {
                 JButton button = new JButton();
-                
+
                 byte[] profileImageBytes = contact.getProfileImage();
                 ImageIcon icon = new ImageIcon(profileImageBytes);
                 Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -116,21 +115,25 @@ public class CreateContact extends javax.swing.JFrame {
                 button.setFocusCycleRoot(false);
                 button.setFocusPainted(false);
                 button.setFocusable(false);
+
+                button.setPreferredSize(new Dimension(490, 60));
+
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CreateChat chat=new CreateChat(busBO,contact);
+                        CreateChat chat = new CreateChat(busBO, contact);
                         openCreateChat(chat);
                         System.out.println("Contacto seleccionado: " + contact.getUser());
                     }
                 });
 
-                panel.add(button);
+                panel2.add(button);
                 buttons.add(button);
-                index++;
             }
-            panel.revalidate();
-            panel.repaint();
+
+            panel2.revalidate();
+            panel2.repaint();
+
         } catch (ExceptionService ex) {
             Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -154,8 +157,9 @@ public class CreateContact extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        panel = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        panel = new javax.swing.JScrollPane();
+        panel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -181,10 +185,6 @@ public class CreateContact extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
 
-        panel.setBackground(new java.awt.Color(220, 220, 220));
-        panel.setLayout(new java.awt.GridLayout(0, 1));
-        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 490, 290));
-
         jButton2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("<");
@@ -200,6 +200,16 @@ public class CreateContact extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        panel.setBackground(new java.awt.Color(220, 220, 220));
+        panel.setBorder(null);
+        panel.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        panel2.setBackground(new java.awt.Color(220, 220, 220));
+        panel2.setLayout(new java.awt.GridLayout(0, 1));
+        panel.setViewportView(panel2);
+
+        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 510, 300));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 380));
 
@@ -225,6 +235,7 @@ public class CreateContact extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel panel;
+    private javax.swing.JScrollPane panel;
+    private javax.swing.JPanel panel2;
     // End of variables declaration//GEN-END:variables
 }

@@ -64,7 +64,6 @@ public class JuastappService implements IJuastappService{
             } catch (ExceptionPersistencia ex) {
                 throw new ExceptionService("Error agregando Mensaje",ex);
             }
-            throw new ExceptionService("El mensaje es null");
         }
     }
 

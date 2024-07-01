@@ -6,23 +6,37 @@ package frames;
 
 import dtos.ChatDTO;
 import dtos.MessageDTO;
+import dtos.UserDTO;
 import exceptions.ExceptionService;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import service.BusinessBO;
+
 
 /**
  *
@@ -31,6 +45,9 @@ import service.BusinessBO;
 public class Panel2 extends javax.swing.JPanel {
     private BusinessBO busBO;
     private ChatDTO chat;
+    private List<MessageDTO> messages;
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a");
+    public javax.swing.Timer timer; 
     
     /**
      * Creates new form Panel2
@@ -47,9 +64,220 @@ public class Panel2 extends javax.swing.JPanel {
 
             Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
-            
         jButton1.setIcon(scaledIcon);
+        setMessages(); 
+        timer = new javax.swing.Timer(5000, e -> setMessages());
+        timer.start();
     }
+    
+    
+     @Override
+    protected void finalize() throws Throwable {
+        timer.stop();
+        super.finalize();
+    }
+    
+    private void setMessages() {
+            try {
+               messages = busBO.getAllMessagesByChat(chat.getId());
+                System.out.println(messages.size());
+               messages.sort(Comparator.comparing(MessageDTO::getTimestamp));
+               showMessages();
+           } catch (ExceptionService ex) {
+               Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
+
+    private void showMessages() {
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            
+            for (int i = 0; i < messages.size(); i++) {
+                MessageDTO message = messages.get(i);
+                JPanel messagePanel = new JPanel();
+                messagePanel.setLayout(new BorderLayout());
+                messagePanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+                String formattedTime = message.getTimestamp().format(TIME_FORMATTER);
+
+
+                if (message.getText() != null && !message.getText().isEmpty()) {
+                    JTextArea messageArea = new JTextArea();
+                    messageArea.setOpaque(true);
+                    messageArea.setEditable(false);
+                    messageArea.setLineWrap(true);
+                    messageArea.setWrapStyleWord(true);
+                    messageArea.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    messageArea.setMaximumSize(new Dimension(400, 100));
+                    if (message.getSenderId().equals(busBO.getId())) {
+                        messagePanel.setBackground(new Color(236, 229, 221));
+                        messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                        messageArea.setForeground(Color.BLACK);
+                        messageArea.setBackground(new Color(200, 255, 200));
+                        messageArea.setText("Tú:\n" + message.getText() + "\n           " + formattedTime);
+                    } else {
+                        try {
+                            messagePanel.setBackground(new Color(236, 229, 221));
+                            messagePanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                            messageArea.setBackground(new Color(230, 230, 230));
+                            messageArea.setForeground(Color.BLACK);
+
+                            UserDTO user = busBO.getUserById(message.getSenderId());
+                            if (user != null) {
+                                messageArea.setText(user.getUser() + ":\n" + message.getText() + "\n            " + formattedTime);
+                            } else {
+                                messageArea.setText("Usuario Desconocido:\n" + message.getText() + "\n" + formattedTime);
+                            }
+                        } catch (ExceptionService ex) {
+                            Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+                            messageArea.setText("Error al cargar el usuario:\n" + message.getText() + "\n" + formattedTime);
+                        }
+                    }
+
+                    JPanel buttonPanel = new JPanel(new BorderLayout());
+                    JButton button = new JButton("..");
+                    button.setForeground(messageArea.getCaretColor());
+                    button.setOpaque(false);
+                    button.setContentAreaFilled(false);
+                    button.setBorderPainted(false);
+                    button.setFocusCycleRoot(false);
+                    button.setFocusPainted(false);
+                    button.setFocusable(false);
+                    button.addActionListener(e -> {
+                        editOrEliminatedImageM(message);
+                    });
+                    buttonPanel.add(button, BorderLayout.EAST);
+
+                    messagePanel.add(buttonPanel, BorderLayout.NORTH);
+                    messagePanel.add(messageArea, BorderLayout.CENTER);
+
+                } else if (message.getImage()!=null) {
+                    try {
+                    byte[] imageData = message.getImage();
+                    ImageIcon imageIcon = new ImageIcon(imageData);
+                    Image scaledImage = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                    JLabel imageLabel = new JLabel(scaledIcon);
+
+                    JPanel buttonPanel = new JPanel(new BorderLayout());
+                    JButton button = new JButton("..");
+                    button.setForeground(Color.BLACK);
+                    button.setOpaque(false);
+                    button.setContentAreaFilled(false);
+                    button.setBorderPainted(false);
+                    button.setFocusPainted(false);
+                    button.addActionListener(e -> {
+                        editOrEliminated(message);
+                    });
+                    buttonPanel.add(button, BorderLayout.EAST);
+
+                    messagePanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                    messagePanel.setBackground(new Color(236, 229, 221));
+                    messagePanel.setLayout(new BorderLayout());
+
+                    if (message.getSenderId().equals(busBO.getId())) {
+                        messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    } else {
+                        messagePanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    }
+
+                    messagePanel.add(buttonPanel, BorderLayout.NORTH);
+                    messagePanel.add(imageLabel, BorderLayout.CENTER);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                }
+                panel.add(messagePanel);
+            }
+
+            if (messages.isEmpty()) {
+                panel.setBackground(new Color(236, 229, 221));
+            } else {
+                panel.setBackground(new Color(236, 229, 221));
+            }
+            dashBoard.setViewportView(panel);
+            dashBoard.revalidate();
+            dashBoard.repaint();
+            SwingUtilities.invokeLater(() -> {
+                JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
+                verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+            });
+        }
+       
+       public void editOrEliminatedImageM(MessageDTO message){
+         try {
+            String[] options = {"Eliminar", "Cancelar"};
+            int choice = JOptionPane.showOptionDialog(null,
+                    "¿Qué acción deseas realizar con este mensaje?",
+                    "Eliminar o Cancelar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[1]);
+
+            switch (choice) {
+                case 0:
+                    int confirmOption = JOptionPane.showConfirmDialog(null,
+                            "¿Está seguro que desea eliminar este mensaje?",
+                            "Confirmación de Eliminación",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+
+                    if (confirmOption == JOptionPane.YES_OPTION) {
+                        busBO.deleteMessageById(message.getId());
+                    }
+                    break;
+                case 1: // Cancelar
+                    break;
+                default:
+                    break;
+            }
+        } catch (ExceptionService ex) {
+            Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+       
+    public void editOrEliminated(MessageDTO message){
+        try {
+            String[] options = {"Editar", "Eliminar", "Cancelar"};
+            int choice = JOptionPane.showOptionDialog(null,
+                    "¿Qué acción desea realizar sobre el mensaje?",
+                    "Editar o Eliminar Mensaje",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2]);
+
+            switch (choice) {
+                case 0: 
+                    JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                    EditMessage editMessage=new EditMessage(parentFrame,message,busBO);
+                    break;
+                case 1:
+                    int option = JOptionPane.showConfirmDialog(null,
+                        "¿Está seguro que desea eliminar este mensaje?",
+                        "Confirmación de Eliminación",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                
+                if (option == JOptionPane.YES_OPTION) {
+                    busBO.deleteMessageById(message.getId());
+                }
+                    break;
+                case 2: 
+                    break;
+                default:
+                    break;
+            }
+        } catch (ExceptionService ex) {
+            Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    
+       
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,7 +298,7 @@ public class Panel2 extends javax.swing.JPanel {
         textName = new javax.swing.JLabel();
         buttonConfigChat = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        dashBoard = new javax.swing.JScrollPane();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -177,44 +405,35 @@ public class Panel2 extends javax.swing.JPanel {
                 buttonConfigChatActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonConfigChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 1, 450, 70));
+        jPanel3.add(buttonConfigChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 1, 420, 70));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("...");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, -10, 40, 70));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, -10, 50, 70));
 
-        jPanel5.setBackground(new java.awt.Color(236, 229, 221));
-        jPanel5.setForeground(new java.awt.Color(236, 229, 221));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 187, Short.MAX_VALUE)
-        );
+        dashBoard.setBackground(new java.awt.Color(236, 229, 221));
+        dashBoard.setBorder(null);
+        dashBoard.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
             .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dashBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dashBoard, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
@@ -257,7 +476,14 @@ public class Panel2 extends javax.swing.JPanel {
             if(response1 == JOptionPane.YES_OPTION){
                 try {
                     busBO.deleteChatById(chat.getId());
+                    Chatsfrm chatsFrame = new Chatsfrm(busBO);
+                    chatsFrame.show();
+                    JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                    finalize();
+                    parentFrame.dispose();
                 } catch (ExceptionService ex) {
+                    Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Throwable ex) {
                     Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -301,9 +527,9 @@ public class Panel2 extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonImageActionPerformed
 
     private void buttonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSendActionPerformed
-        String messageText = txt.getText().trim(); // Obtener el texto del campo txt y quitar espacios en blanco al inicio y al final
+        String messageText = txt.getText().trim(); 
 
-        if (!messageText.isEmpty()) { // Verificar si el texto no está vacío
+        if (!messageText.isEmpty()) { 
             try {
                 MessageDTO message = new MessageDTO();
                 message.setChatId(chat.getId());
@@ -341,12 +567,12 @@ public class Panel2 extends javax.swing.JPanel {
     private javax.swing.JButton buttonConfigChat;
     private javax.swing.JButton buttonImage;
     private javax.swing.JButton buttonSend;
+    private javax.swing.JScrollPane dashBoard;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
     private utilerias.PanelRound panelRound1;
     private javax.swing.JLabel textName;
     private javax.swing.JTextField txt;
