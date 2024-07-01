@@ -250,6 +250,8 @@ public class EditProfile extends javax.swing.JFrame {
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
     try {
+        int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres editar tu perfil?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
         UserDTO user = busBO.getUserById(busBO.getId());
 
         user.setUser(txtName.getText());
@@ -281,6 +283,7 @@ public class EditProfile extends javax.swing.JFrame {
         Chatsfrm c=new Chatsfrm(busBO);
         c.show();
         this.dispose();
+        }
     } catch (ExceptionService ex) {
         Logger.getLogger(EditProfile.class.getName()).log(Level.SEVERE, null, ex);
         JOptionPane.showMessageDialog(this, "Error al actualizar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -54,7 +54,6 @@ public class BusinessBO implements IControllerBusiness{
         if(userDTO!=null){
          service.createUser(userDTO);   
         }
-        throw new ExceptionService("Usuario nulo");
     }
     
     /**
@@ -98,7 +97,6 @@ public class BusinessBO implements IControllerBusiness{
         if(messageDTO!=null){
             service.createMessage(messageDTO);
         }
-        throw new ExceptionService("El mesaje es nulo");
     }
 
     /**
@@ -140,7 +138,6 @@ public class BusinessBO implements IControllerBusiness{
         if(chat!=null){
             service.updateChat(chat);
         }
-        throw new ExceptionService("El chat es nulo");
     }
 
     /**
@@ -154,7 +151,6 @@ public class BusinessBO implements IControllerBusiness{
         if(chatId!=null){
             service.deleteChatById(chatId);
         }
-        throw new ExceptionService("El chatId es nulo");
     }
 
     /**
@@ -168,7 +164,6 @@ public class BusinessBO implements IControllerBusiness{
         if(message!=null){
             service.updateMessage(message);
         }
-        throw new ExceptionService("El mensaje es nulo");
     }
 
     /**
@@ -182,7 +177,6 @@ public class BusinessBO implements IControllerBusiness{
         if(messageId!=null){
             service.deleteMessageById(messageId);
         }
-        throw new ExceptionService("El mesajeId es nulo");
     }
 
     /**
