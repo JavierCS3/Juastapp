@@ -167,6 +167,8 @@ public class CreateChat extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
+            int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres crear este chat?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
             Icon icon = jButton1.getIcon();
             byte[] profileImageBytes = null;
             String name=txtName.getText();
@@ -200,6 +202,7 @@ public class CreateChat extends javax.swing.JFrame {
             Chatsfrm chatfrm=new Chatsfrm(busBO);
             chatfrm.show();
             this.dispose();
+        }
         } catch (ExceptionService ex) {
             Logger.getLogger(CreateChat.class.getName()).log(Level.SEVERE, null, ex);
         }
