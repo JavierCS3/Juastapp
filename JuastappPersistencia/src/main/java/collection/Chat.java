@@ -19,6 +19,10 @@ public class Chat {
     private List<ObjectId> participants;
     private LocalDateTime createdAt;
 
+    /**
+     * 
+     * Constructor por omision
+     */
     public Chat() {
     }
 
@@ -35,18 +39,46 @@ public class Chat {
         this.createdAt = LocalDateTime.now();
     }
 
+    /**
+     * 
+     * Método para obtener un id
+     * 
+     * @return regresa el id
+     * 
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * 
+     * Método para asignas un id
+     * 
+     * @param id 
+     * 
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * 
+     * Método para obtener el nombre del chat
+     * 
+     * @return regresa el chat
+     */
     public String getChatName() {
         return chatName;
     }
 
+    
+    /**
+     * 
+     * Método para asignar nombre a un chat
+     * 
+     * @param chatName 
+     * 
+     */
     public void setChatName(String chatName) {
         this.chatName = chatName;
     }
@@ -67,18 +99,44 @@ public class Chat {
         this.chatImage = chatImage;
     }
 
+    /**
+     * 
+     * Obtiene la lista de los participantes
+     * 
+     * @return regresa la lista con los participantes
+     * 
+     */
     public List<ObjectId> getParticipants() {
         return participants;
     }
 
+    /**
+     * Método para asignar los participantes
+     * 
+     * @param participants recibe una lista de los participantes
+     * 
+     */
     public void setParticipants(List<ObjectId> participants) {
         this.participants = participants;
     }
 
+    /**
+     * 
+     * Tiempo cuando se crea el chat
+     * 
+     * @return 
+     */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * 
+     * Método para asignar un hora al chat
+     * 
+     * @param createdAt 
+     * 
+     */
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
