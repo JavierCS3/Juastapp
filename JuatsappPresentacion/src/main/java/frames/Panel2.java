@@ -115,6 +115,22 @@ public class Panel2 extends javax.swing.JPanel {
                         messageArea.setForeground(Color.BLACK);
                         messageArea.setBackground(new Color(200, 255, 200));
                         messageArea.setText("Tú:\n" + message.getText() + "\n           " + formattedTime);
+                        
+                        JPanel buttonPanel = new JPanel(new BorderLayout());
+                        JButton button = new JButton("..");
+                        button.setForeground(messageArea.getCaretColor());
+                        button.setOpaque(false);
+                        button.setContentAreaFilled(false);
+                        button.setBorderPainted(false);
+                        button.setFocusCycleRoot(false);
+                        button.setFocusPainted(false);
+                        button.setFocusable(false);
+                        button.addActionListener(e -> {
+                            editOrEliminated(message);
+                        });
+                        buttonPanel.add(button, BorderLayout.EAST);
+
+                        messagePanel.add(buttonPanel, BorderLayout.NORTH);
                     } else {
                         try {
                             messagePanel.setBackground(new Color(236, 229, 221));
@@ -134,21 +150,7 @@ public class Panel2 extends javax.swing.JPanel {
                         }
                     }
 
-                    JPanel buttonPanel = new JPanel(new BorderLayout());
-                    JButton button = new JButton("..");
-                    button.setForeground(messageArea.getCaretColor());
-                    button.setOpaque(false);
-                    button.setContentAreaFilled(false);
-                    button.setBorderPainted(false);
-                    button.setFocusCycleRoot(false);
-                    button.setFocusPainted(false);
-                    button.setFocusable(false);
-                    button.addActionListener(e -> {
-                        editOrEliminated(message);
-                    });
-                    buttonPanel.add(button, BorderLayout.EAST);
-
-                    messagePanel.add(buttonPanel, BorderLayout.NORTH);
+                    
                     messagePanel.add(messageArea, BorderLayout.CENTER);
 
                 } else if (message.getImage()!=null) {
@@ -171,19 +173,21 @@ public class Panel2 extends javax.swing.JPanel {
                     button.addActionListener(e -> {
                         editOrEliminatedImageM(message);
                     });
-                    buttonPanel.add(button, BorderLayout.EAST);
+                    
 
                     messagePanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
                     messagePanel.setBackground(new Color(236, 229, 221));
                     messagePanel.setLayout(new BorderLayout());
 
                     if (message.getSenderId().equals(busBO.getId())) {
+                        buttonPanel.add(button, BorderLayout.EAST);
+                         messagePanel.add(buttonPanel, BorderLayout.NORTH);
                         messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
                     } else {
                         messagePanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
                     }
 
-                    messagePanel.add(buttonPanel, BorderLayout.NORTH);
+                   
                     messagePanel.add(imageLabel, BorderLayout.CENTER);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -256,6 +260,7 @@ public class Panel2 extends javax.swing.JPanel {
                 case 0: 
                     JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
                     EditMessage editMessage=new EditMessage(parentFrame,message,busBO);
+                    editMessage.show();
                     break;
                 case 1:
                     int option = JOptionPane.showConfirmDialog(null,
