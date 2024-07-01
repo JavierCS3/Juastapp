@@ -4,29 +4,135 @@
  */
 package frames;
 
+import dtos.ChatDTO;
+import dtos.UserDTO;
+import exceptions.ExceptionService;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import org.bson.types.ObjectId;
+import service.BusinessBO;
 
 /**
  *
  * @author PC Gamer
  */
 public class CreateContact extends javax.swing.JFrame {
-    
-    private int limit=4;
-    private int page=1;
-    private int totalContacts = 20;
+    BusinessBO busBO;
+    private List<JButton> buttons;
+    private int index;
+    private int mouseX, mouseY;
     
     /**
      * Creates new form CreateContact
      */
-    public CreateContact() {
+    public CreateContact(BusinessBO busBO) {
         initComponents();
+        this.busBO=busBO;
         this.setLocationRelativeTo(null);
+        buttons =new ArrayList<>();
+        setButtonLayout();
+        enableDrag();
         
     }
+    
+    private void enableDrag() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
 
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen();
+                int y = e.getYOnScreen();
+                setLocation(x - mouseX, y - mouseY);
+            }
+        });
+    }
+    
+    public void setButtonLayout() {
+        try {
+            List<ObjectId> ids=busBO.getUserById(busBO.getId()).getContactosDTO();
+            List<UserDTO> contacts =new ArrayList<>();
+            UserDTO userNow=busBO.getUserById(busBO.getId());
+           
+            for(ObjectId id:ids){  
+                    List<ObjectId> idsP=new ArrayList<>();
+                    idsP.add(busBO.getId());
+                    idsP.add(id);
+                     List<ChatDTO> chatsDTO=busBO.getChatsByParticipants(ids);
+                     System.out.println(chatsDTO.size());
+                if(chatsDTO.size()==0){
+                    UserDTO user=new UserDTO();
+                    user=busBO.getUserById(id);
+                    contacts.add(user);
+                }
+            }
+            System.out.println(contacts.size());
+            buttons = new ArrayList<>();
+            
+            for (UserDTO contact : contacts) {
+                JButton button = new JButton();
+                
+                byte[] profileImageBytes = contact.getProfileImage();
+                ImageIcon icon = new ImageIcon(profileImageBytes);
+                Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                button.setIcon(scaledIcon);
+                button.setText("  " + contact.getUser());
+                button.setHorizontalAlignment(JButton.LEFT);
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorderPainted(false);
+
+                button.setFocusCycleRoot(false);
+                button.setFocusPainted(false);
+                button.setFocusable(false);
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CreateChat chat=new CreateChat(busBO,contact);
+                        openCreateChat(chat);
+                        System.out.println("Contacto seleccionado: " + contact.getUser());
+                    }
+                });
+
+                panel.add(button);
+                buttons.add(button);
+                index++;
+            }
+            panel.revalidate();
+            panel.repaint();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void openCreateChat(CreateChat chat){
+        chat.show();
+        this.dispose();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,11 +144,8 @@ public class CreateContact extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        buttonFirstContact = new javax.swing.JButton();
-        iconContact1 = new javax.swing.JLabel();
-        textInformacionContact = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -56,31 +159,6 @@ public class CreateContact extends javax.swing.JFrame {
         jLabel1.setText("Contactos");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(220, 220, 220));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        buttonFirstContact.setBorderPainted(false);
-        buttonFirstContact.setContentAreaFilled(false);
-        buttonFirstContact.setDefaultCapable(false);
-        buttonFirstContact.setFocusPainted(false);
-        buttonFirstContact.setFocusable(false);
-        buttonFirstContact.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonFirstContactActionPerformed(evt);
-            }
-        });
-        jPanel2.add(buttonFirstContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 23, 513, 68));
-
-        iconContact1.setText(".");
-        jPanel2.add(iconContact1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 36, 20, 40));
-
-        textInformacionContact.setFont(new java.awt.Font("Dubai Medium", 1, 14)); // NOI18N
-        textInformacionContact.setForeground(new java.awt.Color(0, 0, 0));
-        textInformacionContact.setText(".");
-        jPanel2.add(textInformacionContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 320, 40));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 530, 300));
-
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666595_x_icon.png")); // NOI18N
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
@@ -93,100 +171,26 @@ public class CreateContact extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
 
+        panel.setBackground(new java.awt.Color(220, 220, 220));
+        panel.setLayout(new java.awt.GridLayout(0, 1));
+        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 490, 290));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 380));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void buttonFirstContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonFirstContactActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_buttonFirstContactActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    
-    
-    
-    private void addContactsToPanel() {
-        jPanel2.removeAll();
-        int start = (page - 1) * limit;
-        int end = Math.min(start + limit, totalContacts);
 
-        for (int i = start; i < end; i++) {
-            JButton contactButton = new JButton("Contact " + (i + 1));
-            contactButton.setBorderPainted(false);
-            contactButton.setContentAreaFilled(false);
-            contactButton.setDefaultCapable(false);
-            contactButton.setFocusPainted(false);
-            contactButton.setFocusable(false);
-            contactButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    contactButtonActionPerformed(evt);
-                }
-
-                
-            });
-            jPanel2.add(contactButton);
-        }
-        jPanel2.revalidate();
-        jPanel2.repaint();
-    }
-    
-    private void contactButtonActionPerformed(ActionEvent evt) {
-        CreateChat createChat=new CreateChat();
-        createChat.show();
-        this.dispose();
-
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateContact.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateContact.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateContact.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateContact.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateContact().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonFirstContact;
-    private javax.swing.JLabel iconContact1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel textInformacionContact;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }

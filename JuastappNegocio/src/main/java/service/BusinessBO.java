@@ -133,4 +133,27 @@ public class BusinessBO implements IControllerBusiness{
     public void updateUser(UserDTO user) throws ExceptionService{
         service.updateUser(user);
     }
+    
+    /**
+    * Obtiene todos los chats en los que participan todos los usuarios especificados.
+    * @param participantIds Lista de identificadores de participantes.
+    * @return Lista de chats en los que participan todos los usuarios especificados.
+    * @throws ExceptionService Excepcion de la capa negocio
+    */
+    @Override
+   public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService{
+       return service.getChatsByParticipants(participantIds);
+   }
+   
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ExceptionService
+     */
+    @Override
+    public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService{
+        return service.getChatByUser(id);
+    }
+    
 }

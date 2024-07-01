@@ -289,7 +289,7 @@ public class Chatsfrm extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        CreateContact contact=new CreateContact();
+        CreateContact contact=new CreateContact(busBO);
         contact.show();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed

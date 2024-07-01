@@ -7,6 +7,7 @@ package daos;
 import collection.Chat;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.all;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.in;
 import conexion.ConexionBD;
@@ -125,5 +126,19 @@ public class ChatDAO implements IChatDAO {
             throw new ExceptionPersistencia("Error al obtener chats por usuario: " + e.getMessage(), e);
         }
     }
+    
+    /**
+    * Obtiene todos los chats en los que participan todos los usuarios especificados.
+    * @param participantIds Lista de identificadores de participantes.
+    * @return Lista de chats en los que participan todos los usuarios especificados.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   public List<Chat> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionPersistencia {
+       try {
+           return chatCollection.find(all("participants", participantIds)).into(new ArrayList<>());
+       } catch (Exception e) {
+           throw new ExceptionPersistencia("Error al obtener chats por participantes: " + e.getMessage(), e);
+       }
+   }
     
 }

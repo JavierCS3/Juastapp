@@ -117,4 +117,20 @@ public interface IJuastappService {
      * @throws exceptions.ExceptionService
      */
     public void updateUser(UserDTO user) throws ExceptionService;
+    
+    /**
+    * Obtiene todos los chats en los que participan todos los usuarios especificados.
+    * @param participantIds Lista de identificadores de participantes.
+    * @return Lista de chats en los que participan todos los usuarios especificados.
+    * @throws ExceptionService Excepcion de la capa negocio
+    */
+   public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService;
+   
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ExceptionService
+     */
+    public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService;
 }

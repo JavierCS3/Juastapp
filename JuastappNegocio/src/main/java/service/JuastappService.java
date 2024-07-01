@@ -234,4 +234,46 @@ public class JuastappService implements IJuastappService{
             }
         }
     }
+    
+    /**
+     *
+     * @param participantIds
+     * @return
+     * @throws ExceptionService
+     */
+    @Override
+    public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService{
+        try {
+            List<Chat> chats=chatDAO.getChatsByParticipants(participantIds);
+            List<ChatDTO> chatsDTO=new ArrayList<>();
+            for(Chat chat:chats){
+                chatsDTO.add(ChatDTO.conver(chat));
+            }
+            return chatsDTO;
+        } catch (ExceptionPersistencia ex) {
+            Logger.getLogger(JuastappService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ExceptionService
+     */
+    @Override
+    public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService{
+        try {
+            List<Chat> chats=chatDAO.getChatsByUserId(id);
+        List<ChatDTO> chatsDTO=new ArrayList<>();
+            for(Chat chat:chats){
+                chatsDTO.add(ChatDTO.conver(chat));
+            }
+            return chatsDTO;
+        } catch (ExceptionPersistencia ex) {
+            Logger.getLogger(JuastappService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

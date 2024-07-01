@@ -59,4 +59,11 @@ public interface IChatDAO {
      */
     List<Chat> getChatsByUserId(ObjectId userId) throws ExceptionPersistencia;
 
+    /**
+    * Obtiene todos los chats en los que participan todos los usuarios especificados.
+    * @param participantIds Lista de identificadores de participantes.
+    * @return Lista de chats en los que participan todos los usuarios especificados.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   public List<Chat> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionPersistencia;
 }

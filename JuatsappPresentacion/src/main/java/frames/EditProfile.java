@@ -278,7 +278,9 @@ public class EditProfile extends javax.swing.JFrame {
         busBO.updateUser(user);
 
         JOptionPane.showMessageDialog(this, "Usuario actualizado correctamente");
-
+        Chatsfrm c=new Chatsfrm(busBO);
+        c.show();
+        this.dispose();
     } catch (ExceptionService ex) {
         Logger.getLogger(EditProfile.class.getName()).log(Level.SEVERE, null, ex);
         JOptionPane.showMessageDialog(this, "Error al actualizar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

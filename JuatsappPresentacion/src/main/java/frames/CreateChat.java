@@ -4,6 +4,28 @@
  */
 package frames;
 
+import dtos.ChatDTO;
+import dtos.UserDTO;
+import exceptions.ExceptionService;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.bson.types.ObjectId;
 import service.BusinessBO;
 
 /**
@@ -12,13 +34,39 @@ import service.BusinessBO;
  */
 public class CreateChat extends javax.swing.JFrame {
     private BusinessBO busBO;
+    private UserDTO user;
+    private int mouseX, mouseY;
+    
     /**
      * Creates new form CreateChat
      */
-    public CreateChat() {
+    public CreateChat(BusinessBO busBO, UserDTO user) {
         initComponents();
+        this.busBO=busBO;
+        this.user=user;
+        this.setLocationRelativeTo(null);
+        enableDrag();
     }
+    
+    private void enableDrag() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
 
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen();
+                int y = e.getYOnScreen();
+                setLocation(x - mouseX, y - mouseY);
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +78,7 @@ public class CreateChat extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -56,19 +104,19 @@ public class CreateChat extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 180, 140));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.setToolTipText("");
-        jTextField2.setActionCommand("<Not Set>");
-        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
-        jTextField2.setCaretColor(new java.awt.Color(18, 140, 126));
-        jTextField2.setSelectionColor(new java.awt.Color(18, 140, 126));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtName.setBackground(new java.awt.Color(255, 255, 255));
+        txtName.setForeground(new java.awt.Color(0, 0, 0));
+        txtName.setToolTipText("");
+        txtName.setActionCommand("<Not Set>");
+        txtName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
+        txtName.setCaretColor(new java.awt.Color(18, 140, 126));
+        txtName.setSelectionColor(new java.awt.Color(18, 140, 126));
+        txtName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtNameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 210, 30));
+        jPanel1.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 210, 30));
 
         jLabel2.setFont(new java.awt.Font("Dubai Medium", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -112,64 +160,80 @@ public class CreateChat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtNameActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        Chatsfrm chat=new Chatsfrm(busBO);
-        chat.show();
-        this.dispose();
+        try {
+            // TODO add your handling code here:
+            Icon icon = jButton1.getIcon();
+            byte[] profileImageBytes = null;
+            String name=txtName.getText();
+            if (icon instanceof ImageIcon) {
+                try {
+                    BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                    Graphics g = bufferedImage.createGraphics();
+                    icon.paintIcon(null, g, 0, 0);
+                    g.dispose();
+                    
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(bufferedImage, "png", baos);
+                    baos.flush();
+                    profileImageBytes = baos.toByteArray();
+                    baos.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(CreateChat.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                throw new IllegalArgumentException("Icono del botón no es un ImageIcon");
+            }
+            ChatDTO chat=new ChatDTO();
+            chat.setChatImage(profileImageBytes);
+            chat.setChatName(name);
+            chat.setCreatedAt(LocalDateTime.now());
+            List<ObjectId> participants=new ArrayList<>();
+            participants.add(user.getId());
+            participants.add(busBO.getId());
+            chat.setParticipants(participants);
+            busBO.createChat(chat);
+            Chatsfrm chatfrm=new Chatsfrm(busBO);
+            chatfrm.show();
+            this.dispose();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(CreateChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
+        int returnVal = fileChooser.showOpenDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                ImageIcon icon = new ImageIcon(ImageIO.read(file));
+
+                jButton1.setIcon(icon);
+
+            } catch (IOException ex) {
+                Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al cargar la imagen: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        CreateContact cC=new CreateContact();
+        CreateContact cC=new CreateContact(busBO);
         cC.show();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateChat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateChat().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -178,6 +242,6 @@ public class CreateChat extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }
