@@ -73,22 +73,31 @@ public class CreateContact extends javax.swing.JFrame {
             List<ObjectId> ids=busBO.getUserById(busBO.getId()).getContactosDTO();
             List<UserDTO> contacts =new ArrayList<>();
             UserDTO userNow=busBO.getUserById(busBO.getId());
-           
-            for(ObjectId id:ids){  
-                    List<ObjectId> idsP=new ArrayList<>();
-                    idsP.add(busBO.getId());
-                    idsP.add(id);
-                     List<ChatDTO> chatsDTO=busBO.getChatsByParticipants(ids);
-                     System.out.println(chatsDTO.size());
-                if(chatsDTO.size()==0){
-                    UserDTO user=new UserDTO();
-                    user=busBO.getUserById(id);
+            System.out.println("numero de chats " +busBO.getChatByUser(busBO.getId()).size());
+            
+            List<ChatDTO> chat1 = busBO.getChatByUser(busBO.getId());
+            for (ObjectId id : ids) {
+                int count = 0;
+                List<ChatDTO> chat2 = busBO.getChatByUser(id);
+                System.out.println("numero de chats contactos: " + chat2.size());
+
+                for (int i = 0; i < chat1.size() && i < chat2.size(); i++) {
+                    if (chat2.get(i) != null && chat1.get(i) != null) {
+                        if (chat1.get(i).getId().equals(chat2.get(i).getId())) {
+                            count = 1;
+                            break;
+                        }
+                    }
+                }
+                System.out.println("Contador " + count);
+                if (count == 0) {
+                    UserDTO user = busBO.getUserById(id);
                     contacts.add(user);
                 }
             }
             System.out.println(contacts.size());
             buttons = new ArrayList<>();
-            
+            panel.removeAll();
             for (UserDTO contact : contacts) {
                 JButton button = new JButton();
                 

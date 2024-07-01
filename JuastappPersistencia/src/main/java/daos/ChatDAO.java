@@ -50,19 +50,26 @@ public class ChatDAO implements IChatDAO {
     }
 
     /**
-     * Crea un nuevo chat.
-     * @param chat Objeto Chat a crear.
-     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
-     */
-    @Override
-    public void createChat(Chat chat) throws ExceptionPersistencia {
-        try {
-            chatCollection.insertOne(chat);
-            System.out.println("Chat creado: " + chat.getId());
-        } catch (Exception e) {
-            throw new ExceptionPersistencia("Error al crear chat: " + e.getMessage(), e);
-        }
-    }
+    * Crea un nuevo chat.
+    * @param chat Objeto Chat a crear.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   @Override
+   public void createChat(Chat chat) throws ExceptionPersistencia {
+       try {
+           // Imprimir el documento antes de insertar
+           System.out.println("Intentando crear el chat con los siguientes datos:");
+           System.out.println("Chat Image: " + (chat.getChatImage() != null ? "Image present" : "No image"));
+           System.out.println("Chat Name: " + chat.getChatName());
+           System.out.println("Created At: " + chat.getCreatedAt());
+           System.out.println("Participants: " + chat.getParticipants());
+
+           chatCollection.insertOne(chat);
+           System.out.println("Chat creado: " + chat.getId());
+       } catch (Exception e) {
+           throw new ExceptionPersistencia("Error al crear chat: " + e.getMessage(), e);
+       }
+   }
 
     /**
      * Actualiza un chat existente.

@@ -4,21 +4,27 @@
  */
 package frames;
 
+import dtos.ChatDTO;
 import javax.swing.JPanel;
+import service.BusinessBO;
 
 /**
  *
  * @author PC Gamer
  */
 public class Panel2 extends javax.swing.JPanel {
-
+    private BusinessBO busBO;
+    private ChatDTO chat;
+    
+    
     /**
      * Creates new form Panel2
      */
-    public Panel2() {
+    public Panel2(BusinessBO busBO, ChatDTO chat) {
         initComponents();
+        this.busBO=busBO;
+        this.chat=chat;
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,7 +223,6 @@ public class Panel2 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private utilerias.PanelRound panelRound1;
-    private utilerias.PanelRound panelRound2;
     private javax.swing.JTextField textMessage;
     private javax.swing.JLabel textName;
     // End of variables declaration//GEN-END:variables

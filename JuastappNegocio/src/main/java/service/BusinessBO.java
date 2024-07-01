@@ -84,7 +84,6 @@ public class BusinessBO implements IControllerBusiness{
         if(chat!=null){
             service.createChat(chat);
         }
-        throw new ExceptionService("El chat es nulo");
     }
 
     @Override

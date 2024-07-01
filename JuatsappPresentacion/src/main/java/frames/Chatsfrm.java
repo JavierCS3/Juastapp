@@ -4,15 +4,22 @@
  */
 package frames;
 
+import dtos.ChatDTO;
 import exceptions.ExceptionService;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import org.bson.types.ObjectId;
 import service.BusinessBO;
 import utilerias.ImageUtils;
 
@@ -23,6 +30,7 @@ import utilerias.ImageUtils;
 public class Chatsfrm extends javax.swing.JFrame {
     private int mouseX, mouseY;
     private BusinessBO busBO;
+     private List<JButton> buttons;
     
     
     /**
@@ -46,6 +54,7 @@ public class Chatsfrm extends javax.swing.JFrame {
 
             BontonPerfil.setText("");
             BontonPerfil.setIcon(scaledIcon);
+            setButtonLayout();
         } catch (ExceptionService ex) {
             Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -120,17 +129,7 @@ public class Chatsfrm extends javax.swing.JFrame {
         });
 
         boardChats.setBackground(new java.awt.Color(234, 234, 234));
-
-        javax.swing.GroupLayout boardChatsLayout = new javax.swing.GroupLayout(boardChats);
-        boardChats.setLayout(boardChatsLayout);
-        boardChatsLayout.setHorizontalGroup(
-            boardChatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        boardChatsLayout.setVerticalGroup(
-            boardChatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 321, Short.MAX_VALUE)
-        );
+        boardChats.setLayout(new java.awt.GridLayout(0, 1));
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -152,7 +151,7 @@ public class Chatsfrm extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(boardChats, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(345, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 140, 390));
@@ -276,6 +275,48 @@ public class Chatsfrm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void setButtonLayout() {
+        try {
+            List<ChatDTO> ids=busBO.getChatByUser(busBO.getId());
+            
+            buttons = new ArrayList<>();
+            boardChats.removeAll();
+            for (ChatDTO chat : ids) {
+                JButton button = new JButton();
+                
+                byte[] profileImageBytes = chat.getChatImage();
+                ImageIcon icon = new ImageIcon(profileImageBytes);
+                Image scaledImage = icon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                button.setIcon(scaledIcon);
+                button.setText("  " + chat.getChatName());
+                button.setHorizontalAlignment(JButton.LEFT);
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorderPainted(false);
+
+                button.setFocusCycleRoot(false);
+                button.setFocusPainted(false);
+                button.setFocusable(false);
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Panel2 chatfrm=new Panel2(busBO,chat);
+                        showPanel(chatfrm);
+                    }
+                });
+
+                boardChats.add(button);
+                buttons.add(button);
+            }
+            boardChats.revalidate();
+            boardChats.repaint();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Configfrm config=new Configfrm(this);

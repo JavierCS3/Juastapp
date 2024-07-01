@@ -198,8 +198,12 @@ public class CreateChat extends javax.swing.JFrame {
             participants.add(user.getId());
             participants.add(busBO.getId());
             chat.setParticipants(participants);
+            System.out.println(chat.getChatName()+" "+chat.getParticipants().get(0)+" "+ chat.getParticipants().get(1));
+            
             busBO.createChat(chat);
+            
             Chatsfrm chatfrm=new Chatsfrm(busBO);
+            
             chatfrm.show();
             this.dispose();
         }
