@@ -27,11 +27,20 @@ import org.bson.types.ObjectId;
  */
 public class JuastappService implements IJuastappService{
 
+    /**
+     * Creación de variables de clase
+     */
     private UserDAO userDAO;
     private MessageDAO messageDAO;
     private ChatDAO chatDAO;
     private ObjectId id;
     
+    /**
+     * Método constructor que inicializa las variables de clase
+     * @param userDAO
+     * @param messageDAO
+     * @param chatDAO 
+     */
     public JuastappService(UserDAO userDAO, MessageDAO messageDAO, ChatDAO chatDAO) {
         this.userDAO=userDAO;
         this.messageDAO=messageDAO;
@@ -39,7 +48,13 @@ public class JuastappService implements IJuastappService{
     }
     
     
-
+    
+    /**
+     * Método para crear mensajes
+     * @param messageDTO recibe objeto de la clase MessageDTO
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void createMessage(MessageDTO messageDTO) throws ExceptionService{
         Message message=MessageDTO.conver(messageDTO);
@@ -53,6 +68,13 @@ public class JuastappService implements IJuastappService{
         }
     }
 
+    /**
+     * Método para obtener todo los mensajes de chat
+     * @param chatId recibe un objeto de la clase ObjectID
+     * @return regresa la lista de mensajes
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public List<MessageDTO> getAllMessagesByChat(ObjectId chatId) throws ExceptionService {
         try {
@@ -73,6 +95,12 @@ public class JuastappService implements IJuastappService{
         return null;
     }
 
+    /**
+     * Método para crear un usuario
+     * @param userDTO recibe un objeto de la clase UserDTO
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void createUser(UserDTO userDTO) throws ExceptionService {
         if(userDTO!=null){
@@ -87,6 +115,13 @@ public class JuastappService implements IJuastappService{
         }
     }
 
+    /**
+     * Obtiene un usuario por id
+     * @param userDI recibe un objeto de la clase ObjectID
+     * @return regresa el usuario 
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public UserDTO getUserById(ObjectId userDI) throws ExceptionService {
         if(userDI!=null){
@@ -104,6 +139,13 @@ public class JuastappService implements IJuastappService{
     }
     }
 
+    /**
+     * Método para obtener un usuario por teléfono
+     * @param phone teléfono para buscar el usuario
+     * @return
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public UserDTO getUserByPhone(String phone) throws ExceptionService {
         if(phone!=null){
@@ -146,6 +188,12 @@ public class JuastappService implements IJuastappService{
         }System.out.println("El chatDTO es nulo: "+chat);
     }
 
+    /**
+     * Método para eliminar un chat por id
+     * @param chatId objeto de la clase ObjectId
+     * @throws ExceptionService
+     * 
+     */
     @Override
     public void deleteChatById(ObjectId chatId) throws ExceptionService {
         if(chatId!=null){
@@ -177,6 +225,13 @@ public class JuastappService implements IJuastappService{
         System.out.println("El id del mensaje es nulo");
     }
 
+    /**
+     * Método para actualizar un mensaje
+     * 
+     * @param message mensaje a actualizar
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void updateMessage(MessageDTO message) throws ExceptionService {
         if(message!=null){
@@ -190,6 +245,14 @@ public class JuastappService implements IJuastappService{
         }
     }
 
+    /**
+     * Método para iniciar sesión 
+     * @param phoneNumber teléfono para ingresar
+     * @param password contraseña del usuario
+     * @return 
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public UserDTO login(String phoneNumber, String password) throws ExceptionService {
         if(phoneNumber!=null && password!=null){
@@ -209,19 +272,29 @@ public class JuastappService implements IJuastappService{
         }
     }
 
+    /**
+     * Método para obtener un id
+     * @return 
+     */
     @Override
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Método para asignar un id
+     * @param id 
+     * 
+     */
     @Override
     public void setId(ObjectId id) {
         this.id = id;
     }
     
     /**
-     *
+     * Método para actualizar un usuario
      * @param user
+     * 
      */
     @Override
     public void updateUser(UserDTO user) throws ExceptionService{
@@ -236,10 +309,11 @@ public class JuastappService implements IJuastappService{
     }
     
     /**
-     *
+     * Método para obtener por participantes
      * @param participantIds
      * @return
      * @throws ExceptionService
+     * 
      */
     @Override
     public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService{
@@ -257,10 +331,11 @@ public class JuastappService implements IJuastappService{
     }
     
     /**
-     *
+     * Método para obtener un chat por usuario
      * @param id
      * @return
      * @throws ExceptionService
+     * 
      */
     @Override
     public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService{
