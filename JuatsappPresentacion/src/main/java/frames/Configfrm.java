@@ -4,29 +4,40 @@
  */
 package frames;
 
+import dtos.UserDTO;
+import exceptions.ExceptionService;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import service.BusinessBO;
 
 /**
  *
  * @author PC Gamer
  */
 public class Configfrm extends javax.swing.JDialog {
-
+    BusinessBO busBO;
     /**
      * Creates new form Configfrm
      */
-    public Configfrm(java.awt.Frame parent) {
+    public Configfrm(java.awt.Frame parent,BusinessBO busBO) throws ExceptionService {
             super(parent, "Configuracion", true);
         setUndecorated(true);
         initComponents();
+        this.busBO=busBO;
         Shape forma = new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 50, 50);
         setShape(forma);
         panelRound1.setRoundBottomLeft(35);
         panelRound1.setRoundBottomRight(35);
         panelRound1.setRoundTopLeft(35);
         panelRound1.setRoundTopRight(35);
-        this.setLocationRelativeTo(null);
+        int x = 530; 
+        int y = parent.getHeight() - getHeight()+200;
+        this.setLocation(x, y);
+        UserDTO user=busBO.getUserById(busBO.getId());
+        info.setText(user.getUser());
+        info1.setText(user.getPhone());
     }
 
     /**
@@ -42,6 +53,10 @@ public class Configfrm extends javax.swing.JDialog {
         panelRound2 = new utilerias.PanelRound();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        info = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        info1 = new javax.swing.JLabel();
         panelRound4 = new utilerias.PanelRound();
         panelRound3 = new utilerias.PanelRound();
         jLabel1 = new javax.swing.JLabel();
@@ -76,15 +91,58 @@ public class Configfrm extends javax.swing.JDialog {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("General");
 
+        info.setFont(new java.awt.Font("Ebrima", 0, 14)); // NOI18N
+        info.setForeground(new java.awt.Color(0, 0, 0));
+        info.setText("Perfil");
+
+        jLabel4.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Perfil");
+
+        jButton2.setForeground(new java.awt.Color(37, 211, 102));
+        jButton2.setText("¿Cerrar sesion?");
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setDefaultCapable(false);
+        jButton2.setFocusPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setRequestFocusEnabled(false);
+        jButton2.setVerifyInputWhenFocusTarget(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        info1.setFont(new java.awt.Font("Ebrima", 0, 14)); // NOI18N
+        info1.setForeground(new java.awt.Color(0, 0, 0));
+        info1.setText("Perfil");
+
         javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
         panelRound2.setLayout(panelRound2Layout);
         panelRound2Layout.setHorizontalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(jButton1)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRound2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelRound2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addComponent(jButton1))
+                            .addGroup(panelRound2Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(panelRound2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(info, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(info1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         panelRound2Layout.setVerticalGroup(
@@ -94,10 +152,18 @@ public class Configfrm extends javax.swing.JDialog {
                 .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jButton1))
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addGap(128, 128, 128)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(info, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(info1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(15, 15, 15))
         );
 
-        panelRound1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 210, 360));
+        panelRound1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 210, 390));
 
         panelRound4.setBackground(new java.awt.Color(209, 209, 209));
         panelRound4.setRoundBottomLeft(20);
@@ -121,7 +187,7 @@ public class Configfrm extends javax.swing.JDialog {
 
         panelRound1.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 90, 40));
 
-        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 360));
+        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -131,12 +197,24 @@ public class Configfrm extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Login login=new Login(busBO);
+        login.show();
+        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        parentFrame.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel info;
+    private javax.swing.JLabel info1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private utilerias.PanelRound panelRound1;
     private utilerias.PanelRound panelRound2;
     private utilerias.PanelRound panelRound3;

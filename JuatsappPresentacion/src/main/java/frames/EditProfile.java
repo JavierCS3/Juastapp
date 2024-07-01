@@ -49,8 +49,8 @@ public class EditProfile extends javax.swing.JFrame {
             
             ImageIcon icon = new ImageIcon(profileImageBytes);
             
-            int width = 128;
-            int height = 128;
+            int width = 250;
+            int height = 250;
             Image originalImage = icon.getImage();
             Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
 
@@ -111,7 +111,7 @@ public class EditProfile extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dubai Medium", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Perfil");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 220, 50));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 0, 220, 50));
 
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\4213425_picture_image_file_gallery_photo_icon.png")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -124,12 +124,12 @@ public class EditProfile extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 180, 140));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 270, 270));
 
         jLabel3.setFont(new java.awt.Font("Dubai Medium", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Contraseña");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
 
         txtPassword.setBackground(new java.awt.Color(255, 255, 255));
         txtPassword.setForeground(new java.awt.Color(0, 0, 0));
@@ -143,7 +143,7 @@ public class EditProfile extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
-        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 210, 30));
+        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 210, 30));
 
         txtName.setBackground(new java.awt.Color(255, 255, 255));
         txtName.setForeground(new java.awt.Color(0, 0, 0));
@@ -157,12 +157,12 @@ public class EditProfile extends javax.swing.JFrame {
                 txtNameActionPerformed(evt);
             }
         });
-        jPanel2.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 210, 30));
+        jPanel2.add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 210, 30));
 
         jLabel4.setFont(new java.awt.Font("Dubai Medium", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Nombre");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, -1, -1));
 
         buttonCancel.setBackground(new java.awt.Color(37, 211, 102));
         buttonCancel.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -177,7 +177,7 @@ public class EditProfile extends javax.swing.JFrame {
                 buttonCancelActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 90, 30));
+        jPanel2.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 420, 90, 30));
 
         buttonUpdate.setBackground(new java.awt.Color(37, 211, 102));
         buttonUpdate.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -192,17 +192,17 @@ public class EditProfile extends javax.swing.JFrame {
                 buttonUpdateActionPerformed(evt);
             }
         });
-        jPanel2.add(buttonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 320, 90, 30));
+        jPanel2.add(buttonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 90, 30));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);

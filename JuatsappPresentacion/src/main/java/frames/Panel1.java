@@ -50,24 +50,27 @@ public class Panel1 extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(420, 380));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setBackground(new java.awt.Color(220, 220, 220));
+        jPanel2.setPreferredSize(new java.awt.Dimension(620, 530));
+
+        jPanel3.setBackground(new java.awt.Color(224, 224, 224));
+        jPanel3.setPreferredSize(new java.awt.Dimension(620, 530));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dubai Medium", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("JuatsApp");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 400, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8545515_network_socialmedia_user interface_whatsapp_icon_1.png")); // NOI18N
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 120, 80));
+        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8545515_network_socialmedia_user interface_whatsapp_icon.png")); // NOI18N
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 340, 80));
 
         jLabel3.setBackground(new java.awt.Color(25, 24, 27));
         jLabel3.setText("y rapida");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, -1, -1));
 
         jLabel4.setBackground(new java.awt.Color(25, 24, 27));
         jLabel4.setText("Envia y recibe Mensajes de forma sencilla");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, -1, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

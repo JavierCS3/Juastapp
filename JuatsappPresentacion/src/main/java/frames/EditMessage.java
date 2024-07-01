@@ -29,6 +29,7 @@ public class EditMessage extends javax.swing.JDialog {
         initComponents();
         this.busBO=busBO;
         this.messages=message;
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -42,13 +43,14 @@ public class EditMessage extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         buttonUpdate = new javax.swing.JButton();
-        buttonCancel = new javax.swing.JButton();
         txt = new javax.swing.JTextField();
+        buttonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(236, 229, 221));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(220, 220, 220));
         jPanel1.setForeground(new java.awt.Color(236, 229, 221));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -65,7 +67,17 @@ public class EditMessage extends javax.swing.JDialog {
                 buttonUpdateActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 70, 30));
+        jPanel1.add(buttonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 70, 30));
+
+        txt.setBackground(new java.awt.Color(255, 255, 255));
+        txt.setForeground(new java.awt.Color(0, 0, 0));
+        txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 370, 30));
 
         buttonCancel.setBackground(new java.awt.Color(37, 211, 102));
         buttonCancel.setFont(new java.awt.Font("Ebrima", 1, 14)); // NOI18N
@@ -80,19 +92,9 @@ public class EditMessage extends javax.swing.JDialog {
                 buttonCancelActionPerformed(evt);
             }
         });
-        jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, 120, 20));
+        jPanel1.add(buttonCancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, 100, 30));
 
-        txt.setBackground(new java.awt.Color(234, 234, 234));
-        txt.setForeground(new java.awt.Color(0, 0, 0));
-        txt.setBorder(null);
-        txt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 340, 30));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 100));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 100));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

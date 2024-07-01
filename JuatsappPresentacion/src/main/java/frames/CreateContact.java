@@ -171,7 +171,7 @@ public class CreateContact extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dubai", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Contactos");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666595_x_icon.png")); // NOI18N
         jButton1.setBorderPainted(false);
@@ -183,7 +183,7 @@ public class CreateContact extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 0, -1, -1));
 
         jButton2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
@@ -199,7 +199,7 @@ public class CreateContact extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, -1));
 
         panel.setBackground(new java.awt.Color(220, 220, 220));
         panel.setBorder(null);
@@ -209,9 +209,9 @@ public class CreateContact extends javax.swing.JFrame {
         panel2.setLayout(new java.awt.GridLayout(0, 1));
         panel.setViewportView(panel2);
 
-        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 510, 300));
+        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 580, 410));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 380));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

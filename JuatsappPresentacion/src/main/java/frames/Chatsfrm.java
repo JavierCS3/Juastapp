@@ -46,7 +46,7 @@ public class Chatsfrm extends javax.swing.JFrame {
     public Chatsfrm(BusinessBO busBO) {
         try {
             initComponents();
-            this.setSize(628, 405);
+            this.setSize(920,560);
             this.setLocationRelativeTo(null);
             
             showPanel(b.getFondo());
@@ -142,7 +142,7 @@ public class Chatsfrm extends javax.swing.JFrame {
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addComponent(jButton3))
         );
         panelRound1Layout.setVerticalGroup(
@@ -152,10 +152,10 @@ public class Chatsfrm extends javax.swing.JFrame {
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 140, 50));
+        getContentPane().add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 220, 50));
 
         jPanel1.setBackground(new java.awt.Color(235, 235, 235));
         jPanel1.setPreferredSize(new java.awt.Dimension(628, 434));
@@ -179,9 +179,9 @@ public class Chatsfrm extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 0, 40, -1));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 0, 40, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 30));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 30));
 
         dashBoard.setBackground(new java.awt.Color(224, 224, 224));
 
@@ -189,14 +189,14 @@ public class Chatsfrm extends javax.swing.JFrame {
         dashBoard.setLayout(dashBoardLayout);
         dashBoardLayout.setHorizontalGroup(
             dashBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
         );
         dashBoardLayout.setVerticalGroup(
             dashBoardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
-        jPanel1.add(dashBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 420, 380));
+        jPanel1.add(dashBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 620, 530));
 
         jPanel4.setBackground(new java.awt.Color(220, 220, 220));
 
@@ -255,27 +255,27 @@ public class Chatsfrm extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
                         .addComponent(panelRound3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(BontonPerfil))
-                .addGap(0, 7, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(270, Short.MAX_VALUE)
+                .addContainerGap(390, Short.MAX_VALUE)
                 .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(42, 42, 42)
                 .addComponent(BontonPerfil)
-                .addGap(64, 64, 64))
+                .addGap(49, 49, 49))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 440));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 560));
 
         boardChats.setBackground(new java.awt.Color(234, 234, 234));
         boardChats.setLayout(new java.awt.GridLayout(0, 1));
-        jPanel1.add(boardChats, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 81, 140, 300));
+        jPanel1.add(boardChats, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 81, 220, 480));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 635, 405));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -344,9 +344,13 @@ public class Chatsfrm extends javax.swing.JFrame {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Configfrm config=new Configfrm(this);
-        config.show();
+        try {
+            // TODO add your handling code here:
+            Configfrm config=new Configfrm(this,busBO);
+            config.show();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -370,7 +374,7 @@ public class Chatsfrm extends javax.swing.JFrame {
 
 
     private void showPanel(JPanel p){
-        p.setSize(460, 420);
+        p.setSize(620, 530);
         p.setLocation(0, 0);
         dashBoard.removeAll();
         dashBoard.add(p, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,0,-1,-1));
