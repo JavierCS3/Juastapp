@@ -35,10 +35,20 @@ public class BusinessBO implements IControllerBusiness{
     }
     
     
+    /**
+     * Método para acceder a los métodos de  JuastappService
+     * @param service recibe un objeto de la clase JuastappService
+     * 
+     */
     public BusinessBO(JuastappService service) {
         this.service = service;
     }
     
+    /**
+     * Método para crear un usuario
+     * @param userDTO recibe un objeto de la clase userDTO
+     * @throws ExceptionService 
+     */
     @Override
     public void createUser(UserDTO userDTO) throws ExceptionService {
         if(userDTO!=null){
@@ -46,7 +56,14 @@ public class BusinessBO implements IControllerBusiness{
         }
         throw new ExceptionService("Usuario nulo");
     }
-
+    
+    /**
+     * Método para obtener un usuario por id
+     * @param userDI objeto de la clase ObjectID
+     * @return regresa el usuario con id
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public UserDTO getUserById(ObjectId userDI) throws ExceptionService {
         if(userDI!=null){
@@ -55,6 +72,13 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El id es nulo");
     }
 
+    /**
+     * Método que obtiene un usuario por teléfono
+     * @param phone telefono para buscar
+     * @return
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public UserDTO getUserByPhone(String phone) throws ExceptionService {
         if(phone!=null){
@@ -63,6 +87,12 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El numeor de telefono es nulo");
     }
 
+    /**
+     * Método para crear un mensaje
+     * @param messageDTO objeto de la clase MessageDTO
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void createMessage(MessageDTO messageDTO) throws ExceptionService {
         if(messageDTO!=null){
@@ -71,6 +101,12 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El mesaje es nulo");
     }
 
+    /**
+     * Método para obtener todos los mensajes del chat
+     * @param chatId
+     * @return regresa los mensajes
+     * @throws ExceptionService 
+     */
     @Override
     public List<MessageDTO> getAllMessagesByChat(ObjectId chatId) throws ExceptionService {
         if(chatId!=null){
@@ -79,6 +115,13 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El chatId es nulo");
     }
 
+    /**
+     * Método para crear un chat
+     * @param chat objeto de la clase ChatDTO
+     * @throws ExceptionService 
+     * 
+     * 
+     */
     @Override
     public void createChat(ChatDTO chat) throws ExceptionService {
         if(chat!=null){
@@ -86,6 +129,12 @@ public class BusinessBO implements IControllerBusiness{
         }
     }
 
+    /**
+     * Actualiza un chat 
+     * @param chat recbin un objeto tipo ChatDTO
+     * @throws ExceptionService
+     * 
+     */
     @Override
     public void updateChat(ChatDTO chat) throws ExceptionService {
         if(chat!=null){
@@ -94,6 +143,12 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El chat es nulo");
     }
 
+    /**
+     * Método para eliminar un chat por id
+     * @param chatId 
+     * @throws ExceptionService
+     * 
+     */
     @Override
     public void deleteChatById(ObjectId chatId) throws ExceptionService {
         if(chatId!=null){
@@ -102,6 +157,12 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El chatId es nulo");
     }
 
+    /**
+     * Método para actualizar un mensaje
+     * @param message Recibe un objeto de la clase MessageDTO
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void updateMessage(MessageDTO message) throws ExceptionService {
         if(message!=null){
@@ -110,6 +171,12 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El mensaje es nulo");
     }
 
+    /**
+     * Eliminar mensaje por medio de un id
+     * @param messageId recibe un objeto de la clase ObjectId
+     * @throws ExceptionService 
+     * 
+     */
     @Override
     public void deleteMessageById(ObjectId messageId) throws ExceptionService {
         if(messageId!=null){
@@ -118,16 +185,29 @@ public class BusinessBO implements IControllerBusiness{
         throw new ExceptionService("El mesajeId es nulo");
     }
 
+    /**
+     * Método para obtener un id
+     * @return 
+     */
     @Override
     public ObjectId getId() {
         return service.getId();
     }
 
+    /**
+     * Método para asginar un id
+     * @param id 
+     */
     @Override
     public void setId(ObjectId id) {
         service.setId(id);
     }
     
+    /**
+     * Método para actualizar un usuario
+     * @param user recibe un objeto de la clase UserDTO
+     * @throws ExceptionService 
+     */
     @Override
     public void updateUser(UserDTO user) throws ExceptionService{
         service.updateUser(user);
