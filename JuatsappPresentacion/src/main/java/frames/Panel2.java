@@ -144,7 +144,7 @@ public class Panel2 extends javax.swing.JPanel {
                     button.setFocusPainted(false);
                     button.setFocusable(false);
                     button.addActionListener(e -> {
-                        editOrEliminatedImageM(message);
+                        editOrEliminated(message);
                     });
                     buttonPanel.add(button, BorderLayout.EAST);
 
@@ -166,8 +166,10 @@ public class Panel2 extends javax.swing.JPanel {
                     button.setContentAreaFilled(false);
                     button.setBorderPainted(false);
                     button.setFocusPainted(false);
+                    
+                    
                     button.addActionListener(e -> {
-                        editOrEliminated(message);
+                        editOrEliminatedImageM(message);
                     });
                     buttonPanel.add(button, BorderLayout.EAST);
 
