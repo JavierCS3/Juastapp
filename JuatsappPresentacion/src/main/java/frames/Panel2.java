@@ -5,9 +5,23 @@
 package frames;
 
 import dtos.ChatDTO;
+import dtos.MessageDTO;
+import exceptions.ExceptionService;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import service.BusinessBO;
 
 /**
@@ -18,7 +32,6 @@ public class Panel2 extends javax.swing.JPanel {
     private BusinessBO busBO;
     private ChatDTO chat;
     
-    
     /**
      * Creates new form Panel2
      */
@@ -28,7 +41,6 @@ public class Panel2 extends javax.swing.JPanel {
         this.chat=chat;
         textName.setText("   "+chat.getChatName());
         jButton1.setText("");
-        
         byte[] profileImageBytes = chat.getChatImage();
             
             ImageIcon icon = new ImageIcon(profileImageBytes);
@@ -51,12 +63,13 @@ public class Panel2 extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         panelRound1 = new utilerias.PanelRound();
         buttonSend = new javax.swing.JButton();
-        textMessage = new javax.swing.JTextField();
+        txt = new javax.swing.JTextField();
         buttonImage = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         textName = new javax.swing.JLabel();
         buttonConfigChat = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -80,12 +93,12 @@ public class Panel2 extends javax.swing.JPanel {
             }
         });
 
-        textMessage.setBackground(new java.awt.Color(234, 234, 234));
-        textMessage.setForeground(new java.awt.Color(0, 0, 0));
-        textMessage.setBorder(null);
-        textMessage.addActionListener(new java.awt.event.ActionListener() {
+        txt.setBackground(new java.awt.Color(234, 234, 234));
+        txt.setForeground(new java.awt.Color(0, 0, 0));
+        txt.setBorder(null);
+        txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textMessageActionPerformed(evt);
+                txtActionPerformed(evt);
             }
         });
 
@@ -111,7 +124,7 @@ public class Panel2 extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonImage, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonSend)
                 .addGap(43, 43, 43))
@@ -123,7 +136,7 @@ public class Panel2 extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textMessage))
+                    .addComponent(txt))
                 .addContainerGap())
         );
 
@@ -164,7 +177,12 @@ public class Panel2 extends javax.swing.JPanel {
                 buttonConfigChatActionPerformed(evt);
             }
         });
-        jPanel3.add(buttonConfigChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 1, 380, 70));
+        jPanel3.add(buttonConfigChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 1, 450, 70));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("...");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, -10, 40, 70));
 
         jPanel5.setBackground(new java.awt.Color(236, 229, 221));
         jPanel5.setForeground(new java.awt.Color(236, 229, 221));
@@ -184,7 +202,7 @@ public class Panel2 extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -217,22 +235,96 @@ public class Panel2 extends javax.swing.JPanel {
 
     private void buttonConfigChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfigChatActionPerformed
         // TODO add your handling code here:
-        
-        
+        String[] options = {"Editar", "Eliminar", "Cancelar"};
+    
+        int response = JOptionPane.showOptionDialog(
+            null, 
+            "¿Qué acción deseas realizar con este chat?", 
+            "Editar o Eliminar Chat", 
+            JOptionPane.YES_NO_CANCEL_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, 
+            null, 
+            options,  
+            options[0]  
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            EditChat edit = new EditChat(parentFrame, busBO, chat);
+            edit.setVisible(true); 
+        } else if (response == JOptionPane.NO_OPTION) {
+            int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres elimar este chat? Todos los mensajes se eliminaran", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(response1 == JOptionPane.YES_OPTION){
+                try {
+                    busBO.deleteChatById(chat.getId());
+                } catch (ExceptionService ex) {
+                    Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else if (response == JOptionPane.CANCEL_OPTION) {
+        }
+    
     }//GEN-LAST:event_buttonConfigChatActionPerformed
 
     private void buttonImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png", "gif"));
+        int returnVal = fileChooser.showOpenDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try {
+                byte[] imageData = Files.readAllBytes(file.toPath());
+
+                int option = JOptionPane.showConfirmDialog(this, "¿Deseas enviar esta imagen?", "Confirmar Envío de Imagen", JOptionPane.YES_NO_OPTION);
+
+                if (option == JOptionPane.YES_OPTION) {
+                    MessageDTO message = new MessageDTO();
+                    message.setChatId(chat.getId());
+                    message.setImage(imageData);
+                    message.setSenderId(busBO.getId());
+                    message.setTimestamp(LocalDateTime.now());
+                    busBO.createMessage(message);
+
+                    JOptionPane.showMessageDialog(this, "Imagen enviada correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Envío cancelado");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (ExceptionService ex) {
+                Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
     }//GEN-LAST:event_buttonImageActionPerformed
 
     private void buttonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSendActionPerformed
-        // TODO add your handling code here:
-        
+        String messageText = txt.getText().trim(); // Obtener el texto del campo txt y quitar espacios en blanco al inicio y al final
+
+        if (!messageText.isEmpty()) { // Verificar si el texto no está vacío
+            try {
+                MessageDTO message = new MessageDTO();
+                message.setChatId(chat.getId());
+                message.setSenderId(busBO.getId());
+                message.setTimestamp(LocalDateTime.now());
+                message.setText(messageText);
+                busBO.createMessage(message);
+
+                txt.setText("");
+
+            } catch (ExceptionService ex) {
+                Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "El mensaje no puede estar vacío", "Mensaje Vacío", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonSendActionPerformed
 
-    private void textMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMessageActionPerformed
+    private void txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textMessageActionPerformed
+    }//GEN-LAST:event_txtActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -250,12 +342,13 @@ public class Panel2 extends javax.swing.JPanel {
     private javax.swing.JButton buttonImage;
     private javax.swing.JButton buttonSend;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private utilerias.PanelRound panelRound1;
-    private javax.swing.JTextField textMessage;
     private javax.swing.JLabel textName;
+    private javax.swing.JTextField txt;
     // End of variables declaration//GEN-END:variables
 }
