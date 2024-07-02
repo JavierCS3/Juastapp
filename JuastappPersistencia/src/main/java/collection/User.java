@@ -198,18 +198,39 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    /**
+     * Método para obtener la direccion del usuario
+     * @return regresa la dirección del usuario
+     * 
+     */
     public Addres getAddres() {
         return addres;
     }
 
+    /**
+     * 
+     * Asigna el valor ala dirección
+     * @param addres regresa la direccion del usuario
+     * 
+     */
     public void setAddres(Addres addres) {
         this.addres = addres;
     }
 
+    /**
+     * 
+     * Método para obtener los contactos 
+     * @return regresa la lista de los contactos
+     */
     public List<ObjectId> getContactos() {
         return contactos;
     }
 
+    /**
+     * Asigna los contactos ala lista
+     * @param contactos 
+     * 
+     */
     public void setContactos(List<ObjectId> contactos) {
         this.contactos = contactos;
     }
