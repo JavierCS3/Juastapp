@@ -63,6 +63,9 @@ public class EditProfile extends javax.swing.JFrame {
         
     }
 
+    /**
+     * Método para habilitar el arrastrar
+     */
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override

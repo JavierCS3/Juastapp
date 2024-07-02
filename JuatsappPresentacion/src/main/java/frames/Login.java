@@ -33,6 +33,9 @@ public class Login extends javax.swing.JFrame {
         this.busBO=BusBO;
     }
 
+    /**
+     * Método para habilitar el arrastrar
+     */
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override

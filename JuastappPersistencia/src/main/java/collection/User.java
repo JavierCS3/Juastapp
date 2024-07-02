@@ -133,6 +133,11 @@ public class User {
         return contactos;
     }
 
+    /**
+     * Asigna los contactos ala lista
+     * @param contactos 
+     * 
+     */
     public void setContactos(List<ObjectId> contactos) {
         this.contactos = contactos;
     }
