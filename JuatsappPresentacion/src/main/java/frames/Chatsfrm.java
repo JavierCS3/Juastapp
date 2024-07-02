@@ -302,7 +302,11 @@ public class Chatsfrm extends javax.swing.JFrame {
             int startIndex = currentPage * pageSize;
             int endIndex = Math.min(startIndex + pageSize, chats.size());
 
-            for (ChatDTO chat : chats) {
+            
+            //for (ChatDTO chat : chats) {
+            for (int i = startIndex; i < endIndex; i++) {
+                ChatDTO chat = chats.get(i);
+                
                 JPanel chatPanel = new JPanel();
                 chatPanel.setLayout(new BorderLayout());
                 chatPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
