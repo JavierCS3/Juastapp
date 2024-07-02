@@ -565,110 +565,114 @@ public class RegisterUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (txtUser.getText().isEmpty() || 
-            txtNumber.getText().isEmpty() || 
-            txtPas.getText().isEmpty() || 
-            date.getDatoFecha() == null || 
-            gener.getSelectedItem() == null || 
-            txtC.getText().isEmpty() || 
-            txtStreet.getText().isEmpty() || 
-            txtCode.getText().isEmpty() || 
-            txtHnumber.getText().isEmpty() || 
-            txtCoords.getText().isEmpty()) {
-
-            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String phoneNumberStr = txtNumber.getText().trim();
-        if (phoneNumberStr.length() != 10) {
-            JOptionPane.showMessageDialog(null, "El número de teléfono debe tener exactamente 10 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        long phoneNumber;
-        try {
-            phoneNumber = Long.parseLong(phoneNumberStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El número de teléfono debe ser un número entero válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        java.util.Date dateValue = date.getDatoFecha();
-        LocalDate localDate = null;
-        if (dateValue != null) {
-            localDate = dateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if (localDate.isAfter(LocalDate.now())) {
-                JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser mayor que la fecha actual.", "Error", JOptionPane.ERROR_MESSAGE);
+        try {                                         
+            if (txtUser.getText().isEmpty() ||
+                    txtNumber.getText().isEmpty() ||
+                    txtPas.getText().isEmpty() ||
+                    date.getDatoFecha() == null ||
+                    gener.getSelectedItem() == null ||
+                    txtC.getText().isEmpty() ||
+                    txtStreet.getText().isEmpty() ||
+                    txtCode.getText().isEmpty() ||
+                    txtHnumber.getText().isEmpty() ||
+                    txtCoords.getText().isEmpty()) {
+                
+                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
                 return; 
             }
-        }
-
-        int response = JOptionPane.showConfirmDialog(null, "¿Deseas registrarte?", "Confirmación de registro", JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
-            try {
-                UserDTO user = new UserDTO();
-                AddresDTO address = new AddresDTO();
-
-                user.setUser(txtUser.getText());
-                user.setPhone(txtNumber.getText());
-                user.setPassword(txtPas.getText());
-                user.setBirthDate(localDate);
-                user.setCreatedAt(LocalDateTime.now());
-                user.setGender((String) gener.getSelectedItem());
-                Icon icon = jButton3.getIcon();
-                if (icon instanceof ImageIcon) {
-                    BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-                    Graphics g = bufferedImage.createGraphics();
-                    icon.paintIcon(null, g, 0, 0);
-                    g.dispose();
-
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(bufferedImage, "png", baos);
-                    baos.flush();
-                    byte[] profileImageBytes = baos.toByteArray();
-                    baos.close();
-
-                    user.setProfileImage(profileImageBytes);
-                } else {
-                    throw new IllegalArgumentException("Icono del botón no es un ImageIcon");
-                }
-                
-                address.setStreet(txtStreet.getText());
-                address.setCity("Cd. Obregon");
-                address.sethNumber(txtHnumber.getText());
-                address.setCountry(txtC.getText());
-                address.setZipCode(txtCode.getText());
-                String coordsText = txtCoords.getText().trim();
-                String[] coordsArray = coordsText.split(",");
-
-                if (coordsArray.length != 2) {
-                    JOptionPane.showMessageDialog(null, "El formato de las coordenadas debe ser 'latitud, longitud'.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                try {
-                    Double latitude = Double.valueOf(coordsArray[0].trim());
-                    Double longitude = Double.valueOf(coordsArray[1].trim());
-                    address.setLatitude(latitude);
-                    address.setLongitude(longitude);
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Las coordenadas deben ser valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                user.setAddres(address);
-                user.setContactosDTO(null);
-                System.out.println(""+user.getUser()+" "+user.getPhone()+" "+user.getBirthDate()+" "+user.getPassword()+" "+user.getGender()+" "+user.getAddres());
-                busBO.createUser(user);
-
-                JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente.", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
-            } catch (ExceptionService | IllegalArgumentException | IOException ex) {
-                Logger.getLogger(RegisterUser.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace(); 
+            
+            String phoneNumberStr = txtNumber.getText().trim();
+            if (phoneNumberStr.length() != 10 || (busBO.getUserByPhone(phoneNumberStr))!=null) {
+                JOptionPane.showMessageDialog(null, "Numero de telefono no valido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            
+            long phoneNumber;
+            try {
+                phoneNumber = Long.parseLong(phoneNumberStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El número de teléfono debe ser un número entero válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            java.util.Date dateValue = date.getDatoFecha();
+            LocalDate localDate = null;
+            if (dateValue != null) {
+                localDate = dateValue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                if (localDate.isAfter(LocalDate.now())) {
+                    JOptionPane.showMessageDialog(null, "La fecha de nacimiento no puede ser mayor que la fecha actual.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            
+            int response = JOptionPane.showConfirmDialog(null, "¿Deseas registrarte?", "Confirmación de registro", JOptionPane.YES_NO_OPTION);
+            
+            if (response == JOptionPane.YES_OPTION) {
+                try {
+                    UserDTO user = new UserDTO();
+                    AddresDTO address = new AddresDTO();
+                    
+                    user.setUser(txtUser.getText());
+                    user.setPhone(txtNumber.getText());
+                    user.setPassword(txtPas.getText());
+                    user.setBirthDate(localDate);
+                    user.setCreatedAt(LocalDateTime.now());
+                    user.setGender((String) gener.getSelectedItem());
+                    Icon icon = jButton3.getIcon();
+                    if (icon instanceof ImageIcon) {
+                        BufferedImage bufferedImage = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+                        Graphics g = bufferedImage.createGraphics();
+                        icon.paintIcon(null, g, 0, 0);
+                        g.dispose();
+                        
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ImageIO.write(bufferedImage, "png", baos);
+                        baos.flush();
+                        byte[] profileImageBytes = baos.toByteArray();
+                        baos.close();
+                        
+                        user.setProfileImage(profileImageBytes);
+                    } else {
+                        throw new IllegalArgumentException("Icono del botón no es un ImageIcon");
+                    }
+                    
+                    address.setStreet(txtStreet.getText());
+                    address.setCity("Cd. Obregon");
+                    address.sethNumber(txtHnumber.getText());
+                    address.setCountry(txtC.getText());
+                    address.setZipCode(txtCode.getText());
+                    String coordsText = txtCoords.getText().trim();
+                    String[] coordsArray = coordsText.split(",");
+                    
+                    if (coordsArray.length != 2) {
+                        JOptionPane.showMessageDialog(null, "El formato de las coordenadas debe ser 'latitud, longitud'.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+                    try {
+                        Double latitude = Double.valueOf(coordsArray[0].trim());
+                        Double longitude = Double.valueOf(coordsArray[1].trim());
+                        address.setLatitude(latitude);
+                        address.setLongitude(longitude);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(null, "Las coordenadas deben ser valores numéricos válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
+                    user.setAddres(address);
+                    user.setContactosDTO(null);
+                    System.out.println(""+user.getUser()+" "+user.getPhone()+" "+user.getBirthDate()+" "+user.getPassword()+" "+user.getGender()+" "+user.getAddres());
+                    busBO.createUser(user);
+                    
+                    JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente.", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+                } catch (ExceptionService | IllegalArgumentException | IOException ex) {
+                    Logger.getLogger(RegisterUser.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
+        } catch (ExceptionService ex) {
+            Logger.getLogger(RegisterUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
