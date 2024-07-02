@@ -12,8 +12,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -22,12 +20,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import org.bson.types.ObjectId;
 import service.BusinessBO;
 
 /**
@@ -282,6 +280,7 @@ public class Chatsfrm extends javax.swing.JFrame {
 
     
     public void setButtonLayout() {
+        
         try {
         List<ChatDTO> chats = busBO.getChatByUser(busBO.getId());
 
@@ -291,6 +290,7 @@ public class Chatsfrm extends javax.swing.JFrame {
         boardChats.setLayout(new BoxLayout(boardChats, BoxLayout.Y_AXIS));
 
         for (ChatDTO chat : chats) {
+            
             JPanel chatPanel = new JPanel();
             chatPanel.setLayout(new BorderLayout());
             chatPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
@@ -313,7 +313,44 @@ public class Chatsfrm extends javax.swing.JFrame {
             chatInfo.setWrapStyleWord(true);
             chatInfo.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             chatInfo.setMaximumSize(new Dimension(400, 100));
-            chatInfo.setText(chat.getChatName());
+            
+            List<ObjectId> ids=chat.getParticipants();
+            List<ObjectId> contacts = busBO.getUserById(busBO.getId()).getContactosDTO();
+            UserDTO user=new UserDTO();
+            boolean hasChat = false;
+            if(contacts!=null){
+                System.out.println("1");
+               for(ObjectId idP : ids){
+                    if(idP.equals(busBO.getId())){
+                    } else {
+                        user=busBO.getUserById(idP);
+                        System.out.println("hola 1");
+                }
+               }
+               
+               for (ObjectId id : contacts) {
+                        for(ObjectId idP : ids){
+                            if (idP != null && id != null) {
+                                if(id.equals(idP)){
+                                  hasChat = true;  
+                                  user=busBO.getUserById(idP);
+                                }
+                        }else{
+                                if(idP!=(busBO.getId())){
+                                    user=busBO.getUserById(idP);
+                                }
+                        }
+                    }
+            }   
+            }
+               
+            if(!hasChat){
+                System.out.println("hola "+ user.getPhone());
+                chatInfo.setText( user.getPhone());
+            }else{
+                chatInfo.setText(chat.getChatName());
+            }
+
             chatPanel.add(chatInfo, BorderLayout.CENTER);
 
             JButton button = new JButton("+");
@@ -324,22 +361,24 @@ public class Chatsfrm extends javax.swing.JFrame {
             button.setFocusCycleRoot(false);
             button.setFocusPainted(false);
             button.setFocusable(false);
+            
             button.addActionListener(e -> {
                 Panel2 chatFrame = new Panel2(busBO, chat);
                 showPanel(chatFrame);
             });
+            
             chatPanel.add(button, BorderLayout.EAST);
             buttons.add(button);
             chatPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, chatPanel.getPreferredSize().height));
             chatPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             boardChats.add(chatPanel);
+        
         }
-
         boardChats.revalidate();
         boardChats.repaint();
     } catch (ExceptionService ex) {
         Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            }
     }
     
     

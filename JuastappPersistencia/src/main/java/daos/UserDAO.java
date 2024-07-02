@@ -171,7 +171,7 @@ public class UserDAO implements IUserDAO{
                 .append("user", user.getUser())
                 .append("password", user.getPassword())
                 .append("profileImage", user.getProfileImage()));
-
+                
         UpdateResult result = collection.updateOne(filter, updateDoc);
 
         if (result.getModifiedCount() != 1) {
@@ -180,6 +180,43 @@ public class UserDAO implements IUserDAO{
     } catch (IllegalArgumentException | MongoException e) {
         throw new ExceptionPersistencia("Error al actualizar usuario: " + e.getMessage(), e);
     }
+   }
+   
+   /**
+    * Actualiza la información de un usuario existente en la base de datos, incluyendo los contactos proporcionados.
+    * @param user Usuario con la información actualizada.
+    * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
+    */
+   @Override
+   public void updateUserContacts(User user) throws ExceptionPersistencia {
+       try {
+           MongoCollection<User> collection = conexion.getDatabase().getCollection("users", User.class);
+           ObjectId userId = user.getId();
+
+           if (userId == null) {
+               throw new IllegalArgumentException("El usuario debe tener un ID válido.");
+           }
+
+           System.out.println("Actualizando usuario con ID: " + userId + user.getContactos());
+
+           List<ObjectId> contactos = user.getContactos();
+           System.out.println(contactos);
+           if (contactos == null) {
+               contactos = new ArrayList<>();
+           }
+
+           Bson filter = Filters.eq("_id", userId);
+
+           Document updateDoc = new Document();
+           updateDoc.put("$set", new Document()
+                   .append("contactos", user.getContactos()));
+
+           collection.updateOne(filter, updateDoc);
+
+           System.out.println("Se ha actualizado la lista de contactos correctamente para el usuario con ID: " + userId+" "+user.getContactos());
+       } catch (IllegalArgumentException | MongoException e) {
+           throw new ExceptionPersistencia("Error al actualizar usuario: " + e.getMessage(), e);
+       }
    }
 
     /**

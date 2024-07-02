@@ -309,6 +309,26 @@ public class JuastappService implements IJuastappService{
     }
     
     /**
+     * Método para actualizar un usuario
+     * @param user
+     * @throws exceptions.ExceptionService
+     * 
+     */
+    @Override
+    public void updateUserContacts(UserDTO user) throws ExceptionService{
+        if(user!=null){
+            try {
+                
+                User userD=UserDTO.conver(user);
+                System.out.println("Update negocio "+userD.getContactos());
+                userDAO.updateUserContacts(userD);
+            } catch (ExceptionPersistencia ex) {
+                throw new ExceptionService("Error al guardar sesion",ex);
+            }
+        }
+    }
+    
+    /**
      * Método para obtener por participantes
      * @param participantIds
      * @return

@@ -1,0 +1,286 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ */
+package frames;
+
+import dtos.UserDTO;
+import exceptions.ExceptionService;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import org.bson.types.ObjectId;
+import service.BusinessBO;
+
+/**
+ *
+ * @author PC Gamer
+ */
+public class AddContact extends javax.swing.JDialog {
+
+    BusinessBO busBO;
+    private List<JButton> buttons;
+    UserDTO user;
+     private CreateContact parentFrame;
+    
+    /**
+     * Creates new form AddContact
+     */
+    public AddContact(java.awt.Frame parent,BusinessBO busBO) {
+        super(parent, "Editar mensaje",true);
+        initComponents();
+        this.busBO=busBO;
+        this.parentFrame = (CreateContact) parent;
+        this.setLocationRelativeTo(null);
+    }
+    
+    public void setDashBoard(){
+        try {
+            List<ObjectId> contacts=new ArrayList<>();
+            UserDTO user1 = busBO.getUserById(busBO.getId());
+            contacts=user1.getContactosDTO();
+            int count = 0;
+            
+            buttons = new ArrayList<>();
+            dashBoard.removeAll();
+            if(contacts!=null){
+                for (ObjectId id : contacts) {
+                
+                if(id.equals(this.user.getId())){
+                    count=1;
+                    break;
+                }
+            } 
+            }   
+                if(count==0){
+                JButton button = new JButton();
+
+                byte[] profileImageBytes = user.getProfileImage();
+                ImageIcon icon = new ImageIcon(profileImageBytes);
+                Image scaledImage = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+                button.setIcon(scaledIcon);
+                button.setText("  " + user.getUser());
+                button.setHorizontalAlignment(JButton.LEFT);
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorderPainted(false);
+
+                button.setFocusCycleRoot(false);
+                button.setFocusPainted(false);
+                button.setFocusable(false);
+
+                button.setPreferredSize(new Dimension(490, 60));
+
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        addUserInContacts();
+                    }
+                });
+
+                dashBoard.add(button);
+                buttons.add(button);
+            dashBoard.revalidate();
+            dashBoard.repaint();
+            }
+        } catch (ExceptionService ex) {
+            Logger.getLogger(AddContact.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
+    
+        public void addUserInContacts(){
+                try {
+                UserDTO contactUser = this.user;
+
+                String message = "Contact Information:\n\n" +
+                                 "User: " + contactUser.getUser() + "\n" +
+                                 "Numero de telefono: " + contactUser.getPhone() + "\n" +
+                                 "¿Quieres añadirlo a tus contactos?";
+
+                int response = JOptionPane.showConfirmDialog(null, message, "Add Contact", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (response == JOptionPane.YES_OPTION) {
+                    List<ObjectId> contacts=new ArrayList<>();
+                    UserDTO user1 = busBO.getUserById(busBO.getId());
+                    if(user1.getContactosDTO()!=null){
+                        contacts=user1.getContactosDTO();
+                    }
+                    contacts.addFirst(user.getId());;
+                    user1.setContactosDTO(contacts);
+                    System.out.println("ADDContact "+user1.getContactosDTO());
+                    busBO.updateUserContacts(user1);
+                    setDashBoard();
+                    parentFrame.setButtonLayout();
+                }
+            } catch (ExceptionService ex) {
+                Logger.getLogger(AddContact.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        dashBoard = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        txtNumber = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(224, 224, 224));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        dashBoard.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(dashBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 90));
+
+        jButton1.setBackground(new java.awt.Color(37, 211, 102));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        txtNumber.setBackground(new java.awt.Color(255, 255, 255));
+        txtNumber.setForeground(new java.awt.Color(0, 0, 0));
+        txtNumber.setToolTipText("");
+        txtNumber.setActionCommand("<Not Set>");
+        txtNumber.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
+        txtNumber.setCaretColor(new java.awt.Color(18, 140, 126));
+        txtNumber.setSelectionColor(new java.awt.Color(18, 140, 126));
+        txtNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumberActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Buscar usuario:");
+
+        jButton2.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666595_x_icon.png")); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setFocusPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumberActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            UserDTO user1=busBO.getUserById(busBO.getId());
+            String phoneNumber = txtNumber.getText().trim();
+        if (phoneNumber.matches("\\d{10}")  && !phoneNumber.equals(user1.getPhone())) {
+            this.user=busBO.getUserByPhone(txtNumber.getText());
+            setDashBoard();
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe ser un numero de telefono valido", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+        } 
+        } catch (ExceptionService ex) {
+            Logger.getLogger(AddContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel dashBoard;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txtNumber;
+    // End of variables declaration//GEN-END:variables
+}

@@ -207,6 +207,7 @@ public class BusinessBO implements IControllerBusiness{
         service.updateUser(user);
     }
     
+    
     /**
     * Obtiene todos los chats en los que participan todos los usuarios especificados.
     * @param participantIds Lista de identificadores de participantes.
@@ -229,4 +230,8 @@ public class BusinessBO implements IControllerBusiness{
         return service.getChatByUser(id);
     }
     
+    @Override
+    public void updateUserContacts(UserDTO user) throws ExceptionService{
+        service.updateUserContacts(user);
+    }
 }

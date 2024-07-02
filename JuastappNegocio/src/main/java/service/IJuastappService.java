@@ -133,4 +133,6 @@ public interface IJuastappService {
      * @throws ExceptionService
      */
     public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService;
+    
+    public void updateUserContacts(UserDTO user) throws ExceptionService;
 }

@@ -254,7 +254,7 @@ public class UserDTO {
         userDAO.setPassword(userDTO.getPassword());
         userDAO.setGender(userDTO.getGender());
         userDAO.setProfileImage(userDTO.getProfileImage());
-        userDAO.setContactos(userDAO.getContactos());
+        userDAO.setContactos(userDTO.getContactosDTO());
         return userDAO;
     }
     

@@ -79,4 +79,6 @@ public interface IUserDAO {
     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
     */
     public User getUserByPhoneNumber(String phoneNumber) throws ExceptionPersistencia;
+    
+    public void updateUserContacts(User user) throws ExceptionPersistencia;
 }
