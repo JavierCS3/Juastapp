@@ -41,7 +41,7 @@ public class Chatsfrm extends javax.swing.JFrame {
     private BusinessBO busBO;
     private List<JButton> buttons;
     private Panel1 b = new Panel1();
-    private JPanel boardChats;
+   
 
     /**
      * Creates new form Chats
