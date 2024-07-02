@@ -60,6 +60,9 @@ public class EditChat extends javax.swing.JDialog {
             enableDrag();
     }
     
+    /**
+     * Método para habilitar el arrastre
+     */
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override

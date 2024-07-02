@@ -48,6 +48,10 @@ public class CreateChat extends javax.swing.JFrame {
         enableDrag();
     }
     
+    /**
+     * Método para habilitar el arrastrar
+     * 
+     */
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override

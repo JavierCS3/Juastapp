@@ -46,6 +46,9 @@ public class CreateContact extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Método para habilitar el arrastras
+     */
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -65,6 +68,10 @@ public class CreateContact extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Método para asignar el diseño a los botones
+     * 
+     */
     public void setButtonLayout() {
         try {
             List<ObjectId> ids = busBO.getUserById(busBO.getId()).getContactosDTO();
@@ -140,6 +147,11 @@ public class CreateContact extends javax.swing.JFrame {
     }
     
     
+    /**
+     * 
+     * Método para abrir un chat creado
+     * @param chat chat creadi para abrir
+     */
     public void openCreateChat(CreateChat chat){
         chat.show();
         this.dispose();
