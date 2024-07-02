@@ -65,6 +65,7 @@ public class Login extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         textPassword = new javax.swing.JTextField();
@@ -101,21 +102,44 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(37, 211, 102));
+        jButton3.setText("Registrarme");
+        jButton3.setBorderPainted(false);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setDefaultCapable(false);
+        jButton3.setFocusPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setRequestFocusEnabled(false);
+        jButton3.setVerifyInputWhenFocusTarget(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(284, 284, 284)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(339, 339, 339)
+                        .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(299, 299, 299)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(311, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jButton3)
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         jPanel7.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 780, 230));
@@ -124,7 +148,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dubai Light", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Contraseña:");
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 200, 40));
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 200, 40));
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Dubai Light", 0, 24)); // NOI18N
@@ -144,7 +168,7 @@ public class Login extends javax.swing.JFrame {
                 textPasswordActionPerformed(evt);
             }
         });
-        jPanel7.add(textPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 390, 30));
+        jPanel7.add(textPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 390, 30));
 
         txtNumber.setBackground(new java.awt.Color(255, 255, 255));
         txtNumber.setForeground(new java.awt.Color(0, 0, 0));
@@ -158,13 +182,13 @@ public class Login extends javax.swing.JFrame {
                 txtNumberActionPerformed(evt);
             }
         });
-        jPanel7.add(txtNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 390, 30));
+        jPanel7.add(txtNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 390, 30));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Dubai Light", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Numero de telefono:");
-        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 200, 40));
+        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 200, 40));
 
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 780, 380));
 
@@ -283,11 +307,19 @@ public class Login extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        RegisterUser registerUser=new RegisterUser(busBO);
+        registerUser.show();
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -4,7 +4,8 @@
  */
 package dtos;
 
-import collection.Addres;
+import collection.Address;
+import collection.Coordinates;
 
 /**
  * Clase que representa un objeto de transferencia de datos (DTO) para direcciones.
@@ -18,6 +19,8 @@ public class AddresDTO {
     private String hNumber;
     private String country;
     private String zipCode;
+    private double latitude; 
+    private double longitude;
 
     /**
      * Constructor por omisión.
@@ -127,19 +130,39 @@ public class AddresDTO {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
     
     /**
     * Convierte un objeto de tipo AddresDAO a un objeto de tipo AddresDTO.
     * @param addresDAO Objeto AddresDAO a convertir.
     * @return Objeto AddresDTO resultante de la conversión.
     */
-    public static AddresDTO conver(Addres addresDAO){
+    public static AddresDTO conver(Address addresDAO){
         AddresDTO addresDTO =new AddresDTO();
         addresDTO.sethNumber(addresDAO.gethNumber());
         addresDTO.setStreet(addresDAO.getStreet());
         addresDTO.setCity(addresDAO.getCity());
         addresDTO.setCountry(addresDTO.getCountry());
         addresDTO.setZipCode(addresDAO.getZipCode());
+        if(addresDAO.getCoordinates()!=null){
+            addresDTO.setLatitude(addresDAO.getCoordinates().getLatitude());
+        addresDTO.setLongitude(addresDAO.getCoordinates().getLongitude());
+        }
         return addresDTO;
     }
     
@@ -148,13 +171,17 @@ public class AddresDTO {
     * @param addresDTO Objeto AddresDTO a convertir.
     * @return Objeto AddresDAO resultante de la conversión.
     */
-    public static Addres conver(AddresDTO addresDTO){
-        Addres addresDAO =new Addres();
+    public static Address  conver(AddresDTO addresDTO){
+        Address  addresDAO =new Address();
         addresDAO.sethNumber(addresDTO.gethNumber());
         addresDAO.setStreet(addresDTO.getStreet());
         addresDAO.setCity(addresDTO.getCity());
         addresDAO.setCountry(addresDTO.getCountry());
         addresDAO.setZipCode(addresDTO.getZipCode());
+        Coordinates coordinates=new Coordinates();
+        coordinates.setLatitude(addresDTO.getLatitude());
+        coordinates.setLongitude(addresDTO.getLongitude());
+        addresDAO.setCoordinates(coordinates);
         return addresDAO;
     }
     

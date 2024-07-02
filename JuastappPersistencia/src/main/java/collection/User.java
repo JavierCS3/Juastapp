@@ -11,8 +11,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.types.ObjectId;
 
 /**
- * Clase entidad que almacena la coleccion users
- * @author PC Gamer
+ * Clase para representar un usuario.
  */
 public class User {
     private ObjectId id;
@@ -21,189 +20,113 @@ public class User {
     private String password;
     private LocalDate birthDate;
     private byte[] profileImage;
-    private Addres addres;
+    private Address  address;
     private String gender;
     private LocalDateTime createdAt;
     private List<ObjectId> contactos;
-    
+
     /**
-     * Constructor por omision
+     * Constructor por omisión.
      */
-    public User(){
-        
-    }
-    
-    /**
-     *  Constructor que inicializa todos los atributos de la clase User
-     * @param user Usuario del user(nombre o alias)
-     * @param phone Numero telefonico del usuario
-     * @param profileImage Imagen de perfil del usuario en byte
-     * @param password Contraseña del usuario
-     * @param address Direccion de tipo address en donde almacenara la coleccion address
-     * @param gender Genero del usuario
-     * @param birthDate Fecha de nacimiento del usuario
-     * @param contactos Contactos del usuario
-     */
-    public User(String user,String phone,byte[] profileImage, String password, Addres address, String gender, LocalDate birthDate,List<ObjectId> contactos){
-        this.user=user;
-        this.phone=phone;
-        this.password=password;
-        this.addres=address;
-        this.gender=gender;
-        this.birthDate=birthDate;
-        this.createdAt=LocalDateTime.now();
-        this.profileImage=profileImage;
-        this.contactos = contactos;
+    public User() {
     }
 
     /**
-     * @return
+     * Constructor que inicializa todos los atributos de la clase User.
+     *
+     * @param user        Nombre de usuario
+     * @param phone       Número telefónico del usuario
+     * @param profileImage Imagen de perfil en formato de arreglo de bytes
+     * @param password    Contraseña del usuario
+     * @param address     Dirección del usuario
+     * @param gender      Género del usuario
+     * @param birthDate   Fecha de nacimiento del usuario
+     * @param contactos   Lista de contactos del usuario
      */
+    public User(String user, String phone, byte[] profileImage, String password, Address  address, String gender, LocalDate birthDate, List<ObjectId> contactos) {
+        this.user = user;
+        this.phone = phone;
+        this.password = password;
+        this.address = address;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.createdAt = LocalDateTime.now();
+        this.profileImage = profileImage;
+        this.contactos = contactos;
+    }
+
+    // Getters and setters for all fields (omitted for brevity)
+
     public ObjectId getId() {
         return id;
     }
 
-    /**
-     * Set del id
-     * @param id el id del usuario
-     */
     public void setId(ObjectId id) {
         this.id = id;
     }
-      
-    /**
-     * get nombre del usuario
-     * @return nombre del usuario
-     */
+
     public String getUser() {
         return user;
     }
 
-    /**
-     * Set del nombre del usuario
-     * @param user
-     */
     public void setUser(String user) {
         this.user = user;
     }
-    
-    /**
-     * Get numero del usuario
-     * @return numero del usuario
-     */
+
     public String getPhone() {
         return phone;
     }
 
-    /**
-     *  Set numero del usuario
-     * @param phone numero del usuario
-     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    /**
-     *  Get contraseña del usuario
-     * @return contraseña del usuario
-     */
     public String getPassword() {
         return password;
     }
 
-    /**
-     *  Set contraseña del usuario
-     * @param password contraseña del usuario
-     */
     public void setPassword(String password) {
         this.password = password;
     }
 
-    /**
-     *  Get fecha de nacimiento del usuario
-     * @return fecha de nacimiento del usuario
-     */
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    /**
-     *  Set fecha de nacimiento del usuario
-     * @param birthDate fecha de nacimiento del usuario
-     */
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-    /**
-     *  Get imagen del usuario
-     * @return imagen del usuario
-     */
+
     public byte[] getProfileImage() {
         return profileImage;
     }
 
-    /**
-     * Set imagen de perfil del usuario
-     * @param profileImage imagen de perfil
-     */
     public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
     }
 
-    /**
-     * Get Direccion de tipo Addres
-     * @return Adres direccion del usuario
-     */
-    public Addres getAddress() {
-        return addres;
+    public Address  getAddress() {
+        return address;
     }
 
-    /**
-     * Set Direccion de tipo Addres
-     * @param address Direccion del usuario de tipo addres
-     */
-    public void setAddress(Addres address) {
-        this.addres = address;
+    public void setAddress(Address  address) {
+        this.address = address;
     }
 
-    /**
-     * Set genero del usuario
-     * @param gender genero del usuario
-     */
+    public String getGender() {
+        return gender;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    /**
-     * Set genero del usuario
-     * @return genero del usuario
-     */
-    public String getGender() {
-        return gender;
-    }
-    
-    /**
-     * Get fecha en la que se creo el usuario
-     * @return fecha en la que se creo el usuario
-     */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    /**
-     * Set fecha en la que se creo el usuario
-     * @param createdAt fecha en la que se creo el usuario
-     */
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Addres getAddres() {
-        return addres;
-    }
-
-    public void setAddres(Addres addres) {
-        this.addres = addres;
     }
 
     public List<ObjectId> getContactos() {
@@ -214,3 +137,4 @@ public class User {
         this.contactos = contactos;
     }
 }
+

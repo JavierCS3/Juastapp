@@ -107,6 +107,7 @@ public class JuastappService implements IJuastappService{
                 User user=UserDTO.conver(userDTO);
                 userDAO.createUser(user);
             } catch (ExceptionPersistencia ex) {
+                ex.printStackTrace();
                 throw new ExceptionService("Error al agregar Usuario",ex);
             }
         }else{

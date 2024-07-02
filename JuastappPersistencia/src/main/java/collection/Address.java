@@ -8,25 +8,25 @@ package collection;
  *
  * @author PC Gamer
  */
-public class Addres {
+public class Address  {
     
     
     /**
      * Creación de las variables de clase
      * 
      */
-    private String street;
-    private String city;
-//    private String state;
-    private String zipCode;
-    private String country;
-    private String hNumber;
+     private String street;      
+    private String city;        
+    private String zipCode;      
+    private String country;     
+    private String hNumber;   
+    private Coordinates coordinates;
 
     /**
      * Método constructor por omisión
      * 
      */
-    public Addres() {
+    public Address () {
     }
 
     /**
@@ -35,19 +35,18 @@ public class Addres {
      * 
      * @param street calle del usuario
      * @param city ciudad del usuario
-     * @param state estado del usuario
      * @param zipCode código postal del usuario
      * @param country pais del usuario
      * @param hNumber número de casa del usuario
      * 
      */
-    public Addres(String street, String city, String state, String zipCode, String country,String hNumber) {
+    public Address (String street, String city, String zipCode, String country,String hNumber,Coordinates coordinates) {
         this.street = street;
         this.city = city;
         this.hNumber=hNumber;
-//        this.state = state;
         this.zipCode = zipCode;
         this.country = country;
+        this.coordinates = coordinates;
     }
 
     
@@ -167,7 +166,8 @@ public class Addres {
     public void setCountry(String country) {
         this.country = country;
     }
-
+    
+    
     
     /**
      * 
@@ -179,6 +179,19 @@ public class Addres {
      */
     public String getCountry() {
         return country;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    @Override
+    public String toString() {
+        return "Addres{" + "street=" + street + ", city=" + city + ", zipCode=" + zipCode + ", country=" + country + ", hNumber=" + hNumber + ", coordinates=" + coordinates + '}';
     }
     
     
