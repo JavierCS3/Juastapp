@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import service.BusinessBO;
 
@@ -35,25 +36,27 @@ import service.BusinessBO;
  * @author PC Gamer
  */
 public class Chatsfrm extends javax.swing.JFrame {
+
     private int mouseX, mouseY;
     private BusinessBO busBO;
-     private List<JButton> buttons;
+    private List<JButton> buttons;
     private Panel1 b = new Panel1();
-    
+    private JPanel boardChats;
+
     /**
      * Creates new form Chats
      */
     public Chatsfrm(BusinessBO busBO) {
         try {
             initComponents();
-            this.setSize(920,560);
+            this.setSize(920, 560);
             this.setLocationRelativeTo(null);
-            
+
             showPanel(b.getFondo());
             enableDrag();
-            this.busBO=busBO;
+            this.busBO = busBO;
             byte[] profileImageBytes = busBO.getUserById(busBO.getId()).getProfileImage();
-            
+
             ImageIcon icon = new ImageIcon(profileImageBytes);
 
             Image scaledImage = icon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
@@ -66,7 +69,17 @@ public class Chatsfrm extends javax.swing.JFrame {
             Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    //SCROLLPANE
+    public Chatsfrm() {
+        buttons = new ArrayList<>();
+        boardChats = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(boardChats);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        setLayout(new BorderLayout());
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
     private void enableDrag() {
         addMouseListener(new MouseAdapter() {
             @Override
@@ -121,10 +134,8 @@ public class Chatsfrm extends javax.swing.JFrame {
         panelRound1.setRoundTopRight(25);
 
         jLabel1.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Chats");
 
-        jButton3.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666681_edit_icon.png")); // NOI18N
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
         jButton3.setFocusPainted(false);
@@ -165,12 +176,9 @@ public class Chatsfrm extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Ebrima", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\843786_whatsapp_icon.png")); // NOI18N
         jLabel2.setText("    JuastApp");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 30));
 
-        jButton2.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666595_x_icon.png")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.setContentAreaFilled(false);
         jButton2.setFocusable(false);
@@ -202,7 +210,6 @@ public class Chatsfrm extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(220, 220, 220));
         jButton1.setForeground(new java.awt.Color(220, 220, 220));
-        jButton1.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\3643771_configuration_configure_gear_set_setting_icon.png")); // NOI18N
         jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
@@ -280,73 +287,78 @@ public class Chatsfrm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public void setButtonLayout() {
         try {
-        List<ChatDTO> chats = busBO.getChatByUser(busBO.getId());
+            List<ChatDTO> chats = busBO.getChatByUser(busBO.getId());
 
-        buttons = new ArrayList<>();
-        boardChats.removeAll();
+            buttons = new ArrayList<>();
 
-        boardChats.setLayout(new BoxLayout(boardChats, BoxLayout.Y_AXIS));
+            boardChats.removeAll();
+            boardChats.setLayout(new BoxLayout(boardChats, BoxLayout.Y_AXIS));
 
-        for (ChatDTO chat : chats) {
-            JPanel chatPanel = new JPanel();
-            chatPanel.setLayout(new BorderLayout());
-            chatPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-            chatPanel.setBackground(new Color(236, 229, 221));
+            //SCROLL PAGINADO
+            int pageSize = 5; // Número de chats por página
+            int currentPage = 0; // Página actual
+            int startIndex = currentPage * pageSize;
+            int endIndex = Math.min(startIndex + pageSize, chats.size());
 
-            byte[] chatImageBytes = chat.getChatImage();
-            ImageIcon icon = new ImageIcon(chatImageBytes);
-            Image scaledImage = icon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            for (ChatDTO chat : chats) {
+                JPanel chatPanel = new JPanel();
+                chatPanel.setLayout(new BorderLayout());
+                chatPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                chatPanel.setBackground(new Color(236, 229, 221));
 
-            JLabel imageLabel = new JLabel(scaledIcon);
-            imageLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            chatPanel.add(imageLabel, BorderLayout.WEST);
+                byte[] chatImageBytes = chat.getChatImage();
+                ImageIcon icon = new ImageIcon(chatImageBytes);
+                Image scaledImage = icon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaledImage);
 
-            JTextArea chatInfo = new JTextArea();
-            chatInfo.setOpaque(false);
-            chatInfo.setEditable(false);
-            chatInfo.setFocusable(false);
-            chatInfo.setLineWrap(true);
-            chatInfo.setWrapStyleWord(true);
-            chatInfo.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-            chatInfo.setMaximumSize(new Dimension(400, 100));
-            chatInfo.setText(chat.getChatName());
-            chatPanel.add(chatInfo, BorderLayout.CENTER);
+                JLabel imageLabel = new JLabel(scaledIcon);
+                imageLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+                chatPanel.add(imageLabel, BorderLayout.WEST);
 
-            JButton button = new JButton("+");
-            button.setForeground(chatInfo.getCaretColor());
-            button.setOpaque(false);
-            button.setContentAreaFilled(false);
-            button.setBorderPainted(false);
-            button.setFocusCycleRoot(false);
-            button.setFocusPainted(false);
-            button.setFocusable(false);
-            button.addActionListener(e -> {
-                Panel2 chatFrame = new Panel2(busBO, chat);
-                showPanel(chatFrame);
-            });
-            chatPanel.add(button, BorderLayout.EAST);
-            buttons.add(button);
-            chatPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, chatPanel.getPreferredSize().height));
-            chatPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            boardChats.add(chatPanel);
+                JTextArea chatInfo = new JTextArea();
+                chatInfo.setOpaque(false);
+                chatInfo.setEditable(false);
+                chatInfo.setFocusable(false);
+                chatInfo.setLineWrap(true);
+                chatInfo.setWrapStyleWord(true);
+                chatInfo.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                chatInfo.setMaximumSize(new Dimension(400, 100));
+                chatInfo.setText(chat.getChatName());
+                chatPanel.add(chatInfo, BorderLayout.CENTER);
+
+                JButton button = new JButton("+");
+                button.setForeground(chatInfo.getCaretColor());
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorderPainted(false);
+                button.setFocusCycleRoot(false);
+                button.setFocusPainted(false);
+                button.setFocusable(false);
+                button.addActionListener(e -> {
+                    Panel2 chatFrame = new Panel2(busBO, chat);
+                    showPanel(chatFrame);
+                });
+                chatPanel.add(button, BorderLayout.EAST);
+                buttons.add(button);
+                chatPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, chatPanel.getPreferredSize().height));
+                chatPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                boardChats.add(chatPanel);
+            }
+
+            boardChats.revalidate();
+            boardChats.repaint();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        boardChats.revalidate();
-        boardChats.repaint();
-    } catch (ExceptionService ex) {
-        Logger.getLogger(CreateContact.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
-    
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            Configfrm config=new Configfrm(this,busBO);
+            Configfrm config = new Configfrm(this, busBO);
             config.show();
         } catch (ExceptionService ex) {
             Logger.getLogger(Chatsfrm.class.getName()).log(Level.SEVERE, null, ex);
@@ -360,24 +372,23 @@ public class Chatsfrm extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        CreateContact contact=new CreateContact(busBO);
+        CreateContact contact = new CreateContact(busBO);
         contact.show();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void BontonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BontonPerfilActionPerformed
         // TODO add your handling code here:
-        EditProfile editP=new EditProfile(busBO);
+        EditProfile editP = new EditProfile(busBO);
         editP.show();
         this.dispose();
     }//GEN-LAST:event_BontonPerfilActionPerformed
 
-
-    private void showPanel(JPanel p){
+    private void showPanel(JPanel p) {
         p.setSize(620, 530);
         p.setLocation(0, 0);
         dashBoard.removeAll();
-        dashBoard.add(p, new org.netbeans.lib.awtextra.AbsoluteConstraints(0,0,-1,-1));
+        dashBoard.add(p, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         dashBoard.revalidate();
         dashBoard.repaint();
     }
