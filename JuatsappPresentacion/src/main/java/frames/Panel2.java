@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,6 +37,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.bson.types.ObjectId;
 import service.BusinessBO;
 
 
@@ -47,27 +50,76 @@ public class Panel2 extends javax.swing.JPanel {
     private ChatDTO chat;
     private List<MessageDTO> messages;
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("hh:mm a");
-    public javax.swing.Timer timer; 
-    
+    public javax.swing.Timer timer;  
+    private int PAGE_SIZE = 5; 
+    private int currentPage = 0;
+
     /**
      * Creates new form Panel2
      */
     public Panel2(BusinessBO busBO, ChatDTO chat) {
-        initComponents();
-        this.busBO=busBO;
-        this.chat=chat;
-        textName.setText("   "+chat.getChatName());
-        jButton1.setText("");
-        byte[] profileImageBytes = chat.getChatImage();
+        try {
+            initComponents();
+            this.busBO=busBO;
+            this.chat=chat;
+            JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
+            verticalScrollBar.setValue(100);
+            dashBoard.setVerticalScrollBar(verticalScrollBar);
+            
+            
+            List<ObjectId> ids=chat.getParticipants();
+            List<ObjectId> contacts = busBO.getUserById(busBO.getId()).getContactosDTO();
+            UserDTO user=new UserDTO();
+            boolean hasChat = false;
+            if(contacts!=null){
+                System.out.println("1");
+                for(ObjectId idP : ids){
+                    if(idP.equals(busBO.getId())){
+                    } else {
+                        user=busBO.getUserById(idP);
+                        System.out.println("hola 1");
+                    }
+                }
+                
+                for (ObjectId id : contacts) {
+                    for(ObjectId idP : ids){
+                        if (idP != null && id != null) {
+                            if(id.equals(idP)){
+                                hasChat = true;
+                                user=busBO.getUserById(idP);
+                            }
+                        }else{
+                            if(idP!=(busBO.getId())){
+                                user=busBO.getUserById(idP);
+                            }
+                        }
+                    }
+                }   
+            }
+               
+            if(!hasChat){
+                System.out.println("hola "+ user.getPhone());
+                textName.setText("   "+ user.getPhone());
+            }else{
+                textName.setText("   "+chat.getChatName());
+            }
+            jButton1.setText("");
+            byte[] profileImageBytes = chat.getChatImage();
             
             ImageIcon icon = new ImageIcon(profileImageBytes);
-
+            
             Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        jButton1.setIcon(scaledIcon);
-        setMessages(); 
-        timer = new javax.swing.Timer(5000, e -> setMessages());
-        timer.start();
+            jButton1.setIcon(scaledIcon);
+            
+            
+            setMessages();
+            timer = new javax.swing.Timer(5000, e -> setMessages());
+            timer.start();
+            initialize();
+        } catch (ExceptionService ex) {
+            Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -79,20 +131,24 @@ public class Panel2 extends javax.swing.JPanel {
     
     private void setMessages() {
             try {
-               messages = busBO.getAllMessagesByChat(chat.getId());
-                System.out.println(messages.size());
-               messages.sort(Comparator.comparing(MessageDTO::getTimestamp));
-               showMessages();
+            List<MessageDTO> allMessages = busBO.getAllMessagesByChat(chat.getId());
+            allMessages.sort((m1, m2) -> m2.getTimestamp().compareTo(m1.getTimestamp()));
+            int fromIndex = currentPage * PAGE_SIZE;
+            int toIndex = Math.min(fromIndex + PAGE_SIZE, allMessages.size());
+            
+            messages = allMessages.subList(fromIndex, toIndex);
+            
+            showMessages(currentPage == 0);
            } catch (ExceptionService ex) {
                Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
            }
        }
 
-    private void showMessages() {
+    private void showMessages(boolean scrollToBottom) {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             
-            for (int i = 0; i < messages.size(); i++) {
+            for (int i = messages.size() - 1; i >= 0; i--) {
                 MessageDTO message = messages.get(i);
                 JPanel messagePanel = new JPanel();
                 messagePanel.setLayout(new BorderLayout());
@@ -204,11 +260,52 @@ public class Panel2 extends javax.swing.JPanel {
             dashBoard.setViewportView(panel);
             dashBoard.revalidate();
             dashBoard.repaint();
-            SwingUtilities.invokeLater(() -> {
-                JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
-                verticalScrollBar.setValue(verticalScrollBar.getMaximum());
-            });
+            
+               if (scrollToBottom) {
+               SwingUtilities.invokeLater(() -> {
+                   JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
+                   verticalScrollBar.setValue(100);
+               });
+           }
         }
+    
+       public void initialize() {
+       
+        AdjustmentListener adjustmentListener = new AdjustmentListener() {
+            int count=0;
+             @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                JScrollBar scrollBar = (JScrollBar) e.getAdjustable();
+                if(scrollBar.getValue()==0){
+                    count++;
+                }else{
+                    count=0;
+                }
+                int currentValue = scrollBar.getValue();
+                 System.out.println(count);
+                if ( count==2) {
+                    loadNextPage();
+                }
+            }
+        };
+        
+        dashBoard.getVerticalScrollBar().addAdjustmentListener(adjustmentListener);
+        currentPage = 0;
+        setMessages();
+    }
+    
+    public void loadNextPage() {
+         System.out.println("mas mensajes cargados");
+         PAGE_SIZE++;  
+         setMessages();
+    }
+
+    public void loadPreviousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            setMessages();
+        }
+    }
        
        public void editOrEliminatedImageM(MessageDTO message){
          try {
