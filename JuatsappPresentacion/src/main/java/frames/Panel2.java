@@ -278,11 +278,10 @@ public class Panel2 extends javax.swing.JPanel {
                 JScrollBar scrollBar = (JScrollBar) e.getAdjustable();
                 if(scrollBar.getValue()==0){
                     count++;
+                    System.out.println(count);
                 }else{
                     count=0;
                 }
-                int currentValue = scrollBar.getValue();
-                 System.out.println(count);
                 if ( count==2) {
                     loadNextPage();
                 }
