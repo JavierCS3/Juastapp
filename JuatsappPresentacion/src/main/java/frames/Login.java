@@ -291,7 +291,6 @@ public class Login extends javax.swing.JFrame {
         try {
             System.out.println(txtNumber.getText()+" "+textPassword.getText());
             busBO.login(txtNumber.getText(), textPassword.getText());
-            JOptionPane.showMessageDialog(this, "Cuenta iniciada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             Chatsfrm chat=new Chatsfrm(busBO);
             chat.show();
             this.dispose();

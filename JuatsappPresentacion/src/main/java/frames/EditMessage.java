@@ -29,6 +29,7 @@ public class EditMessage extends javax.swing.JDialog {
         initComponents();
         this.busBO=busBO;
         this.messages=message;
+        txt.setText(message.getText());
         this.setLocationRelativeTo(null);
     }
 
@@ -105,7 +106,7 @@ public class EditMessage extends javax.swing.JDialog {
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         try {
-            int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres editar tu perfil?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres editar el mensaje?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
                 messages.setText(txt.getText());
                 
