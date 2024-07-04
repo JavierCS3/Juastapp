@@ -129,6 +129,10 @@ public class Panel2 extends javax.swing.JPanel {
         super.finalize();
     }
     
+    /**
+     * Método para asignar mensajes en el chat
+     * 
+     */
     private void setMessages() {
             try {
             List<MessageDTO> allMessages = busBO.getAllMessagesByChat(chat.getId());
@@ -144,6 +148,10 @@ public class Panel2 extends javax.swing.JPanel {
            }
        }
 
+    /**
+     * Método para mostrar los mensajes
+     * @param scrollToBottom 
+     */
     private void showMessages(boolean scrollToBottom) {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -269,6 +277,7 @@ public class Panel2 extends javax.swing.JPanel {
            }
         }
     
+        
        public void initialize() {
        
         AdjustmentListener adjustmentListener = new AdjustmentListener() {
@@ -306,6 +315,10 @@ public class Panel2 extends javax.swing.JPanel {
         }
     }
        
+    /**
+     * Método para eliminar o editar una imagen
+     * @param message 
+     */
        public void editOrEliminatedImageM(MessageDTO message){
          try {
             String[] options = {"Eliminar", "Cancelar"};
@@ -340,6 +353,11 @@ public class Panel2 extends javax.swing.JPanel {
         }
         }
        
+       
+    /**
+     * Método para editar o eliminar un mensaje
+     * @param message 
+     */   
     public void editOrEliminated(MessageDTO message){
         try {
             String[] options = {"Editar", "Eliminar", "Cancelar"};
