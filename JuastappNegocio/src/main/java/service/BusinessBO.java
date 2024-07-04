@@ -74,7 +74,7 @@ public class BusinessBO implements IControllerBusiness{
     /**
      * Método que obtiene un usuario por teléfono
      * @param phone telefono para buscar
-     * @return
+     * @return regresa el teléfono por usuario
      * @throws ExceptionService 
      * 
      */
@@ -101,7 +101,7 @@ public class BusinessBO implements IControllerBusiness{
 
     /**
      * Método para obtener todos los mensajes del chat
-     * @param chatId
+     * @param chatId id del chat
      * @return regresa los mensajes
      * @throws ExceptionService 
      */
@@ -142,7 +142,7 @@ public class BusinessBO implements IControllerBusiness{
 
     /**
      * Método para eliminar un chat por id
-     * @param chatId 
+     * @param chatId id de l chat
      * @throws ExceptionService
      * 
      */
@@ -181,7 +181,7 @@ public class BusinessBO implements IControllerBusiness{
 
     /**
      * Método para obtener un id
-     * @return 
+     * @return regresa el id
      */
     @Override
     public ObjectId getId() {
@@ -190,7 +190,7 @@ public class BusinessBO implements IControllerBusiness{
 
     /**
      * Método para asginar un id
-     * @param id 
+     * @param id id a asignar
      */
     @Override
     public void setId(ObjectId id) {
@@ -200,7 +200,7 @@ public class BusinessBO implements IControllerBusiness{
     /**
      * Método para actualizar un usuario
      * @param user recibe un objeto de la clase UserDTO
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      */
     @Override
     public void updateUser(UserDTO user) throws ExceptionService{
@@ -221,8 +221,8 @@ public class BusinessBO implements IControllerBusiness{
    
     /**
      *
-     * @param id
-     * @return
+     * @param id del chat
+     * @return regrea el chat del usuario
      * @throws ExceptionService
      */
     @Override
@@ -230,6 +230,11 @@ public class BusinessBO implements IControllerBusiness{
         return service.getChatByUser(id);
     }
     
+    /**
+     * Actualiza los contactos del usuario
+     * @param user usuario para obtener sus contactos
+     * @throws ExceptionService lanza una excepción tipo servicio
+     */
     @Override
     public void updateUserContacts(UserDTO user) throws ExceptionService{
         service.updateUserContacts(user);

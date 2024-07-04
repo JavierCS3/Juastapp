@@ -99,21 +99,21 @@ public interface IControllerBusiness {
     public UserDTO login(String phoneNumber, String password) throws ExceptionService;
     
     /**
-     *
-     * @return
+     * Método para obtener el id
+     * @return regresa el id
      */
     public ObjectId getId();
 
     /**
-     *
-     * @param id
+     * Método para asignar el id
+     * @param id id a asignar
      */
     public void setId(ObjectId id);
     
     /**
-     *
-     * @param user
-     * @throws ExceptionService
+     * Método para actualizar el usuario
+     * @param user usuario a actualizar
+     * @throws ExceptionService lanza una excepión tipo ExceptionService
      */
     public void updateUser(UserDTO user) throws ExceptionService;
     
@@ -126,12 +126,17 @@ public interface IControllerBusiness {
    public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService;
    
     /**
-     *
-     * @param id
-     * @return
-     * @throws ExceptionService
+     * Método para obtener chat por usuario
+     * @param id id del usuairo
+     * @return regresa el chat
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      */
     public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService;
     
+    /**
+     * Método para actualizar los contactos del usuario
+     * @param user usuario para actualizar sus contactos
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
+     */
     public void updateUserContacts(UserDTO user) throws ExceptionService;
 }
