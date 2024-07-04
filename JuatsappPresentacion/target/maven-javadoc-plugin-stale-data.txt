@@ -1,0 +1,61 @@
+@options
+@packages
+-classpath
+'/Users/usuario2/.m2/repository/com/mycompany/JuastappNegocio/1.0-SNAPSHOT/JuastappNegocio-1.0-SNAPSHOT.jar:/Users/usuario2/.m2/repository/com/mycompany/JuastappPersistencia/1.0-SNAPSHOT/JuastappPersistencia-1.0-SNAPSHOT.jar:/Users/usuario2/.m2/repository/org/mongodb/mongo-java-driver/3.10.2/mongo-java-driver-3.10.2.jar:/Users/usuario2/.m2/repository/org/mongodb/bson/3.10.2/bson-3.10.2.jar:/Users/usuario2/.m2/repository/org/mongodb/mongodb-driver-core/3.10.2/mongodb-driver-core-3.10.2.jar:/Users/usuario2/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar:/Users/usuario2/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE90/AbsoluteLayout-RELEASE90.jar:/Users/usuario2/.m2/repository/unknown/binary/RSCalendar-v2.0/SNAPSHOT/RSCalendar-v2.0-SNAPSHOT.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'JuatsappPresentacion 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'JuatsappPresentacion 1.0-SNAPSHOT API'
+frames
+Exceptions
+utilerias
+run
+com.mycompany.juatsapppresentacion
+/Users/usuario2/.m2/repository/com/mycompany/JuastappNegocio/1.0-SNAPSHOT/JuastappNegocio-1.0-SNAPSHOT.jar = 1720071374596
+/Users/usuario2/.m2/repository/com/mycompany/JuastappPersistencia/1.0-SNAPSHOT/JuastappPersistencia-1.0-SNAPSHOT.jar = 1720071365695
+/Users/usuario2/.m2/repository/org/mongodb/mongo-java-driver/3.10.2/mongo-java-driver-3.10.2.jar = 1554730078000
+/Users/usuario2/.m2/repository/org/mongodb/bson/3.10.2/bson-3.10.2.jar = 1554729775000
+/Users/usuario2/.m2/repository/org/mongodb/mongodb-driver-core/3.10.2/mongodb-driver-core-3.10.2.jar = 1554729849000
+/Users/usuario2/.m2/repository/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar = 1644327230000
+/Users/usuario2/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE90/AbsoluteLayout-RELEASE90.jar = 1555537659000
+/Users/usuario2/.m2/repository/unknown/binary/RSCalendar-v2.0/SNAPSHOT/RSCalendar-v2.0-SNAPSHOT.jar = 1719944348151
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/src/main/java = 1719803824577
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/tag-search-index.js = 1720071902815
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/overview-tree.html = 1720071902761
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/module-search-index.js = 1720071902811
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/index.html = 1720071902768
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/package-search-index.js = 1720071902812
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/link.svg = 1720071902875
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/serialized-form.html = 1720071902677
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/index-all.html = 1720071902851
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/allpackages-index.html = 1720071902810
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/member-search-index.js = 1720071902815
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/copy.svg = 1720071902875
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/script.js = 1720071902873
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/stylesheet.css = 1720071902872
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/search-page.js = 1720071902881
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/overview-summary.html = 1720071902856
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/help-doc.html = 1720071902870
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/element-list = 1720071902422
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/search.html = 1720071902854
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/allclasses-index.html = 1720071902807
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/type-search-index.js = 1720071902813
+/Users/usuario2/Documents/GitHub/Juastapp/JuatsappPresentacion/target/site/apidocs/search.js = 1720071902878

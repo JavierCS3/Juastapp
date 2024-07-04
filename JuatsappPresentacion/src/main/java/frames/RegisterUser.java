@@ -129,8 +129,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(18, 140, 126));
         jLabel4.setText("CREAR CUENTA");
 
-        txtUser.setBackground(new java.awt.Color(255, 255, 255));
-        txtUser.setForeground(new java.awt.Color(0, 0, 0));
         txtUser.setToolTipText("");
         txtUser.setActionCommand("<Not Set>");
         txtUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -152,8 +150,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(18, 140, 126));
         jLabel6.setText("Numero de telefono");
 
-        txtNumber.setBackground(new java.awt.Color(255, 255, 255));
-        txtNumber.setForeground(new java.awt.Color(0, 0, 0));
         txtNumber.setToolTipText("");
         txtNumber.setActionCommand("<Not Set>");
         txtNumber.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -178,8 +174,6 @@ public class RegisterUser extends javax.swing.JFrame {
         date.setColorSelForeground(new java.awt.Color(0, 0, 0));
         date.setColorTextDiaActual(new java.awt.Color(0, 0, 0));
 
-        txtPas.setBackground(new java.awt.Color(255, 255, 255));
-        txtPas.setForeground(new java.awt.Color(0, 0, 0));
         txtPas.setToolTipText("");
         txtPas.setActionCommand("<Not Set>");
         txtPas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -196,7 +190,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(18, 140, 126));
         jLabel8.setText("Genero:");
 
-        gener.setBackground(new java.awt.Color(255, 255, 255));
         gener.setForeground(new java.awt.Color(18, 140, 126));
         gener.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", "Binario", "Caballo", "Otro" }));
 
@@ -210,8 +203,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(18, 140, 126));
         jLabel11.setText("Contraseña:");
 
-        txtStreet.setBackground(new java.awt.Color(255, 255, 255));
-        txtStreet.setForeground(new java.awt.Color(0, 0, 0));
         txtStreet.setToolTipText("");
         txtStreet.setActionCommand("<Not Set>");
         txtStreet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -233,8 +224,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(18, 140, 126));
         jLabel13.setText("Codigo postal");
 
-        txtHnumber.setBackground(new java.awt.Color(255, 255, 255));
-        txtHnumber.setForeground(new java.awt.Color(0, 0, 0));
         txtHnumber.setToolTipText("");
         txtHnumber.setActionCommand("<Not Set>");
         txtHnumber.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -251,8 +240,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(18, 140, 126));
         jLabel14.setText("Numero de casa");
 
-        txtCode.setBackground(new java.awt.Color(255, 255, 255));
-        txtCode.setForeground(new java.awt.Color(0, 0, 0));
         txtCode.setToolTipText("");
         txtCode.setActionCommand("<Not Set>");
         txtCode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -269,8 +256,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(18, 140, 126));
         jLabel15.setText("Colonia");
 
-        txtC.setBackground(new java.awt.Color(255, 255, 255));
-        txtC.setForeground(new java.awt.Color(0, 0, 0));
         txtC.setToolTipText("");
         txtC.setActionCommand("<Not Set>");
         txtC.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -287,8 +272,6 @@ public class RegisterUser extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(18, 140, 126));
         jLabel16.setText("Coordenadas");
 
-        txtCoords.setBackground(new java.awt.Color(255, 255, 255));
-        txtCoords.setForeground(new java.awt.Color(0, 0, 0));
         txtCoords.setToolTipText("");
         txtCoords.setActionCommand("<Not Set>");
         txtCoords.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
@@ -320,7 +303,6 @@ public class RegisterUser extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(37, 211, 102));
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\290120_account_avatar_man_profile_user_icon.png")); // NOI18N
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -417,10 +399,11 @@ public class RegisterUser extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtStreet, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtHnumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(txtHnumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPas, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -440,13 +423,10 @@ public class RegisterUser extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8197847_whatsapp_social network_communication_message_interaction_icon.png")); // NOI18N
-
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("JUATSAPP");
 
-        jButton4.setIcon(new javax.swing.ImageIcon("D:\\Netbeans\\Juastapp\\JuatsappPresentacion\\src\\main\\java\\utilerias\\8666595_x_icon.png")); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setFocusable(false);
