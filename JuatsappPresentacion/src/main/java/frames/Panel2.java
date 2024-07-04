@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
@@ -134,14 +135,19 @@ public class Panel2 extends javax.swing.JPanel {
      * 
      */
     private void setMessages() {
-            try {
+             try {
             List<MessageDTO> allMessages = busBO.getAllMessagesByChat(chat.getId());
             allMessages.sort((m1, m2) -> m2.getTimestamp().compareTo(m1.getTimestamp()));
+
             int fromIndex = currentPage * PAGE_SIZE;
             int toIndex = Math.min(fromIndex + PAGE_SIZE, allMessages.size());
-            
-            messages = allMessages.subList(fromIndex, toIndex);
-            
+
+            if (fromIndex >= allMessages.size()) {
+                messages = Collections.emptyList();
+            } else {
+                messages = allMessages.subList(fromIndex, toIndex);
+            }
+
             showMessages(currentPage == 0);
            } catch (ExceptionService ex) {
                Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
@@ -260,21 +266,17 @@ public class Panel2 extends javax.swing.JPanel {
                 panel.add(messagePanel);
             }
 
-            if (messages.isEmpty()) {
-                panel.setBackground(new Color(236, 229, 221));
-            } else {
-                panel.setBackground(new Color(236, 229, 221));
-            }
-            dashBoard.setViewportView(panel);
-            dashBoard.revalidate();
-            dashBoard.repaint();
-            
-               if (scrollToBottom) {
-               SwingUtilities.invokeLater(() -> {
-                   JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
-                   verticalScrollBar.setValue(100);
-               });
-           }
+            panel.setBackground(new Color(236, 229, 221));
+            SwingUtilities.invokeLater(() -> {
+                dashBoard.setViewportView(panel);
+                dashBoard.revalidate();
+                dashBoard.repaint();
+
+                if (scrollToBottom) {
+                    JScrollBar verticalScrollBar = dashBoard.getVerticalScrollBar();
+                    verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+                }
+            });
         }
     
         
@@ -443,7 +445,6 @@ public class Panel2 extends javax.swing.JPanel {
         });
 
         txt.setBackground(new java.awt.Color(234, 234, 234));
-        txt.setForeground(new java.awt.Color(0, 0, 0));
         txt.setBorder(null);
         txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -511,7 +512,6 @@ public class Panel2 extends javax.swing.JPanel {
 
         textName.setBackground(new java.awt.Color(0, 0, 0));
         textName.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
-        textName.setForeground(new java.awt.Color(0, 0, 0));
         textName.setText("Name");
         jPanel3.add(textName, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
@@ -530,7 +530,6 @@ public class Panel2 extends javax.swing.JPanel {
         jPanel3.add(buttonConfigChat, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, 1, 620, 70));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("...");
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, -10, 40, 70));
 
