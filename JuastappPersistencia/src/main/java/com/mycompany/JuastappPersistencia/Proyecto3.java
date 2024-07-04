@@ -12,11 +12,15 @@ import conexion.ConexionBD;
 import org.bson.Document;
 
 /**
- *
+ * Clase main
  * @author PC Gamer
  */
 public class Proyecto3 {
 
+    /**
+     * Método main
+     * @param args argumentos
+     */
     public static void main(String[] args) {
         ConexionBD conexion = new ConexionBD();
         MongoDatabase database = conexion.getDatabase();

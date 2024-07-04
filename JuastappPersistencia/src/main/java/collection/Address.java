@@ -5,7 +5,7 @@
 package collection;
 
 /**
- *
+ * Clase de la dirección del usuario
  * @author PC Gamer
  */
 public class Address  {
@@ -38,6 +38,7 @@ public class Address  {
      * @param zipCode código postal del usuario
      * @param country pais del usuario
      * @param hNumber número de casa del usuario
+     * @param coordinates coordenadas del usuario
      * 
      */
     public Address (String street, String city, String zipCode, String country,String hNumber,Coordinates coordinates) {

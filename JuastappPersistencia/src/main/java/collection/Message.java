@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 
 /**
  * Clase que representa un mensaje en un chat.
- * @autor PC Gamer
+ * 
  */
 public class Message {
     private ObjectId id;

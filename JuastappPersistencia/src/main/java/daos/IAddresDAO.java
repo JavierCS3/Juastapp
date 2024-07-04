@@ -5,9 +5,10 @@
 package daos;
 
 /**
- *
+ * Interfaz AdressDAO
  * @author PC Gamer
  */
 public class IAddresDAO {
+    
     
 }
