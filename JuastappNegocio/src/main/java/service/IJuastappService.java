@@ -100,21 +100,21 @@ public interface IJuastappService {
     public void updateMessage(MessageDTO message) throws ExceptionService;
     
     /**
-     *
-     * @return
+     * Método para obtener el id
+     * @return regresa el id
      */
     public ObjectId getId();
 
     /**
-     *
-     * @param id
+     * Método para asignar un id
+     * @param id id a asignar
      */
     public void setId(ObjectId id);
     
     /**
-     *
-     * @param user
-     * @throws exceptions.ExceptionService
+     * Método para actualizar un usuario
+     * @param user usuario a actualizar
+     * @throws exceptions.ExceptionService lanza una excepcion tipo ExceptionService
      */
     public void updateUser(UserDTO user) throws ExceptionService;
     
@@ -127,12 +127,17 @@ public interface IJuastappService {
    public List<ChatDTO> getChatsByParticipants(List<ObjectId> participantIds) throws ExceptionService;
    
     /**
-     *
-     * @param id
-     * @return
-     * @throws ExceptionService
+     * Métofo para obtener chat por usuario
+     * @param id id para obtener el chat
+     * @return regresa el chat obtenido
+     * @throws ExceptionService lanza una excepcion tipo ExceptionService
      */
     public List<ChatDTO> getChatByUser(ObjectId id)throws ExceptionService;
     
+    /**
+     * Método para actualizar los contactos del usuario
+     * @param user usuario para actualizar los contactos
+     * @throws ExceptionService lanza una excepción tipo ExceptionServcie
+     */
     public void updateUserContacts(UserDTO user) throws ExceptionService;
 }

@@ -181,14 +181,26 @@ public class Address  {
         return country;
     }
 
+    /**
+     * Método para obtener las coordenadas
+     * @return regresa las coordenadsa
+     */
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    /**
+     * Método para asignar las coordenadas
+     * @param coordinates cordenadas para asignar
+     */
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
 
+    /**
+     * Método que regresa la cadena con los datos 
+     * @return cadena con la dirección
+     */
     @Override
     public String toString() {
         return "Addres{" + "street=" + street + ", city=" + city + ", zipCode=" + zipCode + ", country=" + country + ", hNumber=" + hNumber + ", coordinates=" + coordinates + '}';

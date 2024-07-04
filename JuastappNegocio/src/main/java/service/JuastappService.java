@@ -37,9 +37,9 @@ public class JuastappService implements IJuastappService{
     
     /**
      * Método constructor que inicializa las variables de clase
-     * @param userDAO
-     * @param messageDAO
-     * @param chatDAO 
+     * @param userDAO variable para acceder alos métodos de la clase userDAO
+     * @param messageDAO variable para acceder alos métodos de la clase umessageDAO
+     * @param chatDAO variable para acceder alos métodos de la clase chatDAO
      */
     public JuastappService(UserDAO userDAO, MessageDAO messageDAO, ChatDAO chatDAO) {
         this.userDAO=userDAO;
@@ -52,7 +52,7 @@ public class JuastappService implements IJuastappService{
     /**
      * Método para crear mensajes
      * @param messageDTO recibe objeto de la clase MessageDTO
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -71,7 +71,7 @@ public class JuastappService implements IJuastappService{
      * Método para obtener todo los mensajes de chat
      * @param chatId recibe un objeto de la clase ObjectID
      * @return regresa la lista de mensajes
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -97,7 +97,7 @@ public class JuastappService implements IJuastappService{
     /**
      * Método para crear un usuario
      * @param userDTO recibe un objeto de la clase UserDTO
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -119,7 +119,7 @@ public class JuastappService implements IJuastappService{
      * Obtiene un usuario por id
      * @param userDI recibe un objeto de la clase ObjectID
      * @return regresa el usuario 
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -142,8 +142,8 @@ public class JuastappService implements IJuastappService{
     /**
      * Método para obtener un usuario por teléfono
      * @param phone teléfono para buscar el usuario
-     * @return
-     * @throws ExceptionService 
+     * @return regresael usuario obtenido
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -162,6 +162,12 @@ public class JuastappService implements IJuastappService{
         return null;
     }
 
+    /**
+     * Método para crear el chat
+     * @param chat chat a crear
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
+     * 
+     */
     @Override
     public void createChat(ChatDTO chat) throws ExceptionService {
         if(chat!=null){
@@ -175,6 +181,11 @@ public class JuastappService implements IJuastappService{
         System.out.println("El chat es nulo: "+chat);
     }
 
+    /**
+     * Método para actualizar el chat
+     * @param chat chat a actulizar
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
+     */
     @Override
     public void updateChat(ChatDTO chat) throws ExceptionService {
         if(chat!=null){
@@ -191,7 +202,7 @@ public class JuastappService implements IJuastappService{
     /**
      * Método para eliminar un chat por id
      * @param chatId objeto de la clase ObjectId
-     * @throws ExceptionService
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -229,7 +240,7 @@ public class JuastappService implements IJuastappService{
      * Método para actualizar un mensaje
      * 
      * @param message mensaje a actualizar
-     * @throws ExceptionService 
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -249,8 +260,8 @@ public class JuastappService implements IJuastappService{
      * Método para iniciar sesión 
      * @param phoneNumber teléfono para ingresar
      * @param password contraseña del usuario
-     * @return 
-     * @throws ExceptionService 
+     * @return regresa el usuario
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -274,7 +285,7 @@ public class JuastappService implements IJuastappService{
 
     /**
      * Método para obtener un id
-     * @return 
+     * @return regresa el id
      */
     @Override
     public ObjectId getId() {
@@ -283,7 +294,7 @@ public class JuastappService implements IJuastappService{
 
     /**
      * Método para asignar un id
-     * @param id 
+     * @param id id a asignar
      * 
      */
     @Override
@@ -293,7 +304,7 @@ public class JuastappService implements IJuastappService{
     
     /**
      * Método para actualizar un usuario
-     * @param user
+     * @param user usuario a actualizar
      * 
      */
     @Override
@@ -310,8 +321,8 @@ public class JuastappService implements IJuastappService{
     
     /**
      * Método para actualizar un usuario
-     * @param user
-     * @throws exceptions.ExceptionService
+     * @param user usuario para actualizar los contactos
+     * @throws exceptions.ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -330,9 +341,9 @@ public class JuastappService implements IJuastappService{
     
     /**
      * Método para obtener por participantes
-     * @param participantIds
-     * @return
-     * @throws ExceptionService
+     * @param participantIds lista de participantes
+     * @return regresa los chats por participantes
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
@@ -352,9 +363,9 @@ public class JuastappService implements IJuastappService{
     
     /**
      * Método para obtener un chat por usuario
-     * @param id
-     * @return
-     * @throws ExceptionService
+     * @param id id para obtener los chats por usuario
+     * @return regresa los chats obtenidos
+     * @throws ExceptionService lanza una excepción tipo ExceptionService
      * 
      */
     @Override
