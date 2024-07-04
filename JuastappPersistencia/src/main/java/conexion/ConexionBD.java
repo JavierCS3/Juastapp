@@ -19,10 +19,16 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
  */
 public class ConexionBD implements IConexionBD {
 
+    /**
+     * Creación de las variables de clase
+     */
     private MongoClient mongoClient;
     private MongoDatabase database;
     private boolean connected;
 
+    /**
+     * Método constructor de la conexión
+     */
     public ConexionBD() {
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -70,7 +76,10 @@ public class ConexionBD implements IConexionBD {
         }
     }
 
-    
+    /**
+     * Método para ver si está conectado
+     * @return regresa si está contectado o no
+     */
     @Override
     public boolean isConnected() {
         return connected;

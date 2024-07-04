@@ -80,5 +80,10 @@ public interface IUserDAO {
     */
     public User getUserByPhoneNumber(String phoneNumber) throws ExceptionPersistencia;
     
+    /**
+     * Método para actualizar los contactos
+     * @param user usuario para actualizar sus contactos
+     * @throws ExceptionPersistencia lanza una excepción tipo ExceptionPersistencia
+     */
     public void updateUserContacts(User user) throws ExceptionPersistencia;
 }
