@@ -33,6 +33,7 @@ public class AddresDTO {
      * @param street Calle de la dirección.
      * @param city Ciudad de la dirección.
      * @param country País pero lo manejamos como colonia de la dirección.
+     * @param hNumber Número de casa
      * @param zipCode Código postal de la dirección.
      */
     public AddresDTO(String street, String city, String country, String hNumber,String zipCode) {
@@ -75,10 +76,18 @@ public class AddresDTO {
         this.city = city;
     }
 
+    /**
+     * Método para obtener el número de casa
+     * @return regresa el nñumero de casa
+     */
     public String gethNumber() {
         return hNumber;
     }
 
+    /**
+     * Asignar el número de casa
+     * @param hNumber número de casa a asignar
+     */
     public void sethNumber(String hNumber) {
         this.hNumber = hNumber;
     }
@@ -131,18 +140,34 @@ public class AddresDTO {
         this.country = country;
     }
 
+    /**
+     * Método para obtener la latitud
+     * @return regresa la latitud
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Método para asignar la latitud
+     * @param latitude latitud a asignar
+     */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     * Método para obtener la longitud
+     * @return regresa la longitud
+     */
     public double getLongitude() {
         return longitude;
     }
 
+    /**
+     * Método para asignar la longitud
+     * @param longitude longitud a asignar
+     */
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
