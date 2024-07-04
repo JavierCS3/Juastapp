@@ -57,85 +57,165 @@ public class User {
 
     // Getters and setters for all fields (omitted for brevity)
 
+    /**
+     * Método para obtener un id
+     * @return regresa el id obtenido
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * método para asignar un id
+     * @param id id a asignar
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Método para obtener un usuario
+     * @return regresa el usuario obtenido
+     * 
+     */
     public String getUser() {
         return user;
     }
 
+    /**
+     * 
+     * 
+     * Método para asignar un usuario
+     * @param user usuario a asignar
+     * 
+     */
     public void setUser(String user) {
         this.user = user;
     }
 
+    /**
+     * Método para obtener un teléfono
+     * @return regresa el teléfono
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Asigna un teléfono 
+     * @param phone teléfono a asignar
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Método para obtener una contraseña
+     * @return regresa la contraseña
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Método para asignar una contraseña
+     * @param password contraseña a asignar
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Método para obtener una fecha de nacimiento
+     * @return regresa la fecha de nacimiento
+     */
     public LocalDate getBirthDate() {
         return birthDate;
     }
 
+    /**
+     * Asigna una fecha de nacimiento
+     * @param birthDate fecha de nacimiento a asignar
+     */
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
+    /**
+     * Método para obtener una foto de perfil
+     * @return regresa la foto de perfil
+     */
     public byte[] getProfileImage() {
         return profileImage;
     }
 
+    /**
+     * Método para asignar una foto de perfil
+     * @param profileImage foto de perfil a asignar
+     */
     public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
     }
 
+    /**
+     * Método para obtener una dirección
+     * @return regresa la dirección 
+     */
     public Address  getAddress() {
         return address;
     }
 
+    /**
+     * Método para asignar una dirección
+     * @param address dirección a asignar
+     */
     public void setAddress(Address  address) {
         this.address = address;
     }
 
+    /**
+     * Método para obtener un género
+     * @return regresa el género
+     */
     public String getGender() {
         return gender;
     }
 
+    /**
+     * Método para obtener un género
+     * @param gender género a asignar
+     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
+    /**
+     * Método para obtener una fecha de creación
+     * @return regrea la fecha de creación
+     */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * Método para asignar una fecha de creación
+     * @param createdAt fecha de creado
+     */
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
+    /**
+     * Método para obtener los contactos
+     * @return regresa los contactos
+     */
     public List<ObjectId> getContactos() {
         return contactos;
     }
 
     /**
      * Asigna los contactos ala lista
-     * @param contactos 
+     * @param contactos lista de contactos
      * 
      */
     public void setContactos(List<ObjectId> contactos) {
