@@ -150,7 +150,7 @@ public class Panel2 extends javax.swing.JPanel {
 
     /**
      * Método para mostrar los mensajes
-     * @param scrollToBottom 
+     * @param scrollToBottom desplazar hasta el fondo
      */
     private void showMessages(boolean scrollToBottom) {
             JPanel panel = new JPanel();

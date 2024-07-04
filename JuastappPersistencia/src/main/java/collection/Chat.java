@@ -54,7 +54,7 @@ public class Chat {
      * 
      * Método para asignas un id
      * 
-     * @param id 
+     * @param id id del chat
      * 
      */
     public void setId(ObjectId id) {
@@ -76,7 +76,7 @@ public class Chat {
      * 
      * Método para asignar nombre a un chat
      * 
-     * @param chatName 
+     * @param chatName nombre del chat
      * 
      */
     public void setChatName(String chatName) {
@@ -124,7 +124,7 @@ public class Chat {
      * 
      * Tiempo cuando se crea el chat
      * 
-     * @return 
+     * @return regresa el chat creado
      */
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -134,7 +134,7 @@ public class Chat {
      * 
      * Método para asignar un hora al chat
      * 
-     * @param createdAt 
+     * @param createdAt hora para crear el chat
      * 
      */
     public void setCreatedAt(LocalDateTime createdAt) {

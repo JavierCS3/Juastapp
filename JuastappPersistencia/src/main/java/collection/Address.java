@@ -66,7 +66,7 @@ public class Address  {
      * 
      * Asigna el valor ala calle del usuario
      * 
-     * @param street 
+     * @param street calle del usuario
      * 
      */
     public void setStreet(String street) {
@@ -116,7 +116,7 @@ public class Address  {
      * 
      * Método para asignar el valor del código postal
      * 
-     * @param zipCode 
+     * @param zipCode código postal del usuario
      * 
      */
     public void setZipCode(String zipCode) {
