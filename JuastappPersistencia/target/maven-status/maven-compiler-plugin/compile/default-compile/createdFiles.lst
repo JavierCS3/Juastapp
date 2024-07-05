@@ -4,6 +4,7 @@ collection\Coordinates.class
 daos\ChatDAO.class
 daos\IMessageDAO.class
 daos\IAddresDAO.class
+collection\Participant.class
 daos\UserDAO.class
 collection\Message.class
 collection\User.class

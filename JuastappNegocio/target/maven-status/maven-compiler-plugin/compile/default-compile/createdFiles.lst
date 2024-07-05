@@ -5,6 +5,7 @@ service\BusinessBO.class
 exceptions\ExceptionService.class
 dtos\ChatDTO.class
 service\JuastappService.class
+dtos\ParticipantDTO.class
 service\IControllerBusiness.class
 service\IJuastappService.class
 dtos\MessageDTO.class
