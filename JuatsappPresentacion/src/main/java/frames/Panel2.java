@@ -109,14 +109,14 @@ public class Panel2 extends javax.swing.JPanel {
                 System.out.println("hola "+ user.getPhone());
                 textName.setText("   "+ user.getPhone());
             }else{
-                textName.setText("   "+chat.getChatName());
+                textName.setText("   "+user.getUser());
             }
             jButton1.setText("");
-            byte[] profileImageBytes = chat.getChatImage();
+            byte[] profileImageBytes = user.getProfileImage();
             
             ImageIcon icon = new ImageIcon(profileImageBytes);
             
-            Image scaledImage = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+            Image scaledImage = icon.getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImage);
             jButton1.setIcon(scaledIcon);
             
@@ -515,7 +515,7 @@ public class Panel2 extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         textName.setBackground(new java.awt.Color(0, 0, 0));
         textName.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
@@ -603,13 +603,15 @@ public class Panel2 extends javax.swing.JPanel {
             int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres elimar este chat? ", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(response1 == JOptionPane.YES_OPTION){
                 try {
-                    List<ParticipantDTO> participants=chat.getParticipants();
+                    List<ParticipantDTO> participants = chat.getParticipants();
+                    List<ParticipantDTO> newParticipants = new ArrayList<>();
                     for(ParticipantDTO participant: participants){
-                        if(busBO.getId().equals(participant.getUserId())){
+                        if(!busBO.getId().equals(participant.getUserId())){
                             participant.setDeleted(true);
                         }
+                        newParticipants.add(participant);
                     }
-                    chat.setParticipants(participants);
+                    chat.setParticipants(newParticipants);
                     busBO.updateChat(chat);
                     Chatsfrm chatsFrame = new Chatsfrm(busBO);
                     chatsFrame.show();

@@ -5,6 +5,7 @@
 package frames;
 
 import dtos.ChatDTO;
+import dtos.ParticipantDTO;
 import dtos.UserDTO;
 import exceptions.ExceptionService;
 import java.awt.Dimension;
@@ -130,20 +131,20 @@ public class CreateContact extends javax.swing.JFrame {
     
     public void CreateChatOrDeleteContact(UserDTO contact){
         try {
-            List<ChatDTO> chat1 = busBO.getChatByUser(busBO.getId());
-            List<ChatDTO> chat2 = busBO.getChatByUser(contact.getId());
-
+             List<ChatDTO> chats=busBO.getChatByUser(busBO.getId());
             boolean hasChat = false;
-
-            for (ChatDTO chatDTO1 : chat1) {
-                for (ChatDTO chatDTO2 : chat2) {
-                    if (chatDTO1 != null && chatDTO2 != null && chatDTO1.getId().equals(chatDTO2.getId())) {
-                        hasChat = true;
-                        break;
+            if (chats != null) {
+                for (ChatDTO chat : chats) {
+                    if ((chat.getParticipants().getFirst().getUserId().equals(busBO.getId()) || chat.getParticipants().getLast().getUserId().equals(busBO.getId())) &&
+                        (chat.getParticipants().getFirst().getUserId().equals(contact.getId()) || chat.getParticipants().getLast().getUserId().equals(contact.getId()))) {
+                        
+                        List<ParticipantDTO> participants = chat.getParticipants();
+                        for (ParticipantDTO participant : participants) {
+                            if (!participant.getUserId().equals(busBO.getId())) {
+                                hasChat = participant.isDeleted();
+                            }
+                        }
                     }
-                }
-                if (hasChat) {
-                    break;
                 }
             }
 

@@ -142,9 +142,39 @@ public class CreateChat extends javax.swing.JFrame {
             // TODO add your handling code here:
             int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres crear este chat?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            List<ChatDTO> chats=busBO.getChatByUser(busBO.getId());
+            ChatDTO chatExist = null;
+            System.out.println(busBO.getUserById(busBO.getId()).getUser());
+            if (chats != null) {
+                for (ChatDTO chat : chats) {
+                    if ((chat.getParticipants().getFirst().getUserId().equals(busBO.getId()) || chat.getParticipants().getLast().getUserId().equals(busBO.getId())) &&
+                        (chat.getParticipants().getFirst().getUserId().equals(user.getId()) || chat.getParticipants().getLast().getUserId().equals(user.getId()))) {
+                        
+                        List<ParticipantDTO> participants = chat.getParticipants();
+                        List<ParticipantDTO> newParticipants = new ArrayList<>();
+                        for (ParticipantDTO participant : participants) {
+                            if (!participant.getUserId().equals(busBO.getId())) {
+                                System.out.println("nombre de usuario que le cambiaria a false: "+busBO.getUserById(participant.getUserId()).getUser());
+                                participant.setDeleted(false);
+                                newParticipants.add(participant);
+                            }else{
+                                newParticipants.add(participant);
+                            }
+                        }
+                        System.out.println(newParticipants);
+                        chat.setParticipants(newParticipants);
+                        busBO.updateChat(chat);
+
+                        Chatsfrm chatfrm = new Chatsfrm(busBO);
+                        chatfrm.show();
+                        this.dispose();
+                        return;
+                    }
+                }
+            }
             
-            
-            byte[] icon = user.getProfileImage();
+            if(chatExist==null){
+                byte[] icon = user.getProfileImage();
             String name=user.getUser();
             
             
@@ -175,6 +205,7 @@ public class CreateChat extends javax.swing.JFrame {
             Chatsfrm chatfrm=new Chatsfrm(busBO);
             chatfrm.show();
             this.dispose();
+            }
         }
         } catch (ExceptionService ex) {
             Logger.getLogger(CreateChat.class.getName()).log(Level.SEVERE, null, ex);

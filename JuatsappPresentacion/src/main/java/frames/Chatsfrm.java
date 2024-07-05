@@ -294,15 +294,8 @@ public class Chatsfrm extends javax.swing.JFrame {
             chatPanel.setLayout(new BorderLayout());
             chatPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             chatPanel.setBackground(new Color(236, 229, 221));
-
-            byte[] chatImageBytes = chat.getChatImage();
-            ImageIcon icon = new ImageIcon(chatImageBytes);
-            Image scaledImage = icon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-            JLabel imageLabel = new JLabel(scaledIcon);
-            imageLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            chatPanel.add(imageLabel, BorderLayout.WEST);
+            
+           
 
             JTextArea chatInfo = new JTextArea();
             chatInfo.setOpaque(false);
@@ -357,13 +350,20 @@ public class Chatsfrm extends javax.swing.JFrame {
                         }
                     }
             }   
-            }
-               
+            }     
+             byte[] chatImageBytes = user.getProfileImage();
+            ImageIcon icon = new ImageIcon(chatImageBytes);
+            Image scaledImage = icon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            JLabel imageLabel = new JLabel(scaledIcon);
+            imageLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            chatPanel.add(imageLabel, BorderLayout.WEST);
+            
             if(!hasChat){
                 System.out.println("hola "+ user.getPhone());
                 chatInfo.setText( user.getPhone());
             }else{
-                chatInfo.setText(chat.getChatName());
+                chatInfo.setText(user.getUser());
             }
 
             chatPanel.add(chatInfo, BorderLayout.CENTER);
