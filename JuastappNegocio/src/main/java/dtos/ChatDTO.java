@@ -5,7 +5,10 @@
 package dtos;
 
 import collection.Chat;
+import collection.Participant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -20,8 +23,8 @@ public class ChatDTO {
     private ObjectId id;
     private String chatName;
     private byte[] chatImage;
-    private List<ObjectId> participants;
-    private LocalDateTime createdAt;
+    private List<ParticipantDTO> participants;
+    private Date createdAt;
 
     /**
      * Constructor por omisión.
@@ -36,7 +39,7 @@ public class ChatDTO {
      * @param participants Lista de participantes del chat representados por sus ID.
      * @param createdAt Fecha y hora de creación del chat.
      */
-    public ChatDTO(String chatName, byte[] chatImage, List<ObjectId> participants, LocalDateTime createdAt) {
+    public ChatDTO(String chatName, byte[] chatImage, List<ParticipantDTO> participants, Date createdAt) {
         this.chatName = chatName;
         this.chatImage = chatImage;
         this.participants = participants;
@@ -95,7 +98,7 @@ public class ChatDTO {
      * Obtiene la lista de participantes del chat.
      * @return Lista de participantes del chat representados por sus ID.
      */
-    public List<ObjectId> getParticipants() {
+    public List<ParticipantDTO> getParticipants() {
         return participants;
     }
 
@@ -103,7 +106,7 @@ public class ChatDTO {
      * Establece la lista de participantes del chat.
      * @param participants Lista de participantes del chat representados por sus ID.
      */
-    public void setParticipants(List<ObjectId> participants) {
+    public void setParticipants(List<ParticipantDTO> participants) {
         this.participants = participants;
     }
 
@@ -111,7 +114,7 @@ public class ChatDTO {
      * Obtiene la fecha y hora en la que se creó el chat.
      * @return Fecha y hora de creación del chat.
      */
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -119,7 +122,7 @@ public class ChatDTO {
      * Establece la fecha y hora de creación del chat.
      * @param createdAt Fecha y hora de creación del chat.
      */
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
     
@@ -134,7 +137,11 @@ public class ChatDTO {
         chatDTO.setChatImage(chatDAO.getChatImage());
         chatDTO.setChatName(chatDAO.getChatName());
         chatDTO.setCreatedAt(chatDAO.getCreatedAt());
-        chatDTO.setParticipants(chatDAO.getParticipants());
+        List<ParticipantDTO> participantDTO=new ArrayList<>();
+        for(Participant participantDAO:chatDAO.getParticipants()){
+            participantDTO.add(ParticipantDTO.conver(participantDAO));
+        }
+        chatDTO.setParticipants(participantDTO);
         return chatDTO;
     }
     
@@ -149,7 +156,12 @@ public class ChatDTO {
         chatDAO.setChatImage(chatDTO.getChatImage());
         chatDAO.setChatName(chatDTO.getChatName());
         chatDAO.setCreatedAt(chatDTO.getCreatedAt());
-        chatDAO.setParticipants(chatDTO.getParticipants());
+        List<Participant> participant=new ArrayList<>();
+        for(ParticipantDTO participantDTO:chatDTO.getParticipants()){
+            participant.add(ParticipantDTO.conver(participantDTO));
+        }
+        chatDAO.setParticipants(participant);
+        System.out.println(chatDAO.getParticipants());
         return chatDAO;
     }
 }

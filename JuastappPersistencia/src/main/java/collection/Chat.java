@@ -5,6 +5,7 @@
 package collection;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import org.bson.types.ObjectId;
 
@@ -16,8 +17,8 @@ public class Chat {
     private ObjectId id;
     private String chatName;
     private byte[] chatImage;
-    private List<ObjectId> participants;
-    private LocalDateTime createdAt;
+    private List<Participant> participants;
+    private Date createdAt;
 
     /**
      * 
@@ -32,11 +33,11 @@ public class Chat {
      * @param chatImage Imagen del chat en bytes
      * @param participants Lista de IDs de los participantes del chat
      */
-    public Chat(String chatName, byte[] chatImage, List<ObjectId> participants) {
+    public Chat(String chatName, byte[] chatImage, List<Participant> participants) {
         this.chatName = chatName;
         this.chatImage = chatImage;
         this.participants = participants;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = new Date();
     }
 
     /**
@@ -106,7 +107,7 @@ public class Chat {
      * @return regresa la lista con los participantes
      * 
      */
-    public List<ObjectId> getParticipants() {
+    public List<Participant> getParticipants() {
         return participants;
     }
 
@@ -116,7 +117,7 @@ public class Chat {
      * @param participants recibe una lista de los participantes
      * 
      */
-    public void setParticipants(List<ObjectId> participants) {
+    public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
 
@@ -126,7 +127,7 @@ public class Chat {
      * 
      * @return regresa el chat creado
      */
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -137,7 +138,7 @@ public class Chat {
      * @param createdAt hora para crear el chat
      * 
      */
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

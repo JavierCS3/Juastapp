@@ -7,6 +7,7 @@ package daos;
 import collection.Chat;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.all;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.in;
@@ -14,6 +15,7 @@ import conexion.ConexionBD;
 import exceptions.ExceptionPersistencia;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -57,7 +59,6 @@ public class ChatDAO implements IChatDAO {
    @Override
    public void createChat(Chat chat) throws ExceptionPersistencia {
        try {
-           // Imprimir el documento antes de insertar
            System.out.println("Intentando crear el chat con los siguientes datos:");
            System.out.println("Chat Image: " + (chat.getChatImage() != null ? "Image present" : "No image"));
            System.out.println("Chat Name: " + chat.getChatName());
@@ -127,7 +128,15 @@ public class ChatDAO implements IChatDAO {
     public List<Chat> getChatsByUserId(ObjectId userId) throws ExceptionPersistencia {
         try {
             List<Chat> userChats = new ArrayList<>();
-            chatCollection.find(in("participants", userId)).into(userChats);
+
+            // Construir la consulta para buscar chats donde el usuario participa
+            Bson filter = Filters.elemMatch("participants", 
+                            Filters.and(
+                                Filters.eq("userId", userId)
+                            ));
+
+            chatCollection.find(filter).into(userChats);
+
             return userChats;
         } catch (Exception e) {
             throw new ExceptionPersistencia("Error al obtener chats por usuario: " + e.getMessage(), e);

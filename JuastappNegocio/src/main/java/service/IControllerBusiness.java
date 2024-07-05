@@ -139,4 +139,12 @@ public interface IControllerBusiness {
      * @throws ExceptionService lanza una excepción tipo ExceptionService
      */
     public void updateUserContacts(UserDTO user) throws ExceptionService;
+    
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ExceptionService
+     */
+    public ChatDTO getChatById (ObjectId id)throws ExceptionService;
 }

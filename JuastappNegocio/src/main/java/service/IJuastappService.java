@@ -140,4 +140,13 @@ public interface IJuastappService {
      * @throws ExceptionService lanza una excepción tipo ExceptionServcie
      */
     public void updateUserContacts(UserDTO user) throws ExceptionService;
+    
+    /**
+     *  Metodo para conseguir el chat por su id
+     * @param id
+     * @return
+     * @throws ExceptionService
+     */
+    public ChatDTO getChatById (ObjectId id)throws ExceptionService;
+    
 }

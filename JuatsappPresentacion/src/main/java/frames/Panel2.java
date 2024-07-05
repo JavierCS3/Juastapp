@@ -6,6 +6,7 @@ package frames;
 
 import dtos.ChatDTO;
 import dtos.MessageDTO;
+import dtos.ParticipantDTO;
 import dtos.UserDTO;
 import exceptions.ExceptionService;
 import java.awt.BorderLayout;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -67,8 +69,13 @@ public class Panel2 extends javax.swing.JPanel {
             verticalScrollBar.setValue(100);
             dashBoard.setVerticalScrollBar(verticalScrollBar);
             
+            List<ParticipantDTO> participants=chat.getParticipants();
+            List<ObjectId> ids=new ArrayList();
             
-            List<ObjectId> ids=chat.getParticipants();
+            for(ParticipantDTO participant:participants){
+                ids.add(participant.getUserId());
+            }
+            
             List<ObjectId> contacts = busBO.getUserById(busBO.getId()).getContactosDTO();
             UserDTO user=new UserDTO();
             boolean hasChat = false;
@@ -593,10 +600,17 @@ public class Panel2 extends javax.swing.JPanel {
             EditChat edit = new EditChat(parentFrame, busBO, chat);
             edit.setVisible(true); 
         } else if (response == JOptionPane.NO_OPTION) {
-            int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres elimar este chat? Todos los mensajes se eliminaran", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres elimar este chat? ", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(response1 == JOptionPane.YES_OPTION){
                 try {
-                    busBO.deleteChatById(chat.getId());
+                    List<ParticipantDTO> participants=chat.getParticipants();
+                    for(ParticipantDTO participant: participants){
+                        if(busBO.getId().equals(participant.getUserId())){
+                            participant.setDeleted(true);
+                        }
+                    }
+                    chat.setParticipants(participants);
+                    busBO.updateChat(chat);
                     Chatsfrm chatsFrame = new Chatsfrm(busBO);
                     chatsFrame.show();
                     JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);

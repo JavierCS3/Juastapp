@@ -138,14 +138,10 @@ public class UserDAO implements IUserDAO{
     * @throws ExceptionPersistencia si ocurre un error al acceder a la base de datos
     */
    public void createUser(User user) throws ExceptionPersistencia {
-           //Paso 1: Registrando la información del usuario antes de la inserción
            System.out.println("Creando usuario: " + user.getUser() + ", " + user.getPhone() + ", " +
                               user.getBirthDate() + ", " + user.getPassword() + ", " + user.getGender());
-           // Paso 2: Obteniendo la colección de usuarios desde la base de datos
            MongoCollection<User> collection = conexion.getDatabase().getCollection("users", User.class);
-           // Paso 3: Insertando el usuario en la colección
            collection.insertOne(user);
-           // Paso 4 (opcional): Registrando mensaje de éxito después de la inserción
            System.out.println("Usuario " + user.getUser() + " creado exitosamente");       
    }
 

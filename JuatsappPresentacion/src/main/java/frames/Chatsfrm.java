@@ -5,6 +5,7 @@
 package frames;
 
 import dtos.ChatDTO;
+import dtos.ParticipantDTO;
 import dtos.UserDTO;
 import exceptions.ExceptionService;
 import java.awt.BorderLayout;
@@ -281,7 +282,7 @@ public class Chatsfrm extends javax.swing.JFrame {
         
         try {
         List<ChatDTO> chats = busBO.getChatByUser(busBO.getId());
-
+        System.out.println("chats"+chats);
         buttons = new ArrayList<>();
         boardChats.removeAll();
 
@@ -312,8 +313,24 @@ public class Chatsfrm extends javax.swing.JFrame {
             chatInfo.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
             chatInfo.setMaximumSize(new Dimension(400, 100));
             
-            List<ObjectId> ids=chat.getParticipants();
-            List<ObjectId> contacts = busBO.getUserById(busBO.getId()).getContactosDTO();
+            List<ParticipantDTO> participants=chat.getParticipants();
+            List<ObjectId> ids=new ArrayList();
+            System.out.println(participants);
+            ParticipantDTO participan=new ParticipantDTO();      
+            
+            for(ParticipantDTO participant:participants){
+                ids.add(participant.getUserId());
+                if(participant.getUserId().equals(busBO.getId())){
+                    } else {
+                    System.out.println("participante");
+                        participan=participant;
+                }
+            }
+            
+            if(participan.isDeleted()){
+                
+            }else{
+             List<ObjectId> contacts = busBO.getUserById(busBO.getId()).getContactosDTO();
             UserDTO user=new UserDTO();
             boolean hasChat = false;
             if(contacts!=null){
@@ -370,7 +387,7 @@ public class Chatsfrm extends javax.swing.JFrame {
             chatPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, chatPanel.getPreferredSize().height));
             chatPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             boardChats.add(chatPanel);
-        
+            }
         }
         boardChats.revalidate();
         boardChats.repaint();

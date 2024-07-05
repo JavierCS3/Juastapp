@@ -173,6 +173,7 @@ public class JuastappService implements IJuastappService{
         if(chat!=null){
             try {
                 Chat c=ChatDTO.conver(chat);
+                System.out.println(c.getParticipants());
                 chatDAO.createChat(c);
             } catch (ExceptionPersistencia ex) {
                 throw new ExceptionService("Error al agregar chat",ex);
@@ -377,6 +378,16 @@ public class JuastappService implements IJuastappService{
                 chatsDTO.add(ChatDTO.conver(chat));
             }
             return chatsDTO;
+        } catch (ExceptionPersistencia ex) {
+            Logger.getLogger(JuastappService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public ChatDTO getChatById (ObjectId id)throws ExceptionService{
+        try {
+            ChatDTO chatDTO=ChatDTO.conver(chatDAO.getChatById(id));
         } catch (ExceptionPersistencia ex) {
             Logger.getLogger(JuastappService.class.getName()).log(Level.SEVERE, null, ex);
         }

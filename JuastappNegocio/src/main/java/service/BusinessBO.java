@@ -239,4 +239,9 @@ public class BusinessBO implements IControllerBusiness{
     public void updateUserContacts(UserDTO user) throws ExceptionService{
         service.updateUserContacts(user);
     }
+
+    @Override
+    public ChatDTO getChatById(ObjectId id) throws ExceptionService {
+        return service.getChatById(id);
+    }
 }

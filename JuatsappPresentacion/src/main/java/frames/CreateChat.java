@@ -5,26 +5,18 @@
 package frames;
 
 import dtos.ChatDTO;
+import dtos.ParticipantDTO;
 import dtos.UserDTO;
 import exceptions.ExceptionService;
-import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.bson.types.ObjectId;
 import service.BusinessBO;
 
@@ -150,30 +142,43 @@ public class CreateChat extends javax.swing.JFrame {
             // TODO add your handling code here:
             int response = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres crear este chat?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            
+            
             byte[] icon = user.getProfileImage();
             String name=user.getUser();
+            
             
             ChatDTO chat=new ChatDTO();
             chat.setChatImage(icon);
             chat.setChatName(name);
-            chat.setCreatedAt(LocalDateTime.now());
-            List<ObjectId> participants=new ArrayList<>();
-            participants.add(user.getId());
-            participants.add(busBO.getId());
+            chat.setCreatedAt(new Date());
+            
+            List<ParticipantDTO> participants=new ArrayList<>();
+            
+            ParticipantDTO participant=new ParticipantDTO();
+            participant.setUserId(user.getId());
+            participant.setDeleted(false);
+            participants.add(participant);
+            
+            participant=new ParticipantDTO();
+            participant.setUserId(busBO.getId());
+            participant.setDeleted(false);
+            participants.add(participant);
+            
             chat.setParticipants(participants);
+            
             System.out.println(chat.getChatName()+" "+chat.getParticipants().get(0)+" "+ chat.getParticipants().get(1));
+            System.out.println(participants);
             
             busBO.createChat(chat);
             
             Chatsfrm chatfrm=new Chatsfrm(busBO);
-            
             chatfrm.show();
             this.dispose();
         }
         } catch (ExceptionService ex) {
             Logger.getLogger(CreateChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
