@@ -8,6 +8,8 @@ import dtos.UserDTO;
 import exceptions.ExceptionService;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -45,6 +47,18 @@ public class EditProfile extends javax.swing.JFrame {
             UserDTO user=busBO.getUserById(busBO.getId());
             txtName.setText(user.getUser());
             txtPassword.setText(user.getPassword());
+            
+            passwordBox.addActionListener(new ActionListener() {
+                       @Override
+                       public void actionPerformed(ActionEvent e) {
+                           if (passwordBox.isSelected()) {
+                               txtPassword.setEchoChar((char) 0);
+                           } else {
+                               txtPassword.setEchoChar('*');
+                           }
+                       }
+                   });
+            
             byte[] profileImageBytes = user.getProfileImage();
             
             ImageIcon icon = new ImageIcon(profileImageBytes);
@@ -99,11 +113,12 @@ public class EditProfile extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         buttonCancel = new javax.swing.JButton();
         buttonUpdate = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
+        passwordBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -133,20 +148,6 @@ public class EditProfile extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Contraseña");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 250, -1, -1));
-
-        txtPassword.setBackground(new java.awt.Color(255, 255, 255));
-        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
-        txtPassword.setToolTipText("");
-        txtPassword.setActionCommand("<Not Set>");
-        txtPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(18, 140, 126)));
-        txtPassword.setCaretColor(new java.awt.Color(18, 140, 126));
-        txtPassword.setSelectionColor(new java.awt.Color(18, 140, 126));
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 210, 30));
 
         txtName.setBackground(new java.awt.Color(255, 255, 255));
         txtName.setForeground(new java.awt.Color(0, 0, 0));
@@ -196,6 +197,10 @@ public class EditProfile extends javax.swing.JFrame {
             }
         });
         jPanel2.add(buttonUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 90, 30));
+        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 290, 210, 30));
+
+        passwordBox.setContentAreaFilled(false);
+        jPanel2.add(passwordBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 280, 30, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,10 +241,6 @@ public class EditProfile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
@@ -258,7 +259,7 @@ public class EditProfile extends javax.swing.JFrame {
         UserDTO user = busBO.getUserById(busBO.getId());
 
         user.setUser(txtName.getText());
-        user.setPassword(txtPassword.getText());
+        user.setPassword((new String(txtPassword.getPassword())));
 
         Icon icon = jButton1.getIcon();
         byte[] profileImageBytes = null;
@@ -309,7 +310,8 @@ public class EditProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JCheckBox passwordBox;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

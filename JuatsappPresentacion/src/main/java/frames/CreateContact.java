@@ -148,7 +148,7 @@ public class CreateContact extends javax.swing.JFrame {
                 }
             }
 
-            if (!hasChat) {
+            if (hasChat==true) {
                 String[] options = { "Crear Chat", "Eliminar Contacto", "Cancelar" };
             int choice = JOptionPane.showOptionDialog(null, "¿Qué acción deseas realizar?", "Acción a Realizar",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);

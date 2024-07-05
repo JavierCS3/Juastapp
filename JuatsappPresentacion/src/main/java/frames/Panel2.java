@@ -582,31 +582,26 @@ public class Panel2 extends javax.swing.JPanel {
 
     private void buttonConfigChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConfigChatActionPerformed
         // TODO add your handling code here:
-        String[] options = {"Editar", "Eliminar", "Cancelar"};
-    
+        String[] options = { "Eliminar", "Cancelar"};
+
         int response = JOptionPane.showOptionDialog(
             null, 
             "¿Qué acción deseas realizar con este chat?", 
-            "Editar o Eliminar Chat", 
-            JOptionPane.YES_NO_CANCEL_OPTION, 
+            "Eliminar Chat", 
+            JOptionPane.YES_NO_OPTION, 
             JOptionPane.QUESTION_MESSAGE, 
             null, 
             options,  
-            options[0]  
+            options[1] 
         );
-
         if (response == JOptionPane.YES_OPTION) {
-             JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            EditChat edit = new EditChat(parentFrame, busBO, chat);
-            edit.setVisible(true); 
-        } else if (response == JOptionPane.NO_OPTION) {
-            int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres elimar este chat? ", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(response1 == JOptionPane.YES_OPTION){
+            int response1 = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres eliminar este chat? ", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response1 == JOptionPane.YES_OPTION) {
                 try {
                     List<ParticipantDTO> participants = chat.getParticipants();
                     List<ParticipantDTO> newParticipants = new ArrayList<>();
-                    for(ParticipantDTO participant: participants){
-                        if(!busBO.getId().equals(participant.getUserId())){
+                    for (ParticipantDTO participant : participants) {
+                        if (!busBO.getId().equals(participant.getUserId())) {
                             participant.setDeleted(true);
                         }
                         newParticipants.add(participant);
@@ -616,7 +611,6 @@ public class Panel2 extends javax.swing.JPanel {
                     Chatsfrm chatsFrame = new Chatsfrm(busBO);
                     chatsFrame.show();
                     JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                    finalize();
                     parentFrame.dispose();
                 } catch (ExceptionService ex) {
                     Logger.getLogger(Panel2.class.getName()).log(Level.SEVERE, null, ex);
@@ -626,7 +620,6 @@ public class Panel2 extends javax.swing.JPanel {
             }
         } else if (response == JOptionPane.CANCEL_OPTION) {
         }
-    
     }//GEN-LAST:event_buttonConfigChatActionPerformed
 
     private void buttonImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImageActionPerformed
