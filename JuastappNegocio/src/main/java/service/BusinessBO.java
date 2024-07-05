@@ -83,7 +83,7 @@ public class BusinessBO implements IControllerBusiness{
         if(phone!=null){
             return service.getUserByPhone(phone);
         }
-        throw new ExceptionService("El numeor de telefono es nulo");
+        return null;
     }
 
     /**

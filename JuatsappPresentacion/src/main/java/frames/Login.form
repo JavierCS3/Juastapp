@@ -336,7 +336,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" pref="63" max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="381" max="32767" attributes="0"/>
                   </Group>
@@ -360,9 +360,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="D:\Netbeans\Juastapp\JuatsappPresentacion\src\main\java\utilerias\8666595_x_icon.png"/>
-                </Property>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>

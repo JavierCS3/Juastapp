@@ -226,6 +226,7 @@ public class UserDTO {
     public static UserDTO conver(User userDAO){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userDAO.getId());
+        
         userDTO.setBirthDate(userDAO.getBirthDate());
         userDTO.setCreatedAt(userDAO.getCreatedAt());
         userDTO.setUser(userDAO.getUser());
